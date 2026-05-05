@@ -37,6 +37,9 @@
 本项目的开发、代码整理、文档编写与发布流程优化由 Codex（ChatGPT 5.5）和 Gemini 3.1 Pro 辅助完成。
 
 ---
+<p align="center">
+  <img src="./assets/overview-cn.png" alt="AegisVault Mobile 项目总览" width="720">
+</p>
 
 ## 🚀 功能特性
 
