@@ -38,6 +38,10 @@ This project was developed, organized, documented, and release-optimized with as
 
 ---
 
+<p align="center">
+  <img src="./assets/overview-en.png" alt="AegisVault Mobile Overview" width="720">
+</p>
+
 ## 🚀 Features
 
 ### 🔐 AES Text Encryption
