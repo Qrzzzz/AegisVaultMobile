@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
@@ -75,7 +77,9 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
 
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.screen_title)) }, actions = {
-            IconButton(onClick = { showSettings = true }) { Icon(androidx.compose.material.icons.Icons.Rounded.Info, contentDescription = stringResource(R.string.action_about)) }
+            IconButton(onClick = { showSettings = true }) {
+                Icon(Icons.Rounded.Info, contentDescription = stringResource(R.string.action_about))
+            }
         })
     }, snackbarHost = { SnackbarHost(snackbar) }) { p ->
         Column(Modifier.fillMaxSize().padding(p).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {

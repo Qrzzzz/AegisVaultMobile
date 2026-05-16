@@ -1,8 +1,8 @@
 package com.aegisvault.mobile.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ListItem
@@ -48,25 +48,13 @@ fun ModeSelector(mode: ToolMode, onSelect: (ToolMode) -> Unit) {
 
 @Composable
 fun SecureTextInputCard(value: String, onValue: (String) -> Unit, onPaste: () -> Unit) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValue,
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(stringResource(R.string.label_input)) },
-    )
+    OutlinedTextField(value = value, onValueChange = onValue, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.label_input)) })
     TextButton(onClick = onPaste) { Text(stringResource(R.string.action_paste)) }
 }
 
 @Composable
 fun PasswordField(v: String, onV: (String) -> Unit, visible: Boolean, toggle: () -> Unit) {
-    OutlinedTextField(
-        value = v,
-        onValueChange = onV,
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(stringResource(R.string.label_password)) },
-        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-    )
+    OutlinedTextField(value = v, onValueChange = onV, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.label_password)) }, visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password))
     TextButton(onClick = toggle) { Text(if (visible) stringResource(R.string.action_hide) else stringResource(R.string.action_show)) }
 }
 
@@ -86,13 +74,7 @@ fun ActionButtons(mode: ToolMode, onEncrypt: () -> Unit, onDecrypt: () -> Unit, 
 @Composable
 fun ResultCard(value: String, onCopy: suspend () -> Unit, onUseAsInput: () -> Unit) {
     val scope = rememberCoroutineScope()
-    OutlinedTextField(
-        value = value,
-        onValueChange = {},
-        readOnly = true,
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(stringResource(R.string.label_result)) },
-    )
+    OutlinedTextField(value = value, onValueChange = {}, readOnly = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.label_result)) })
     Button(onClick = onUseAsInput) { Text(stringResource(R.string.action_use_result_as_input)) }
     OutlinedButton(onClick = { scope.launch { onCopy() } }) { Text(stringResource(R.string.action_copy_result)) }
 }
@@ -101,92 +83,67 @@ fun ResultCard(value: String, onCopy: suspend () -> Unit, onUseAsInput: () -> Un
 fun SettingsSheet(settings: AppSettings, onUpdate: ((AppSettings) -> AppSettings) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.settings_title))
-
         Text(stringResource(R.string.settings_language))
         LanguageOption.entries.forEach { option ->
             ListItem(
-                headlineContent = {
-                    Text(
-                        when (option) {
-                            LanguageOption.SYSTEM -> stringResource(R.string.language_system)
-                            LanguageOption.ENGLISH -> stringResource(R.string.language_en)
-                            LanguageOption.ZH_CN -> stringResource(R.string.language_zh_cn)
-                        },
-                    )
-                },
+                headlineContent = { Text(languageLabel(option)) },
                 leadingContent = { RadioButton(selected = settings.language == option, onClick = null) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.clickable { onUpdate { it.copy(language = option) } },
             )
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { onUpdate { it.copy(language = LanguageOption.SYSTEM) } }) { Text(stringResource(R.string.language_system)) }
-            TextButton(onClick = { onUpdate { it.copy(language = LanguageOption.ENGLISH) } }) { Text(stringResource(R.string.language_en)) }
-            TextButton(onClick = { onUpdate { it.copy(language = LanguageOption.ZH_CN) } }) { Text(stringResource(R.string.language_zh_cn)) }
         }
 
         Text(stringResource(R.string.settings_theme))
         ThemeOption.entries.forEach { option ->
             ListItem(
-                headlineContent = {
-                    Text(
-                        when (option) {
-                            ThemeOption.SYSTEM -> stringResource(R.string.theme_system)
-                            ThemeOption.LIGHT -> stringResource(R.string.theme_light)
-                            ThemeOption.DARK -> stringResource(R.string.theme_dark)
-                        },
-                    )
-                },
+                headlineContent = { Text(themeLabel(option)) },
                 leadingContent = { RadioButton(selected = settings.theme == option, onClick = null) },
+                modifier = Modifier.clickable { onUpdate { it.copy(theme = option) } },
             )
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { onUpdate { it.copy(theme = ThemeOption.SYSTEM) } }) { Text(stringResource(R.string.theme_system)) }
-            TextButton(onClick = { onUpdate { it.copy(theme = ThemeOption.LIGHT) } }) { Text(stringResource(R.string.theme_light)) }
-            TextButton(onClick = { onUpdate { it.copy(theme = ThemeOption.DARK) } }) { Text(stringResource(R.string.theme_dark)) }
         }
 
         ListItem(
             headlineContent = { Text(stringResource(R.string.settings_protect_screen)) },
             supportingContent = { Text(stringResource(R.string.settings_protect_screen_support)) },
-            trailingContent = {
-                Switch(checked = settings.protectScreen, onCheckedChange = { checked -> onUpdate { it.copy(protectScreen = checked) } })
-            },
+            trailingContent = { Switch(checked = settings.protectScreen, onCheckedChange = { checked -> onUpdate { it.copy(protectScreen = checked) } }) },
         )
 
         ListItem(
             headlineContent = { Text(stringResource(R.string.settings_auto_clear_leave)) },
             supportingContent = { Text(stringResource(R.string.settings_auto_clear_leave_support)) },
-            trailingContent = {
-                Switch(checked = settings.autoClearOnLeave, onCheckedChange = { checked -> onUpdate { it.copy(autoClearOnLeave = checked) } })
-            },
+            trailingContent = { Switch(checked = settings.autoClearOnLeave, onCheckedChange = { checked -> onUpdate { it.copy(autoClearOnLeave = checked) } }) },
         )
 
         Text(stringResource(R.string.settings_clipboard_auto_clear))
         ClipboardAutoClear.entries.forEach { option ->
             ListItem(
-                headlineContent = {
-                    Text(
-                        when (option) {
-                            ClipboardAutoClear.OFF -> stringResource(R.string.clipboard_off)
-                            ClipboardAutoClear.S30 -> stringResource(R.string.clipboard_30s)
-                            ClipboardAutoClear.S60 -> stringResource(R.string.clipboard_60s)
-                            ClipboardAutoClear.S300 -> stringResource(R.string.clipboard_300s)
-                        },
-                    )
-                },
+                headlineContent = { Text(clipboardLabel(option)) },
                 leadingContent = { RadioButton(selected = settings.clipboardAutoClear == option, onClick = null) },
+                modifier = Modifier.clickable { onUpdate { it.copy(clipboardAutoClear = option) } },
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = { onUpdate { it.copy(clipboardAutoClear = ClipboardAutoClear.OFF) } }) { Text(stringResource(R.string.clipboard_off)) }
-            TextButton(onClick = { onUpdate { it.copy(clipboardAutoClear = ClipboardAutoClear.S30) } }) { Text(stringResource(R.string.clipboard_30s)) }
-            TextButton(onClick = { onUpdate { it.copy(clipboardAutoClear = ClipboardAutoClear.S60) } }) { Text(stringResource(R.string.clipboard_60s)) }
-            TextButton(onClick = { onUpdate { it.copy(clipboardAutoClear = ClipboardAutoClear.S300) } }) { Text(stringResource(R.string.clipboard_300s)) }
-        }
 
-        ListItem(
-            headlineContent = { Text(stringResource(R.string.about_title)) },
-            supportingContent = { Text(stringResource(R.string.about_body)) },
-        )
+        ListItem(headlineContent = { Text(stringResource(R.string.about_title)) }, supportingContent = { Text(stringResource(R.string.about_body)) })
     }
+}
+
+@Composable
+private fun languageLabel(option: LanguageOption): String = when (option) {
+    LanguageOption.SYSTEM -> stringResource(R.string.language_system)
+    LanguageOption.ENGLISH -> stringResource(R.string.language_en)
+    LanguageOption.ZH_CN -> stringResource(R.string.language_zh_cn)
+}
+
+@Composable
+private fun themeLabel(option: ThemeOption): String = when (option) {
+    ThemeOption.SYSTEM -> stringResource(R.string.theme_system)
+    ThemeOption.LIGHT -> stringResource(R.string.theme_light)
+    ThemeOption.DARK -> stringResource(R.string.theme_dark)
+}
+
+@Composable
+private fun clipboardLabel(option: ClipboardAutoClear): String = when (option) {
+    ClipboardAutoClear.OFF -> stringResource(R.string.clipboard_off)
+    ClipboardAutoClear.S30 -> stringResource(R.string.clipboard_30s)
+    ClipboardAutoClear.S60 -> stringResource(R.string.clipboard_60s)
+    ClipboardAutoClear.S300 -> stringResource(R.string.clipboard_300s)
 }
