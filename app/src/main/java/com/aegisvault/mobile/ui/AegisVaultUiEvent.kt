@@ -10,4 +10,6 @@ sealed interface AegisVaultUiEvent {
     data object Decode : AegisVaultUiEvent
     data object ClearSensitiveData : AegisVaultUiEvent
     data object UseResultAsInput : AegisVaultUiEvent
+    data object OnLeaveApp : AegisVaultUiEvent
+    data object ClearMessage : AegisVaultUiEvent
 }

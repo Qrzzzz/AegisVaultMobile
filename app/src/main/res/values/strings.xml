@@ -45,4 +45,29 @@
     <string name="error_protocol">Unsupported or invalid encrypted payload.</string>
     <string name="error_copy_empty">Nothing to copy yet.</string>
     <string name="content_description_toggle_password">Toggle password visibility</string>
+
+    <string name="action_clear_sensitive_data">Clear sensitive data</string>
+    <string name="action_use_result_as_input">Use result as input</string>
+    <string name="action_clear_clipboard">Clear clipboard</string>
+    <string name="status_copied_security">Copied. Clipboard may be visible to system or other apps.</string>
+    <string name="status_clipboard_empty">Clipboard has no text.</string>
+    <string name="error_utf8">Decoded bytes are not valid UTF-8 text.</string>
+    <string name="action_show">Show</string>
+    <string name="action_hide">Hide</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="language_system">Follow system</string>
+    <string name="language_zh_cn">简体中文</string>
+    <string name="settings_theme">Theme</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_protect_screen">Protect screen</string>
+    <string name="settings_auto_clear_leave">Auto-clear sensitive data when leaving app</string>
+    <string name="settings_clipboard_auto_clear">Clipboard auto-clear</string>
+    <string name="clipboard_off">Off</string>
+    <string name="clipboard_30s">30 seconds</string>
+    <string name="clipboard_60s">60 seconds</string>
+    <string name="clipboard_300s">5 minutes</string>
+
 </resources>
