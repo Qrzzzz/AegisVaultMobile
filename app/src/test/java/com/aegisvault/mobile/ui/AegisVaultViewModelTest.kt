@@ -11,9 +11,13 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 
 class AegisVaultViewModelTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     private class FakeRepo(initial: AppSettings = AppSettings()) : AppSettingsRepository {
         private val flow = MutableStateFlow(initial)
         override val settings: Flow<AppSettings> = flow.asStateFlow()
