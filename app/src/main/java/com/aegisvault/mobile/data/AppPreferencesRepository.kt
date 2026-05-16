@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 private val Context.dataStore by preferencesDataStore("aegisvault_settings")
 
 class AppPreferencesRepository(private val context: Context) : AppSettingsRepository {
-    val settings: Flow<AppSettings> = context.dataStore.data.map { p ->
+    override val settings: Flow<AppSettings> = context.dataStore.data.map { p ->
         AppSettings(
             language = LanguageOption.valueOf(p[KEY_LANGUAGE] ?: LanguageOption.SYSTEM.name),
             theme = ThemeOption.valueOf(p[KEY_THEME] ?: ThemeOption.SYSTEM.name),
@@ -21,7 +21,7 @@ class AppPreferencesRepository(private val context: Context) : AppSettingsReposi
         )
     }
 
-    suspend fun update(transform: (AppSettings) -> AppSettings) {
+    override suspend fun update(transform: (AppSettings) -> AppSettings) {
         context.dataStore.edit { prefs ->
             val old = AppSettings(
                 language = LanguageOption.valueOf(prefs[KEY_LANGUAGE] ?: LanguageOption.SYSTEM.name),
