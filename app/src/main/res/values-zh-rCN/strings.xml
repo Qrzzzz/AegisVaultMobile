@@ -45,4 +45,33 @@
     <string name="error_protocol">加密载荷格式无效或暂不支持。</string>
     <string name="error_copy_empty">当前没有可复制的结果。</string>
     <string name="content_description_toggle_password">切换密钥可见性</string>
+
+    <string name="action_clear_sensitive_data">清空敏感数据</string>
+    <string name="action_use_result_as_input">将结果作为输入</string>
+    <string name="action_clear_clipboard">清空剪贴板</string>
+    <string name="status_copied_security">已复制。剪贴板内容可能会被系统或其他应用读取。</string>
+    <string name="status_clipboard_empty">剪贴板没有文本。</string>
+    <string name="error_utf8">解码后的字节不是有效 UTF-8 文本。</string>
+    <string name="action_show">显示</string>
+    <string name="action_hide">隐藏</string>
+    <string name="settings_title">设置</string>
+    <string name="settings_language">语言</string>
+    <string name="language_system">跟随系统</string>
+    <string name="language_zh_cn">简体中文</string>
+    <string name="settings_theme">主题</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
+    <string name="settings_protect_screen">屏幕保护</string>
+    <string name="settings_auto_clear_leave">离开应用时自动清空敏感数据</string>
+    <string name="settings_clipboard_auto_clear">剪贴板自动清空</string>
+    <string name="clipboard_off">关闭</string>
+    <string name="clipboard_30s">30 秒</string>
+    <string name="clipboard_60s">60 秒</string>
+    <string name="clipboard_300s">5 分钟</string>
+
+
+    <string name="settings_protect_screen_support">阻止截图和最近任务缩略图。</string>
+    <string name="settings_auto_clear_leave_support">应用进入后台时清空输入、口令和结果。</string>
+
 </resources>
