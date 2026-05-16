@@ -4,6 +4,7 @@ import org.bouncycastle.crypto.generators.SCrypt
 import org.json.JSONException
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
+import java.nio.charset.CodingErrorAction
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.Base64
@@ -17,6 +18,7 @@ enum class ErrorCode {
     EMPTY_PASSWORD,
     AUTH,
     BASE64_INVALID,
+    UTF8_INVALID,
     PROTOCOL,
 }
 
@@ -110,9 +112,12 @@ object AegisVaultEngine {
             throw AegisVaultException(ErrorCode.BASE64_INVALID)
         }
         return try {
-            decoded.toString(StandardCharsets.UTF_8)
+            val decoder = StandardCharsets.UTF_8.newDecoder()
+                .onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT)
+            decoder.decode(java.nio.ByteBuffer.wrap(decoded)).toString()
         } catch (_: Exception) {
-            throw AegisVaultException(ErrorCode.BASE64_INVALID)
+            throw AegisVaultException(ErrorCode.UTF8_INVALID)
         }
     }
 

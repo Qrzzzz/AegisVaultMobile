@@ -305,3 +305,6 @@ Do not use debug builds for production, commercial, or high-risk security scenar
 ## 📄 License
 
 This project is open-sourced under the [MIT License](./LICENSE).
+
+## Security note
+AegisVault minimizes persistence of sensitive text (input/password/result are kept in memory during current activity lifecycle), but cannot guarantee absolute security against OS services, keyboards/IMEs, clipboard exposure, screenshots, rooted devices, or malware.
