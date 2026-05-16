@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 private val Context.dataStore by preferencesDataStore("aegisvault_settings")
 
-class AppPreferencesRepository(private val context: Context) {
+class AppPreferencesRepository(private val context: Context) : AppSettingsRepository {
     val settings: Flow<AppSettings> = context.dataStore.data.map { p ->
         AppSettings(
             language = LanguageOption.valueOf(p[KEY_LANGUAGE] ?: LanguageOption.SYSTEM.name),

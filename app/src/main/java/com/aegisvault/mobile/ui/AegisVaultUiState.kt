@@ -1,11 +1,12 @@
 package com.aegisvault.mobile.ui
 
+import androidx.annotation.StringRes
 import com.aegisvault.mobile.data.AppSettings
 
 enum class ToolMode { AES, BASE64 }
 enum class MessageTone { SUCCESS, WARNING, ERROR }
 
-data class UiMessage(val text: String, val tone: MessageTone)
+data class UiMessage(@StringRes val resId: Int, val tone: MessageTone)
 
 data class AegisVaultUiState(
     val mode: ToolMode = ToolMode.AES,

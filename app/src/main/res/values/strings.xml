@@ -70,4 +70,8 @@
     <string name="clipboard_60s">60 seconds</string>
     <string name="clipboard_300s">5 minutes</string>
 
+
+    <string name="settings_protect_screen_support">Blocks screenshots and recent-tasks previews.</string>
+    <string name="settings_auto_clear_leave_support">Clears input, password, and result when app goes to background.</string>
+
 </resources>

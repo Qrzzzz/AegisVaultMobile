@@ -53,8 +53,7 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var passwordVisible by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
-    var lastCopied by remember { mutableStateOf<String?>(null) }
-
+    
     DisposableEffect(lifecycleOwner, state.settings.autoClearOnLeave) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_STOP || event == Lifecycle.Event.ON_PAUSE) vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
@@ -70,8 +69,7 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
 
     LaunchedEffect(state.message) {
         val m = state.message ?: return@LaunchedEffect
-        val text = if (m.text.startsWith("RES:")) context.getString(m.text.removePrefix("RES:").toInt()) else context.getString(m.text.removePrefix("ERR:").toInt())
-        snackbar.showSnackbar(text)
+        snackbar.showSnackbar(context.getString(m.resId))
         vm.onEvent(AegisVaultUiEvent.ClearMessage)
     }
 
@@ -94,19 +92,18 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
                 if (state.resultText.isBlank()) { scope.launch { snackbar.showSnackbar(context.getString(R.string.error_copy_empty)) }; return@ResultCard }
                 val copied = state.resultText
                 clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault Result", copied))
-                lastCopied = copied
                 scope.launch {
                     val res = snackbar.showSnackbar(context.getString(R.string.status_copied_security), actionLabel = context.getString(R.string.action_clear_clipboard))
                     if (res.name.contains("Action")) {
                         val current = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
-                        if (current == lastCopied) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
+                        if (shouldClearClipboard(current, copied)) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
                     }
                 }
                 val secs = state.settings.clipboardAutoClear.seconds
                 if (secs != null) scope.launch {
                     delay(secs * 1000)
                     val current = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
-                    if (current == lastCopied) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
+                    if (shouldClearClipboard(current, copied)) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
                 }
             }, onUseAsInput = { vm.onEvent(AegisVaultUiEvent.UseResultAsInput) })
             androidx.compose.material3.OutlinedButton(onClick = { vm.onEvent(AegisVaultUiEvent.ClearSensitiveData); focusManager.clearFocus() }) { Text(stringResource(R.string.action_clear_sensitive_data)) }
@@ -119,3 +116,6 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
         }
     }
 }
+
+
+internal fun shouldClearClipboard(current: String?, copied: String): Boolean = current == copied

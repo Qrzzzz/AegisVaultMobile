@@ -70,4 +70,8 @@
     <string name="clipboard_60s">60 秒</string>
     <string name="clipboard_300s">5 分钟</string>
 
+
+    <string name="settings_protect_screen_support">阻止截图和最近任务缩略图。</string>
+    <string name="settings_auto_clear_leave_support">应用进入后台时清空输入、口令和结果。</string>
+
 </resources>
