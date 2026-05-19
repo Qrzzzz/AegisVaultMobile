@@ -12,6 +12,9 @@ class AegisVaultEngineTest {
     @Test fun tamperedTokenFails() { val t = AegisVaultEngine.encryptText("hello", "pass12345"); val bad=t.dropLast(2)+"aa"; try { AegisVaultEngine.decryptText(bad, "pass12345") } catch (e:AegisVaultException){ assertTrue(e.code==ErrorCode.AUTH || e.code==ErrorCode.PROTOCOL); return }; throw AssertionError() }
     @Test fun emptyTextAndPassword() { try { AegisVaultEngine.encryptText("", "x") } catch (e:AegisVaultException){ assertEquals(ErrorCode.EMPTY_TEXT, e.code) }; try { AegisVaultEngine.encryptText("x", "") } catch (e:AegisVaultException){ assertEquals(ErrorCode.EMPTY_PASSWORD, e.code) } }
     @Test fun invalidUtf8Base64() { try { AegisVaultEngine.decodeText("gA==") } catch (e:AegisVaultException){ assertEquals(ErrorCode.UTF8_INVALID, e.code); return }; throw AssertionError() }
+
+    @Test fun invalidBase64SyntaxFails() { try { AegisVaultEngine.decodeText("%%%") } catch (e:AegisVaultException){ assertEquals(ErrorCode.BASE64_INVALID, e.code); return }; throw AssertionError() }
+    @Test fun unsupportedVersionFails() { try { AegisVaultEngine.decryptText("AGV9.invalid", "pass12345") } catch (e:AegisVaultException){ assertEquals(ErrorCode.PROTOCOL, e.code); return }; throw AssertionError() }
     @Test fun legacyAkMode() {
         val nonce = ByteArray(12) { 1 }
         val key = java.security.MessageDigest.getInstance("SHA-256").digest("legacy-pass".toByteArray())

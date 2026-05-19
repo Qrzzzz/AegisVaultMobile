@@ -48,7 +48,7 @@
 
     <string name="action_clear_sensitive_data">清空敏感数据</string>
     <string name="action_use_result_as_input">将结果作为输入</string>
-    <string name="action_clear_clipboard">清空剪贴板</string>
+    <string name="action_clear_clipboard">尝试清空剪贴板</string>
     <string name="status_copied_security">已复制。剪贴板内容可能会被系统或其他应用读取。</string>
     <string name="status_clipboard_empty">剪贴板没有文本。</string>
     <string name="error_utf8">解码后的字节不是有效 UTF-8 文本。</string>
@@ -71,7 +71,18 @@
     <string name="clipboard_300s">5 分钟</string>
 
 
-    <string name="settings_protect_screen_support">阻止截图和最近任务缩略图。</string>
-    <string name="settings_auto_clear_leave_support">应用进入后台时清空输入、口令和结果。</string>
+    <string name="settings_protect_screen_support">阻止截图和最近任务缩略图，但不能防止所有泄露。</string>
+    <string name="settings_auto_clear_leave_support">应用进入后台后清空输入、口令和结果，未保存文本可能丢失。</string>
+
+
+    <string name="input_supporting">支持较长文本，可在输入框内直接粘贴。</string>
+    <string name="action_clear_result">清空结果</string>
+    <string name="settings_group_appearance">外观</string>
+    <string name="settings_group_security">安全</string>
+    <string name="settings_group_clipboard">剪贴板</string>
+    <string name="settings_group_about">关于</string>
+    <string name="settings_language_support">影响应用界面的显示语言。</string>
+    <string name="settings_theme_support">可跟随系统，或手动选择浅色/深色。</string>
+    <string name="settings_clipboard_auto_clear_support">仅尽力而为：仅当剪贴板仍是本应用复制内容时才会清理。</string>
 
 </resources>

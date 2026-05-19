@@ -36,6 +36,7 @@ class AegisVaultViewModel(
             is AegisVaultUiEvent.UpdatePassword -> _uiState.update { it.copy(password = event.value) }
             AegisVaultUiEvent.ClearSensitiveData -> clearSensitive()
             AegisVaultUiEvent.UseResultAsInput -> _uiState.update { it.copy(inputText = it.resultText, resultText = "", message = null) }
+            AegisVaultUiEvent.ClearResult -> _uiState.update { it.copy(resultText = "", message = null) }
             AegisVaultUiEvent.OnLeaveApp -> if (_uiState.value.settings.autoClearOnLeave) clearSensitive()
             AegisVaultUiEvent.ClearMessage -> _uiState.update { it.copy(message = null) }
             else -> runAction(event)
