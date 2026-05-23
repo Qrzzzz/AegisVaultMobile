@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -38,7 +39,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aegisvault.mobile.R
-import com.aegisvault.mobile.data.ClipboardAutoClear
 import com.aegisvault.mobile.data.LanguageOption
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -55,10 +55,10 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var passwordVisible by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
-    
+
     DisposableEffect(lifecycleOwner, state.settings.autoClearOnLeave) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP || event == Lifecycle.Event.ON_PAUSE) vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
+            if (event == Lifecycle.Event.ON_STOP) vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
@@ -89,8 +89,10 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
                 if (txt.isNullOrBlank()) scope.launch { snackbar.showSnackbar(context.getString(R.string.status_clipboard_empty)) }
                 else vm.onEvent(AegisVaultUiEvent.UpdateInput(txt))
             })
-            if (state.mode == ToolMode.AES) PasswordField(state.password, { vm.onEvent(AegisVaultUiEvent.UpdatePassword(it)) }, passwordVisible, { passwordVisible = !passwordVisible })
-            else Text(stringResource(R.string.password_hint_base64))
+            if (state.mode == ToolMode.AES) {
+                PasswordField(state.password, { vm.onEvent(AegisVaultUiEvent.UpdatePassword(it)) }, passwordVisible, { passwordVisible = !passwordVisible })
+                Text(stringResource(R.string.password_hint_aes))
+            } else Text(stringResource(R.string.password_hint_base64))
             ActionButtons(state.mode, onEncrypt = { vm.onEvent(AegisVaultUiEvent.Encrypt) }, onDecrypt = { vm.onEvent(AegisVaultUiEvent.Decrypt) }, onEncode = { vm.onEvent(AegisVaultUiEvent.Encode) }, onDecode = { vm.onEvent(AegisVaultUiEvent.Decode) })
             ResultCard(state.resultText, onCopy = {
                 if (state.resultText.isBlank()) { scope.launch { snackbar.showSnackbar(context.getString(R.string.error_copy_empty)) }; return@ResultCard }
@@ -109,8 +111,8 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
                     val current = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
                     if (shouldClearClipboard(current, copied)) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
                 }
-            }, onUseAsInput = { vm.onEvent(AegisVaultUiEvent.UseResultAsInput) })
-            androidx.compose.material3.OutlinedButton(onClick = { vm.onEvent(AegisVaultUiEvent.ClearSensitiveData); focusManager.clearFocus() }) { Text(stringResource(R.string.action_clear_sensitive_data)) }
+            }, onUseAsInput = { vm.onEvent(AegisVaultUiEvent.UseResultAsInput) }, onClearResult = { vm.onEvent(AegisVaultUiEvent.ClearResult) })
+            OutlinedButton(onClick = { vm.onEvent(AegisVaultUiEvent.ClearSensitiveData); focusManager.clearFocus() }) { Text(stringResource(R.string.action_clear_sensitive_data)) }
         }
     }
 
@@ -121,5 +123,4 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     }
 }
 
-
-internal fun shouldClearClipboard(current: String?, copied: String): Boolean = current == copied
+internal fun shouldClearClipboard(current: String?, copied: String): Boolean = current == copied && copied.isNotEmpty()

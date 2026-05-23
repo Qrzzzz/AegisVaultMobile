@@ -48,7 +48,7 @@
 
     <string name="action_clear_sensitive_data">Clear sensitive data</string>
     <string name="action_use_result_as_input">Use result as input</string>
-    <string name="action_clear_clipboard">Clear clipboard</string>
+    <string name="action_clear_clipboard">Attempt to clear clipboard</string>
     <string name="status_copied_security">Copied. Clipboard may be visible to system or other apps.</string>
     <string name="status_clipboard_empty">Clipboard has no text.</string>
     <string name="error_utf8">Decoded bytes are not valid UTF-8 text.</string>
@@ -71,7 +71,18 @@
     <string name="clipboard_300s">5 minutes</string>
 
 
-    <string name="settings_protect_screen_support">Blocks screenshots and recent-tasks previews.</string>
-    <string name="settings_auto_clear_leave_support">Clears input, password, and result when app goes to background.</string>
+    <string name="settings_protect_screen_support">Blocks screenshots and recent-task previews, but cannot prevent every leak.</string>
+    <string name="settings_auto_clear_leave_support">Clears input, password, and result when app fully leaves foreground; unsaved text may be lost.</string>
+
+
+    <string name="input_supporting">Long text is supported. You can paste content directly in the field.</string>
+    <string name="action_clear_result">Clear result</string>
+    <string name="settings_group_appearance">Appearance</string>
+    <string name="settings_group_security">Security</string>
+    <string name="settings_group_clipboard">Clipboard</string>
+    <string name="settings_group_about">About</string>
+    <string name="settings_language_support">Changes the language used across app UI text.</string>
+    <string name="settings_theme_support">Follow system or choose light/dark manually.</string>
+    <string name="settings_clipboard_auto_clear_support">Best effort only: clears copied value only if clipboard is unchanged.</string>
 
 </resources>

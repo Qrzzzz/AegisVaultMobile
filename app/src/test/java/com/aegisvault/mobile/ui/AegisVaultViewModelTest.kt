@@ -80,5 +80,15 @@ class AegisVaultViewModelTest {
         assertEquals(com.aegisvault.mobile.data.ThemeOption.DARK, vm.uiState.value.settings.theme)
     }
 
+
+    @Test fun changeModePreservesState() = runTest {
+        val vm = vm(this)
+        vm.onEvent(AegisVaultUiEvent.UpdateInput("hello"))
+        vm.onEvent(AegisVaultUiEvent.UpdatePassword("secret"))
+        vm.onEvent(AegisVaultUiEvent.ChangeMode(ToolMode.BASE64))
+        assertEquals("hello", vm.uiState.value.inputText)
+        assertEquals("secret", vm.uiState.value.password)
+    }
+
     private fun vm(scope: TestScope) = AegisVaultViewModel(FakeRepo(), StandardTestDispatcher(scope.testScheduler))
 }

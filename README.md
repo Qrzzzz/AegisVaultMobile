@@ -157,6 +157,23 @@ AGV1 token
 
 ---
 
+
+## Security limitations
+
+- App runs offline by default.
+- The app does not proactively upload your input, password, or result.
+- Sensitive text is not intentionally persisted by app logic.
+- Absolute safety cannot be guaranteed against keyboards/IMEs, system clipboard behavior, screenshots, rooted devices, or malware.
+- Clipboard auto-clear is best-effort only.
+
+## CI status
+
+GitHub Actions workflow is currently passing for:
+
+- `testDebugUnitTest`
+- `lintDebug`
+- `assembleDebug`
+
 ## 🏗️ 技术栈
 
 | 模块 | 技术 |
