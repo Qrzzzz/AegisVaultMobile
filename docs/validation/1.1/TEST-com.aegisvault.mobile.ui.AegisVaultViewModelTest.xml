@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.ui.AegisVaultViewModelTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-12T14:50:56" hostname="QRZZZZ" time="0.085">
+  <properties/>
+  <testcase name="onLeaveAppClearsOnlyWhenEnabled" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.075"/>
+  <testcase name="failedActionClearsResultAndEmitsError" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.004"/>
+  <testcase name="changeModePreservesState" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.001"/>
+  <testcase name="clearSensitiveDataClearsInputPasswordResult" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.001"/>
+  <testcase name="settingsUpdateChangesThemeLanguageProtectScreen" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.003"/>
+  <testcase name="useResultAsInputMovesAndClearsResult" classname="com.aegisvault.mobile.ui.AegisVaultViewModelTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

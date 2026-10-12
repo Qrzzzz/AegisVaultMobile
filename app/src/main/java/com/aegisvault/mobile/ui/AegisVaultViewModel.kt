@@ -9,6 +9,8 @@ import com.aegisvault.mobile.core.AegisVaultException
 import com.aegisvault.mobile.core.ErrorCode
 import com.aegisvault.mobile.data.AppSettings
 import com.aegisvault.mobile.data.AppSettingsRepository
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,15 +23,24 @@ import kotlinx.coroutines.withContext
 class AegisVaultViewModel(
     private val repo: AppSettingsRepository,
     private val workerDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val operation: suspend (AegisVaultUiEvent, String, String) -> ActionResult = ::executeAction,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AegisVaultUiState())
     val uiState: StateFlow<AegisVaultUiState> = _uiState.asStateFlow()
+
+    private var generation = 0L
+    private var activeJob: Job? = null
+    private var destroyed = false
 
     init {
         viewModelScope.launch { repo.settings.collect { _uiState.update { s -> s.copy(settings = it) } } }
     }
 
     fun onEvent(event: AegisVaultUiEvent) {
+        if (destroyed) return
+        if (event is AegisVaultUiEvent.UpdateInput || event is AegisVaultUiEvent.UpdatePassword ||
+            event is AegisVaultUiEvent.ChangeMode || event == AegisVaultUiEvent.UseResultAsInput ||
+            event == AegisVaultUiEvent.ClearResult) invalidateTask()
         when (event) {
             is AegisVaultUiEvent.ChangeMode -> _uiState.update { it.copy(mode = event.mode, message = null) }
             is AegisVaultUiEvent.UpdateInput -> _uiState.update { it.copy(inputText = event.value) }
@@ -43,30 +54,69 @@ class AegisVaultViewModel(
         }
     }
 
+    private fun invalidateTask() {
+        generation++
+        activeJob?.cancel()
+        activeJob = null
+        _uiState.update { it.copy(isBusy = false) }
+    }
+
+    override fun onCleared() {
+        destroyed = true
+        clearSensitive()
+        super.onCleared()
+    }
+
     private fun clearSensitive() {
+        invalidateTask()
         _uiState.update { it.copy(inputText = "", password = "", resultText = "", message = null, isBusy = false) }
     }
 
-    private fun runAction(event: AegisVaultUiEvent) = viewModelScope.launch {
+    private fun runAction(event: AegisVaultUiEvent) {
+        // Reserve synchronously: two taps before launch dispatch cannot start two jobs.
+        if (_uiState.value.isBusy || destroyed) return
+        val id = ++generation
+        val snapshot = uiState.value
         _uiState.update { it.copy(isBusy = true, message = null) }
-        val s = uiState.value
-        val next = withContext(workerDispatcher) {
+        activeJob = viewModelScope.launch {
             try {
-                when (event) {
-                    AegisVaultUiEvent.Encrypt -> s.copy(isBusy = false, resultText = AegisVaultEngine.encryptText(s.inputText, s.password), message = UiMessage(R.string.status_text_encrypt_success, MessageTone.SUCCESS))
-                    AegisVaultUiEvent.Decrypt -> {
-                        val r = AegisVaultEngine.decryptText(s.inputText, s.password)
-                        s.copy(isBusy = false, resultText = r.plaintext, message = UiMessage(if (r.usedLegacyAk) R.string.status_text_decrypt_legacy_ak else R.string.status_text_decrypt_success, if (r.usedLegacyAk) MessageTone.WARNING else MessageTone.SUCCESS))
-                    }
-                    AegisVaultUiEvent.Encode -> s.copy(isBusy = false, resultText = AegisVaultEngine.encodeText(s.inputText), message = UiMessage(R.string.status_base64_encode_success, MessageTone.SUCCESS))
-                    AegisVaultUiEvent.Decode -> s.copy(isBusy = false, resultText = AegisVaultEngine.decodeText(s.inputText), message = UiMessage(R.string.status_base64_decode_success, MessageTone.SUCCESS))
-                    else -> s.copy(isBusy = false)
+                val result = withContext(workerDispatcher) { operation(event, snapshot.inputText, snapshot.password) }
+                if (id == generation && !destroyed) _uiState.update {
+                    it.copy(resultText = result.text, message = result.message)
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: AegisVaultException) {
-                s.copy(isBusy = false, resultText = "", message = UiMessage(errorRes(e.code), MessageTone.ERROR))
+                if (id == generation && !destroyed) _uiState.update {
+                    it.copy(resultText = "", message = UiMessage(errorRes(e.code), MessageTone.ERROR))
+                }
+            } catch (_: java.security.GeneralSecurityException) {
+                if (id == generation && !destroyed) _uiState.update {
+                    it.copy(resultText = "", message = UiMessage(R.string.error_internal, MessageTone.ERROR))
+                }
+            } finally {
+                if (id == generation && !destroyed) {
+                    activeJob = null
+                    _uiState.update { it.copy(isBusy = false) }
+                }
             }
         }
-        _uiState.value = next
+    }
+
+    data class ActionResult(val text: String, val message: UiMessage)
+
+    companion object {
+        private suspend fun executeAction(event: AegisVaultUiEvent, input: String, password: String): ActionResult =
+            when (event) {
+                AegisVaultUiEvent.Encrypt -> ActionResult(AegisVaultEngine.encryptText(input, password), UiMessage(R.string.status_text_encrypt_success, MessageTone.SUCCESS))
+                AegisVaultUiEvent.Decrypt -> {
+                    val r = AegisVaultEngine.decryptText(input, password)
+                    ActionResult(r.plaintext, UiMessage(if (r.usedLegacyAk) R.string.status_text_decrypt_legacy_ak else R.string.status_text_decrypt_success, if (r.usedLegacyAk) MessageTone.WARNING else MessageTone.SUCCESS))
+                }
+                AegisVaultUiEvent.Encode -> ActionResult(AegisVaultEngine.encodeText(input), UiMessage(R.string.status_base64_encode_success, MessageTone.SUCCESS))
+                AegisVaultUiEvent.Decode -> ActionResult(AegisVaultEngine.decodeText(input), UiMessage(R.string.status_base64_decode_success, MessageTone.SUCCESS))
+                else -> error("Not an operation")
+            }
     }
 
     private fun errorRes(code: ErrorCode): Int = when (code) {
@@ -76,6 +126,8 @@ class AegisVaultViewModel(
         ErrorCode.BASE64_INVALID -> R.string.error_base64
         ErrorCode.UTF8_INVALID -> R.string.error_utf8
         ErrorCode.PROTOCOL -> R.string.error_protocol
+        ErrorCode.RESOURCE -> R.string.error_resource
+        ErrorCode.INTERNAL -> R.string.error_internal
     }
 
     fun updateSettings(transform: (AppSettings) -> AppSettings) = viewModelScope.launch { repo.update(transform) }

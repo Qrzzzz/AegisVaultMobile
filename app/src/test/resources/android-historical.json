@@ -1,0 +1,19 @@
+{
+  "baseline": "fd9811b82453d1feebecfe3e167b32a9b30acb1a",
+  "notice": "Artificial non-sensitive migration samples. AK# includes its password. Never use for secrets.",
+  "modern": {
+    "token": "AGV1.eyJjaXBoZXJ0ZXh0IjoiVWNqREFYZDBPSzBTVW93WTRpMTVRdm5VMlplcmthOC15cmdDNDNiVGxwR3BfZEl5VDlnaTEwYkMiLCJzYWx0Ijoia1VGZWFWb2J4czZibjhoYVNMVW5GUSIsInYiOjEsImtpbmQiOiJ0ZXh0Iiwia2RmIjp7InAiOjEsInIiOjgsInNhbHRfbGVuIjoxNiwibmFtZSI6InNjcnlwdCIsImxlbmd0aCI6MzIsIm4iOjMyNzY4fSwiYWxnIjoiQUVTLTI1Ni1HQ00iLCJub25jZSI6Il9OSm5FUkE4LTJudGUtWloifQ",
+    "password": "audit-password",
+    "plaintext": "cross-platform 中文 🔐"
+  },
+  "legacy": {
+    "token": "AQEBAQEBAQEBAQEBuOrcugvDV1ickUw/U3JLQpr4pkyE4Q==",
+    "password": "legacy-pass",
+    "plaintext": "legacy"
+  },
+  "ak": {
+    "token": "AK#legacy-pass#AQEBAQEBAQEBAQEBuOrcugvDV1ickUw/U3JLQpr4pkyE4Q==",
+    "password": "",
+    "plaintext": "legacy"
+  }
+}

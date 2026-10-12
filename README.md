@@ -17,6 +17,8 @@
 
 ---
 
+当前版本为 **1.1**（versionCode 3）。本次修复任务生命周期与资源预算，仍保留 Android JSON 型 AGV1/旧 AES/AK#，目前无法与桌面版互解。 [安全合约、预算和 1.2–1.4 迁移计划](./docs/backend-1.1.md)
+
 ## ✨ 简介
 
 **AegisVault Mobile** 是一个专注、轻量、离线优先的 Android 文本工具。
@@ -48,7 +50,7 @@
 - 使用 **AES-256-GCM** 进行文本加密与认证
 - 使用 **scrypt** 从用户口令派生密钥
 - 每次加密生成随机 salt 与随机 nonce
-- 输出现代 `AGV1.` 格式密文
+- 输出 Android JSON 型 `AGV1.` 格式密文（1.1 尚未与桌面协议对齐）
 - 支持解密旧版文本格式
 - 支持旧版高风险 `AK#` 兼容模式提示
 
@@ -87,7 +89,7 @@
 当前版本：
 
 ```text
-AegisVault Mobile v1.0.1
+AegisVault Mobile v1.1
 ```
 
 > 当前 APK 为 debug 签名版本，主要用于测试和演示。正式分发前建议使用私有签名密钥构建 release APK 或 AAB。
@@ -251,7 +253,7 @@ Windows PowerShell：
 输出位置：
 
 ```text
-dist/AegisVaultMobile-v1.0.1-debug.apk
+dist/AegisVaultMobile-v1.1-debug.apk
 ```
 
 ---
@@ -292,7 +294,7 @@ AegisVaultMobile/
 
 ---
 
-## 🧪 当前版本
+## 🧪 历史发布
 
 ### v1.0.1
 

@@ -1,0 +1,12 @@
+{
+  "desktopBaseline": "c6664e2b7e6a11b7dfb55f0881136131e1d2bc74",
+  "androidBaseline": "fd9811b82453d1feebecfe3e167b32a9b30acb1a",
+  "sha256": {
+    "agv1-text.json": "89aed487a49877f072c94289187afd1030e976797554b1d22b1a03e9aee9fa66",
+    "crypto_service.py": "df981074e6127a19909b07d266e901d073bc3ae97e3183b544488b06105d510c",
+    "exceptions.py": "8c8bd529a9fe023c7a73afb030b4de18bbe8e3c852a0f2c79a7c808e38c06d0c",
+    "kdf.py": "081cbc209e7b1a498be1979b208fd4b9cb319e30b6f43ee9292405d33e4fe67c",
+    "protocol.py": "6de7ac03e738a52627c59d5e14c78814a9898858f8b2673af900d142635e32b6",
+    "text_limits.json": "95dfe031f7b296ebd3eee2fa2a6bad255d925de00cc1dc3ace9976e195e271de"
+  }
+}

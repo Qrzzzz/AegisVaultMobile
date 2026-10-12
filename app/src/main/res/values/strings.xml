@@ -85,4 +85,6 @@
     <string name="settings_theme_support">Follow system or choose light/dark manually.</string>
     <string name="settings_clipboard_auto_clear_support">Best effort only: clears copied value only if clipboard is unchanged.</string>
 
+    <string name="error_resource">Input or cryptographic parameters exceed the Mobile safety limit.</string>
+    <string name="error_internal">Cryptographic operation unavailable. Please retry.</string>
 </resources>

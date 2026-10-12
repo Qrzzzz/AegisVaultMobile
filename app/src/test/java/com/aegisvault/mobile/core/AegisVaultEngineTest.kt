@@ -10,7 +10,12 @@ class AegisVaultEngineTest {
     @Test fun sameInputDifferentCiphertext() { val a = AegisVaultEngine.encryptText("hello", "pass12345"); val b = AegisVaultEngine.encryptText("hello", "pass12345"); assertNotEquals(a, b) }
     @Test fun wrongPasswordAuth() { val t = AegisVaultEngine.encryptText("hello", "pass12345"); try { AegisVaultEngine.decryptText(t, "bad") } catch (e:AegisVaultException){ assertEquals(ErrorCode.AUTH, e.code); return }; throw AssertionError() }
     @Test fun tamperedTokenFails() { val t = AegisVaultEngine.encryptText("hello", "pass12345"); val bad=t.dropLast(2)+"aa"; try { AegisVaultEngine.decryptText(bad, "pass12345") } catch (e:AegisVaultException){ assertTrue(e.code==ErrorCode.AUTH || e.code==ErrorCode.PROTOCOL); return }; throw AssertionError() }
-    @Test fun emptyTextAndPassword() { try { AegisVaultEngine.encryptText("", "x") } catch (e:AegisVaultException){ assertEquals(ErrorCode.EMPTY_TEXT, e.code) }; try { AegisVaultEngine.encryptText("x", "") } catch (e:AegisVaultException){ assertEquals(ErrorCode.EMPTY_PASSWORD, e.code) } }
+    @Test fun emptyTextAndPassword() {
+        val textError = org.junit.Assert.assertThrows(AegisVaultException::class.java) { AegisVaultEngine.encryptText("", "x") }
+        val passwordError = org.junit.Assert.assertThrows(AegisVaultException::class.java) { AegisVaultEngine.encryptText("x", "") }
+        assertEquals(ErrorCode.EMPTY_TEXT, textError.code)
+        assertEquals(ErrorCode.EMPTY_PASSWORD, passwordError.code)
+    }
     @Test fun invalidUtf8Base64() { try { AegisVaultEngine.decodeText("gA==") } catch (e:AegisVaultException){ assertEquals(ErrorCode.UTF8_INVALID, e.code); return }; throw AssertionError() }
 
     @Test fun invalidBase64SyntaxFails() { try { AegisVaultEngine.decodeText("%%%") } catch (e:AegisVaultException){ assertEquals(ErrorCode.BASE64_INVALID, e.code); return }; throw AssertionError() }
