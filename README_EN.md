@@ -17,6 +17,8 @@
 
 ---
 
+Current version is **1.1** (versionCode 3). This update fixes task lifecycle and resource budgets. Android JSON AGV1/legacy AES/AK# remain; desktop tokens are still incompatible. [Security contract, limits and 1.2–1.4 migration plan](./docs/backend-1.1.md)
+
 ## ✨ Overview
 
 **AegisVault Mobile** is a focused, lightweight, offline-first Android text utility.
@@ -49,7 +51,7 @@ This project was developed, organized, documented, and release-optimized with as
 - **AES-256-GCM** text encryption and authentication
 - Password-based key derivation with **scrypt**
 - Random salt and random nonce for every encryption
-- Modern `AGV1.` encrypted text format
+- Android JSON `AGV1.` encrypted text format (desktop protocol alignment is pending)
 - Modern token decryption
 - Legacy text compatibility
 - Warning for high-risk legacy `AK#` compatibility mode
@@ -90,7 +92,7 @@ Download the APK from GitHub Releases:
 Current version:
 
 ```text
-AegisVault Mobile v1.0.1
+AegisVault Mobile v1.1
 ```
 
 > The current APK is debug-signed and intended for testing and demonstration. For production distribution, build a release APK or AAB with a private signing key.
@@ -237,7 +239,7 @@ Windows PowerShell:
 Output:
 
 ```text
-dist/AegisVaultMobile-v1.0.1-debug.apk
+dist/AegisVaultMobile-v1.1-debug.apk
 ```
 
 ---
@@ -278,7 +280,7 @@ AegisVaultMobile/
 
 ---
 
-## 🧪 Current Version
+## 🧪 Historical Release
 
 ### v1.0.1
 

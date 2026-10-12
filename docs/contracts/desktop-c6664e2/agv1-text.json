@@ -1,0 +1,42 @@
+{
+  "password": "pässwörd-密钥",
+  "plaintext": "AegisVault 固定样本 🔐",
+  "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTAxLTAyVDAzOjA0OjA1WiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjoxNjM4NCwicCI6MSwiciI6OCwic2FsdCI6IkFBRUNBd1FGQmdjSUNRb0xEQTBPRHc9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiJBQUVDQXdRRkJnY0lDUW9MIiwidmVyc2lvbiI6MX2Rd050x4GMXm_fKdfMEEoReZ9_d7p2j-w_0owvc_G-cOe5SLUWGD6HgmBEPA",
+  "salt": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "nonce": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "n": 16384,
+  "r": 8,
+  "p": 1,
+  "length": 32,
+  "created_at": "2026-01-02T03:04:05Z"
+}

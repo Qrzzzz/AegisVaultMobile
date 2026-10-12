@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "max_json_line_bytes": 16777216,
+  "max_plaintext_utf8_bytes": 1507294,
+  "max_plaintext_utf16_code_units": 1507294,
+  "max_encoded_text_utf8_bytes": 2097152,
+  "max_encoded_text_utf16_code_units": 2097152,
+  "max_agv1_header_bytes": 65536
+}

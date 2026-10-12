@@ -1,0 +1,1 @@
+PASS: all 3 frozen samples readable by the exact original Android baseline

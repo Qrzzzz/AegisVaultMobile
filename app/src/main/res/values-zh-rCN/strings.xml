@@ -85,4 +85,6 @@
     <string name="settings_theme_support">可跟随系统，或手动选择浅色/深色。</string>
     <string name="settings_clipboard_auto_clear_support">仅尽力而为：仅当剪贴板仍是本应用复制内容时才会清理。</string>
 
+    <string name="error_resource">输入或加密参数超出安卓版安全限制。</string>
+    <string name="error_internal">加密操作暂不可用，请重试。</string>
 </resources>
