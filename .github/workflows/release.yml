@@ -87,6 +87,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.tag || github.ref_name }}
+      - name: Load verifier from workflow revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .release-automation
+          sparse-checkout: scripts/verify-release.py
+          sparse-checkout-cone-mode: false
       - uses: actions/download-artifact@v4
         with:
           name: release-assets
@@ -101,6 +108,8 @@ jobs:
           gh release create "$RELEASE_TAG" dist/*.apk dist/SHA256SUMS.txt \
             --verify-tag --draft --title "AegisVault Mobile $RELEASE_TAG" \
             --notes-file "docs/releases/$RELEASE_TAG.md"
-          python3 scripts/verify-release.py --tag "$RELEASE_TAG" --draft
+          RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases" --jq ".[] | select(.tag_name == \"$RELEASE_TAG\") | .id")
+          test -n "$RELEASE_ID"
+          python3 .release-automation/scripts/verify-release.py --tag "$RELEASE_TAG" --release-id "$RELEASE_ID" --draft
           gh release edit "$RELEASE_TAG" --draft=false --latest
-          python3 scripts/verify-release.py --tag "$RELEASE_TAG"
+          python3 .release-automation/scripts/verify-release.py --tag "$RELEASE_TAG" --release-id "$RELEASE_ID"

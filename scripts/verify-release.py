@@ -12,8 +12,10 @@ def main():
     parser.add_argument("--repo", default="Qrzzzz/AegisVaultMobile")
     parser.add_argument("--assets-dir", type=Path, default=Path("dist"))
     parser.add_argument("--draft", action="store_true")
+    parser.add_argument("--release-id", type=int)
     args = parser.parse_args()
-    release = json.loads(subprocess.check_output(["gh", "api", f"repos/{args.repo}/releases/tags/{args.tag}"], text=True))
+    endpoint = f"repos/{args.repo}/releases/{args.release_id}" if args.release_id else f"repos/{args.repo}/releases/tags/{args.tag}"
+    release = json.loads(subprocess.check_output(["gh", "api", endpoint], encoding="utf-8"))
     if release["tag_name"] != args.tag or release["draft"] != args.draft or release["prerelease"]:
         raise SystemExit("Unexpected release tag or publication state")
     apk = f"AegisVaultMobile-{args.tag}-debug.apk"
