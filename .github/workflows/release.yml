@@ -3,12 +3,21 @@ name: Android Release
 on:
   push:
     tags: ["v*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing product tag to rebuild and publish
+        required: true
+        type: string
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ inputs.tag || github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -16,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -28,7 +39,7 @@ jobs:
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
       - uses: gradle/actions/setup-gradle@v4
       - name: Validate product version and tag
-        run: python3 scripts/prepare-release.py --check-only --tag "$GITHUB_REF_NAME"
+        run: python3 scripts/prepare-release.py --check-only --tag "$RELEASE_TAG"
       - name: Restore existing test signing identity
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_DEBUG_KEYSTORE_BASE64 }}
@@ -37,10 +48,18 @@ jobs:
           mkdir -p "$HOME/.android"
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$HOME/.android/debug.keystore"
           chmod 600 "$HOME/.android/debug.keystore"
+          keytool -exportcert -keystore "$HOME/.android/debug.keystore" \
+            -alias androiddebugkey -storepass android | sha256sum | \
+            grep -q '^b2b0f013dcfa428bb6f4c3563faa204c7890f72abd6062d1cbbb155222d493c9 '
       - name: Test, lint and build
         run: ./gradlew --no-daemon testDebugUnitTest lintDebug assembleDebug
       - name: Verify and package APK
-        run: python3 scripts/prepare-release.py --tag "$GITHUB_REF_NAME"
+        run: |
+          "$ANDROID_HOME/build-tools/34.0.0/apksigner" sign \
+            --ks "$HOME/.android/debug.keystore" --ks-key-alias androiddebugkey \
+            --ks-pass pass:android --key-pass pass:android \
+            app/build/outputs/apk/debug/app-debug.apk
+          python3 scripts/prepare-release.py --tag "$RELEASE_TAG"
       - uses: actions/upload-artifact@v4
         with:
           name: release-assets
@@ -66,6 +85,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
       - uses: actions/download-artifact@v4
         with:
           name: release-assets
@@ -77,9 +98,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/*.apk dist/SHA256SUMS.txt \
-            --verify-tag --draft --title "AegisVault Mobile $GITHUB_REF_NAME" \
-            --notes-file "docs/releases/$GITHUB_REF_NAME.md"
-          python3 scripts/verify-release.py --tag "$GITHUB_REF_NAME" --draft
-          gh release edit "$GITHUB_REF_NAME" --draft=false --latest
-          python3 scripts/verify-release.py --tag "$GITHUB_REF_NAME"
+          gh release create "$RELEASE_TAG" dist/*.apk dist/SHA256SUMS.txt \
+            --verify-tag --draft --title "AegisVault Mobile $RELEASE_TAG" \
+            --notes-file "docs/releases/$RELEASE_TAG.md"
+          python3 scripts/verify-release.py --tag "$RELEASE_TAG" --draft
+          gh release edit "$RELEASE_TAG" --draft=false --latest
+          python3 scripts/verify-release.py --tag "$RELEASE_TAG"
