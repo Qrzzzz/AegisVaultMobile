@@ -1,7 +1,10 @@
 package com.aegisvault.mobile.ui
 
+import com.aegisvault.mobile.core.Base64DecodeOptions
+
 sealed interface AegisVaultUiEvent {
     data class ChangeMode(val mode: ToolMode) : AegisVaultUiEvent
+    data class UpdateBase64Options(val value: Base64DecodeOptions) : AegisVaultUiEvent
     data class UpdateInput(val value: String) : AegisVaultUiEvent
     data class UpdatePassword(val value: String) : AegisVaultUiEvent
     data object Encrypt : AegisVaultUiEvent

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3 - 2026-10-13
+
+- Desktop-aligned four-mode Base64 decoding with explicit bilingual controls and standard alphabet/padding validation.
+- Empty and whitespace text supported; passwords reject only the empty string, including in offline migration. Unicode is preserved without normalization; malformed input and decoded UTF-8 remain distinct errors.
+- Whitespace-preserving paste/copy/use-result, reachable scrolling and option-change cancellation. Existing AGV1-only reader, budgets, dependencies and signing retained.
+- 47 Android test methods, 783 actual desktop comparisons and 6 migration tests; physical-device acceptance NOT RUN. Settings recovery (#10) remains deferred.
+- versionName 1.3 / versionCode 5; debug-signed test release.
+
 ## 1.2 - 2026-10-13
 
 - Formal desktop AGV1 binary text envelope, canonical UTF-8 writer, exact raw-header AAD and strict independent JSON/UTF-8 reader.

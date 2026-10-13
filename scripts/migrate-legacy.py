@@ -197,7 +197,7 @@ def recover(token, password, source_format):
 
 
 def migrate(token, password, new_password, source_format):
-    if not new_password or new_password.isspace():
+    if not new_password:
         fail("PASSWORD")
     plaintext = recover(token, password, source_format)
     plain = text_bytes(plaintext)

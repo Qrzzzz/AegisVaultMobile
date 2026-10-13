@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.aegisvault.mobile.R
 import com.aegisvault.mobile.core.AegisVaultEngine
 import com.aegisvault.mobile.core.AegisVaultException
+import com.aegisvault.mobile.core.Base64DecodeOptions
 import com.aegisvault.mobile.core.ErrorCode
 import com.aegisvault.mobile.data.AppSettings
 import com.aegisvault.mobile.data.AppSettingsRepository
@@ -23,7 +24,7 @@ import kotlinx.coroutines.withContext
 class AegisVaultViewModel(
     private val repo: AppSettingsRepository,
     private val workerDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private val operation: suspend (AegisVaultUiEvent, String, String) -> ActionResult = ::executeAction,
+    private val operation: suspend (AegisVaultUiEvent, String, String, Base64DecodeOptions) -> ActionResult = ::executeAction,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AegisVaultUiState())
     val uiState: StateFlow<AegisVaultUiState> = _uiState.asStateFlow()
@@ -39,10 +40,11 @@ class AegisVaultViewModel(
     fun onEvent(event: AegisVaultUiEvent) {
         if (destroyed) return
         if (event is AegisVaultUiEvent.UpdateInput || event is AegisVaultUiEvent.UpdatePassword ||
-            event is AegisVaultUiEvent.ChangeMode || event == AegisVaultUiEvent.UseResultAsInput ||
+            event is AegisVaultUiEvent.ChangeMode || event is AegisVaultUiEvent.UpdateBase64Options || event == AegisVaultUiEvent.UseResultAsInput ||
             event == AegisVaultUiEvent.ClearResult) invalidateTask()
         when (event) {
             is AegisVaultUiEvent.ChangeMode -> _uiState.update { it.copy(mode = event.mode, message = null) }
+            is AegisVaultUiEvent.UpdateBase64Options -> _uiState.update { it.copy(base64Options = event.value) }
             is AegisVaultUiEvent.UpdateInput -> _uiState.update { it.copy(inputText = event.value) }
             is AegisVaultUiEvent.UpdatePassword -> _uiState.update { it.copy(password = event.value) }
             AegisVaultUiEvent.ClearSensitiveData -> clearSensitive()
@@ -80,7 +82,7 @@ class AegisVaultViewModel(
         _uiState.update { it.copy(isBusy = true, message = null) }
         activeJob = viewModelScope.launch {
             try {
-                val result = withContext(workerDispatcher) { operation(event, snapshot.inputText, snapshot.password) }
+                val result = withContext(workerDispatcher) { operation(event, snapshot.inputText, snapshot.password, snapshot.base64Options) }
                 if (id == generation && !destroyed) _uiState.update {
                     it.copy(resultText = result.text, message = result.message)
                 }
@@ -106,7 +108,7 @@ class AegisVaultViewModel(
     data class ActionResult(val text: String, val message: UiMessage)
 
     companion object {
-        private suspend fun executeAction(event: AegisVaultUiEvent, input: String, password: String): ActionResult =
+        private suspend fun executeAction(event: AegisVaultUiEvent, input: String, password: String, options: Base64DecodeOptions): ActionResult =
             when (event) {
                 AegisVaultUiEvent.Encrypt -> ActionResult(AegisVaultEngine.encryptText(input, password), UiMessage(R.string.status_text_encrypt_success, MessageTone.SUCCESS))
                 AegisVaultUiEvent.Decrypt -> {
@@ -114,13 +116,14 @@ class AegisVaultViewModel(
                     ActionResult(r.plaintext, UiMessage(R.string.status_text_decrypt_success, MessageTone.SUCCESS))
                 }
                 AegisVaultUiEvent.Encode -> ActionResult(AegisVaultEngine.encodeText(input), UiMessage(R.string.status_base64_encode_success, MessageTone.SUCCESS))
-                AegisVaultUiEvent.Decode -> ActionResult(AegisVaultEngine.decodeText(input), UiMessage(R.string.status_base64_decode_success, MessageTone.SUCCESS))
+                AegisVaultUiEvent.Decode -> ActionResult(AegisVaultEngine.decodeText(input, options.strict, options.ignoreAsciiWhitespace), UiMessage(R.string.status_base64_decode_success, MessageTone.SUCCESS))
                 else -> error("Not an operation")
             }
     }
 
     private fun errorRes(code: ErrorCode): Int = when (code) {
         ErrorCode.EMPTY_TEXT -> R.string.error_empty_text
+        ErrorCode.INPUT_INVALID -> R.string.error_input_unicode
         ErrorCode.EMPTY_PASSWORD -> R.string.error_empty_password
         ErrorCode.AUTH -> R.string.error_auth
         ErrorCode.BASE64_INVALID -> R.string.error_base64

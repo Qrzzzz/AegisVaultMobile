@@ -64,7 +64,7 @@ class ResourceSafetyTest {
         fails(ErrorCode.RESOURCE) { AegisVaultEngine.decryptText("AGV1." + "A".repeat(ResourceLimits.ENCODED), "p") }
         fails(ErrorCode.RESOURCE) { ProtocolJson.parse(ByteArray(ResourceLimits.METADATA + 1)) }
         fails(ErrorCode.RESOURCE) { ProtocolJson.parse(("[".repeat(33) + "]".repeat(33)).toByteArray()) }
-        fails(ErrorCode.UTF8_INVALID) { AegisVaultEngine.encodeText("\uD800") }
-        fails(ErrorCode.UTF8_INVALID) { AegisVaultEngine.encryptText("a", "\uDC00") }
+        fails(ErrorCode.INPUT_INVALID) { AegisVaultEngine.encodeText("\uD800") }
+        fails(ErrorCode.INPUT_INVALID) { AegisVaultEngine.encryptText("a", "\uDC00") }
     }
 }

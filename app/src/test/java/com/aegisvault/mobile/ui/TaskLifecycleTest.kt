@@ -22,7 +22,7 @@ class TaskLifecycleTest {
     private class PausedWorker {
         val gates = mutableListOf<CompletableDeferred<Unit>>()
         var failure = false
-        suspend fun run(event: AegisVaultUiEvent, input: String, password: String): AegisVaultViewModel.ActionResult {
+        suspend fun run(event: AegisVaultUiEvent, input: String, password: String, options: com.aegisvault.mobile.core.Base64DecodeOptions): AegisVaultViewModel.ActionResult {
             val gate = CompletableDeferred<Unit>(); gates.add(gate)
             // Model native crypto that does not cooperate with cancellation.
             withContext(NonCancellable) { gate.await() }
@@ -61,7 +61,7 @@ class TaskLifecycleTest {
     }
 
     @Test fun editingPasswordOrModeDiscardsOldCompletion() = runTest {
-        for (event in listOf(AegisVaultUiEvent.UpdateInput("new"), AegisVaultUiEvent.UpdatePassword("new-password"), AegisVaultUiEvent.ChangeMode(ToolMode.BASE64))) {
+        for (event in listOf(AegisVaultUiEvent.UpdateInput("new"), AegisVaultUiEvent.UpdatePassword("new-password"), AegisVaultUiEvent.ChangeMode(ToolMode.BASE64), AegisVaultUiEvent.UpdateBase64Options(com.aegisvault.mobile.core.Base64DecodeOptions(false, true)))) {
             val worker = PausedWorker(); val vm = vm(this, worker)
             vm.onEvent(AegisVaultUiEvent.Encode); runCurrent(); vm.onEvent(event)
             val edited = vm.uiState.value
@@ -105,7 +105,7 @@ class TaskLifecycleTest {
         val worker = PausedWorker(); worker.failure = true; val vm = vm(this, worker)
         vm.onEvent(AegisVaultUiEvent.Encode); runCurrent(); worker.gates.single().complete(Unit); advanceUntilIdle()
         assertFalse(vm.uiState.value.isBusy); assertEquals(MessageTone.ERROR, vm.uiState.value.message!!.tone)
-        val cancelVm = AegisVaultViewModel(Repo(), StandardTestDispatcher(testScheduler)) { _, _, _ -> throw CancellationException("test") }
+        val cancelVm = AegisVaultViewModel(Repo(), StandardTestDispatcher(testScheduler)) { _, _, _, _ -> throw CancellationException("test") }
         cancelVm.onEvent(AegisVaultUiEvent.Encode); advanceUntilIdle()
         assertFalse(cancelVm.uiState.value.isBusy); assertNull(cancelVm.uiState.value.message)
     }

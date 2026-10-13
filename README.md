@@ -17,7 +17,7 @@
 
 ---
 
-当前版本为 **1.2**（versionCode 4），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.2 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [验证记录](./docs/validation-1.2.md)
+当前版本为 **1.3**（versionCode 5），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.3 文本语义](./docs/backend-1.3.md) · [AGV1 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [验证记录](./docs/validation-1.3.md)
 
 ## ✨ 简介
 
@@ -57,7 +57,8 @@
 ### 🔤 Base64 文本工具
 
 - 文本 Base64 编码
-- 文本 Base64 解码
+- 文本 Base64 解码；严格模式优先，仅关闭严格模式并启用忽略时接受六种 ASCII 空白
+- 空文本有效，空白和 Unicode 原样保留；AES 口令仅拒绝空串
 - 明确提示 Base64 不提供保密性
 - 不需要密码
 
@@ -89,7 +90,7 @@
 当前版本：
 
 ```text
-AegisVault Mobile v1.2
+AegisVault Mobile v1.3
 ```
 
 > 当前 APK 为 debug 签名版本，主要用于测试和演示。正式分发前建议使用私有签名密钥构建 release APK 或 AAB。
@@ -253,7 +254,7 @@ Windows PowerShell：
 输出位置：
 
 ```text
-dist/AegisVaultMobile-v1.2-debug.apk
+dist/AegisVaultMobile-v1.3-debug.apk
 ```
 
 ---

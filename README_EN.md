@@ -17,7 +17,7 @@
 
 ---
 
-Current version is **1.2** (versionCode 4), using formal desktop AGV1 text and authenticated headers. Historical Android JSON/AES/AK# need explicit offline migration. [1.2 contract and limits](./docs/backend-1.2.md) · [Migration](./docs/migration-1.2.en.md) · [Validation record](./docs/validation-1.2.md)
+Current version is **1.3** (versionCode 5), using formal desktop AGV1 text and authenticated headers. Historical Android JSON/AES/AK# need explicit offline migration. [1.3 text semantics](./docs/backend-1.3.md) · [AGV1 contract and limits](./docs/backend-1.2.md) · [Migration](./docs/migration-1.2.en.md) · [Validation record](./docs/validation-1.3.md)
 
 ## ✨ Overview
 
@@ -58,7 +58,8 @@ This project was developed, organized, documented, and release-optimized with as
 ### 🔤 Base64 Text Utility
 
 - Base64 text encoding
-- Base64 text decoding
+- Base64 text decoding with strict mode and optional six-character ASCII whitespace handling
+- Empty text is valid; whitespace and Unicode are exact, and AES passwords reject only the empty string
 - Clear distinction between encoding and encryption
 - No password required
 
@@ -91,7 +92,7 @@ Download the APK from GitHub Releases:
 Current version:
 
 ```text
-AegisVault Mobile v1.2
+AegisVault Mobile v1.3
 ```
 
 > The current APK is debug-signed and intended for testing and demonstration. For production distribution, build a release APK or AAB with a private signing key.
@@ -238,7 +239,7 @@ Windows PowerShell:
 Output:
 
 ```text
-dist/AegisVaultMobile-v1.2-debug.apk
+dist/AegisVaultMobile-v1.3-debug.apk
 ```
 
 ---

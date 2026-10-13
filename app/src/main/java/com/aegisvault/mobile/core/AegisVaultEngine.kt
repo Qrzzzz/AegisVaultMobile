@@ -2,7 +2,6 @@ package com.aegisvault.mobile.core
 
 import org.bouncycastle.crypto.generators.SCrypt
 import java.nio.charset.StandardCharsets
-import java.nio.charset.CodingErrorAction
 import java.security.SecureRandom
 import java.util.Base64
 import javax.crypto.AEADBadTagException
@@ -13,6 +12,7 @@ import javax.crypto.spec.SecretKeySpec
 enum class ErrorCode {
     EMPTY_TEXT,
     EMPTY_PASSWORD,
+    INPUT_INVALID,
     AUTH,
     BASE64_INVALID,
     UTF8_INVALID,
@@ -56,7 +56,6 @@ object AegisVaultEngine {
     // Deterministic inputs are internal to tests; the production entry always uses SecureRandom.
     internal fun encryptEnvelope(plaintext: String, password: String, salt: ByteArray, nonce: ByteArray,
         createdAt: String, params: ScryptParams): String {
-        if (plaintext.isBlank()) throw AegisVaultException(ErrorCode.EMPTY_TEXT)
         requirePassword(password)
         ResourceLimits.encryptedOutputSize(ResourceLimits.utf8Size(plaintext))
         validateScryptParams(params, salt.size)
@@ -77,8 +76,8 @@ object AegisVaultEngine {
     }
 
     fun decryptText(token: String, password: String): TextDecryptResult {
-        ResourceLimits.size(token.length.toLong(), ResourceLimits.ENCODED)
-        val trimmed = token.trim()
+        ResourceLimits.utf8Size(token, ResourceLimits.ENCODED)
+        val trimmed = token.trim(::tokenWhitespace)
         if (trimmed.isBlank()) throw AegisVaultException(ErrorCode.EMPTY_TEXT)
         if (!trimmed.startsWith(textPrefix)) throw AegisVaultException(
             if (trimmed.startsWith("AGV")) ErrorCode.PROTOCOL else ErrorCode.MIGRATION)
@@ -135,38 +134,21 @@ object AegisVaultEngine {
     }
 
     fun encodeText(text: String): String {
-        if (text.isBlank()) {
-            throw AegisVaultException(ErrorCode.EMPTY_TEXT)
-        }
         val bytes = ResourceLimits.utf8Size(text)
         ResourceLimits.size((bytes.toLong() + 2) / 3 * 4, ResourceLimits.ENCODED)
         return Base64.getEncoder().encodeToString(text.toByteArray(StandardCharsets.UTF_8))
     }
 
-    fun decodeText(text: String): String {
-        ResourceLimits.size(text.length.toLong(), ResourceLimits.ENCODED)
-        if (text.isBlank()) {
-            throw AegisVaultException(ErrorCode.EMPTY_TEXT)
-        }
-        val token = text.trim()
-        ResourceLimits.decodedSize(token, ResourceLimits.PLAINTEXT)
-        val decoded = try {
-            Base64.getDecoder().decode(token)
-        } catch (_: IllegalArgumentException) {
-            throw AegisVaultException(ErrorCode.BASE64_INVALID)
-        }
-        return try {
-            val decoder = StandardCharsets.UTF_8.newDecoder()
-                .onMalformedInput(CodingErrorAction.REPORT)
-                .onUnmappableCharacter(CodingErrorAction.REPORT)
-            decoder.decode(java.nio.ByteBuffer.wrap(decoded)).toString()
-        } catch (_: java.nio.charset.CharacterCodingException) {
-            throw AegisVaultException(ErrorCode.UTF8_INVALID)
-        }
-    }
+    fun decodeText(text: String, strict: Boolean = true, ignoreAsciiWhitespace: Boolean = false): String =
+        TextBase64.decode(text, Base64DecodeOptions(strict, ignoreAsciiWhitespace))
+
+    // Python str.strip whitespace, for the AGV1 token boundary only. Base64 never trims.
+    private fun tokenWhitespace(c: Char): Boolean = c in '\t'..'\r' || c in '\u001c'..'\u0020' ||
+        c == '\u0085' || c == '\u00a0' || c == '\u1680' || c in '\u2000'..'\u200a' ||
+        c == '\u2028' || c == '\u2029' || c == '\u202f' || c == '\u205f' || c == '\u3000'
 
     private fun requirePassword(password: String) {
-        if (password.isBlank()) {
+        if (password.isEmpty()) {
             throw AegisVaultException(ErrorCode.EMPTY_PASSWORD)
         }
         ResourceLimits.utf8Size(password)

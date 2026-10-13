@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -82,20 +84,23 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
             }
         })
     }, snackbarHost = { SnackbarHost(snackbar) }) { p ->
-        Column(Modifier.fillMaxSize().padding(p).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(Modifier.fillMaxSize().padding(p).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             ModeSelector(state.mode) { vm.onEvent(AegisVaultUiEvent.ChangeMode(it)) }
             SecureTextInputCard(state.inputText, { vm.onEvent(AegisVaultUiEvent.UpdateInput(it)) }, onPaste = {
                 val txt = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
-                if (txt.isNullOrBlank()) scope.launch { snackbar.showSnackbar(context.getString(R.string.status_clipboard_empty)) }
+                if (txt == null) scope.launch { snackbar.showSnackbar(context.getString(R.string.status_clipboard_empty)) }
                 else vm.onEvent(AegisVaultUiEvent.UpdateInput(txt))
             })
             if (state.mode == ToolMode.AES) {
                 PasswordField(state.password, { vm.onEvent(AegisVaultUiEvent.UpdatePassword(it)) }, passwordVisible, { passwordVisible = !passwordVisible })
                 Text(stringResource(R.string.password_hint_aes))
-            } else Text(stringResource(R.string.password_hint_base64))
+            } else {
+                Text(stringResource(R.string.password_hint_base64))
+                Base64OptionsControls(state.base64Options) { vm.onEvent(AegisVaultUiEvent.UpdateBase64Options(it)) }
+            }
             ActionButtons(state.mode, onEncrypt = { vm.onEvent(AegisVaultUiEvent.Encrypt) }, onDecrypt = { vm.onEvent(AegisVaultUiEvent.Decrypt) }, onEncode = { vm.onEvent(AegisVaultUiEvent.Encode) }, onDecode = { vm.onEvent(AegisVaultUiEvent.Decode) })
             ResultCard(state.resultText, onCopy = {
-                if (state.resultText.isBlank()) { scope.launch { snackbar.showSnackbar(context.getString(R.string.error_copy_empty)) }; return@ResultCard }
+                if (state.resultText.isEmpty()) { scope.launch { snackbar.showSnackbar(context.getString(R.string.error_copy_empty)) }; return@ResultCard }
                 val copied = state.resultText
                 clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault Result", copied))
                 scope.launch {

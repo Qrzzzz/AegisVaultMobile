@@ -98,7 +98,7 @@ internal object ProtocolJson {
                 val c = text[i++]
                 if (c == '"') {
                     val result = out.toString()
-                    ResourceLimits.utf8Size(result, ResourceLimits.METADATA)
+                    ResourceLimits.utf8Size(result, ResourceLimits.METADATA, ErrorCode.UTF8_INVALID)
                     return result
                 }
                 if (c < ' ') bad()
