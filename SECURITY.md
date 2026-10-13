@@ -28,3 +28,8 @@ Out of scope:
 - Attacks requiring a compromised device.
 - Clipboard monitoring by the operating system or privileged apps.
 - Recovery of data when the user has lost the password.
+
+
+## Manual app updates (1.5)
+
+Encryption/Base64 inputs and passwords stay offline. Only explicit update actions connect to the fixed public GitHub repository/CDN, without credentials or sensitive editor data. APK byte count/hash, package/version/minSdk and installed certificate matching precede the system installer; no silent installation is performed. REQUEST_INSTALL_PACKAGES is used only for this user-initiated self-update flow. The existing debug test signer is retained; this is not a production-signing transition. See [the update contract](docs/update-1.5.md) for limits and device acceptance boundaries.

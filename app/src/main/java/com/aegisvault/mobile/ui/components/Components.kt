@@ -161,9 +161,11 @@ fun ResultCard(value: String, onCopy: suspend () -> Unit, onUseAsInput: () -> Un
 }
 
 @Composable
-fun SettingsSheet(settings: AppSettings, onUpdate: ((AppSettings) -> AppSettings) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.padding(bottom = 24.dp)) {
+fun SettingsSheet(settings: AppSettings, onUpdate: ((AppSettings) -> AppSettings) -> Unit,
+    updateContent: @Composable () -> Unit = {}) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.verticalScroll(rememberScrollState()).padding(bottom = 24.dp)) {
         Text(stringResource(R.string.settings_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(horizontal = 16.dp))
+        updateContent()
         SettingsSection(stringResource(R.string.settings_group_appearance))
         ListItem(headlineContent = { Text(stringResource(R.string.settings_language)) }, supportingContent = { Text(stringResource(R.string.settings_language_support)) })
         LanguageOption.entries.forEach { option ->

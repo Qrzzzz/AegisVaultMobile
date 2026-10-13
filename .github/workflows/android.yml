@@ -44,6 +44,10 @@ jobs:
           python -m pip install --quiet cryptography==50.0.2
           python scripts/test-migration.py 2>&1 | tee migration-tests.txt
 
+      - name: Validate update release contract
+        if: ${{ hashFiles('scripts/test-update-contract.py') != '' }}
+        run: python scripts/test-update-contract.py 2>&1 | tee update-contract-tests.txt
+
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
 
@@ -69,4 +73,5 @@ jobs:
             app/build/test-results/testDebugUnitTest/
             app/build/reports/lint-results-debug.*
             migration-tests.txt
+            update-contract-tests.txt
           if-no-files-found: warn

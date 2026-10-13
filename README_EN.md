@@ -17,7 +17,7 @@
 
 ---
 
-Current version is **1.4** (versionCode 6), using formal desktop AGV1 text and authenticated headers. Historical Android JSON/AES/AK# need explicit offline migration. [1.3 text semantics](./docs/backend-1.3.md) · [AGV1 contract and limits](./docs/backend-1.2.md) · [Migration](./docs/migration-1.2.en.md) · [1.4 validation](./docs/validation-1.4.md) · [Settings recovery](./docs/settings-1.4.md)
+Current version is **1.5** (versionCode 7), using formal desktop AGV1 text and authenticated headers. Historical Android JSON/AES/AK# need explicit offline migration. [1.3 text semantics](./docs/backend-1.3.md) · [AGV1 contract and limits](./docs/backend-1.2.md) · [Migration](./docs/migration-1.2.en.md) · [1.4 validation](./docs/validation-1.4.md) · [Settings recovery](./docs/settings-1.4.md)
 
 ## ✨ Overview
 
@@ -83,6 +83,12 @@ This project was developed, organized, documented, and release-optimized with as
 
 ---
 
+## App updates
+
+Settings provides manual GitHub stable-release checks, verified APK downloads and the Android installer. The versioned manifest checks versionCode, size, SHA-256, package identity and certificate matching. No text, passwords or results enter update requests; encryption and Base64 remain offline.
+
+[1.5 update contract](./docs/update-1.5.md) · [Validation](./docs/validation-1.5.md)
+
 ## 📦 Download
 
 Download the APK from GitHub Releases:
@@ -92,7 +98,7 @@ Download the APK from GitHub Releases:
 Current version:
 
 ```text
-AegisVault Mobile v1.4
+AegisVault Mobile v1.5
 ```
 
 > The current APK is debug-signed and intended for testing and demonstration. For production distribution, build a release APK or AAB with a private signing key.
@@ -239,7 +245,7 @@ Windows PowerShell:
 Output:
 
 ```text
-dist/AegisVaultMobile-v1.4-debug.apk
+dist/AegisVaultMobile-v1.5-debug.apk
 ```
 
 ---

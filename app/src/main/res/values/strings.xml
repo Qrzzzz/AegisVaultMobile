@@ -5,7 +5,7 @@
     <string name="screen_subtitle">Elegant text AES and Base64 tools</string>
     <string name="hero_title">Quiet tools, dependable output.</string>
     <string name="hero_body">Encrypt, decrypt, encode, and decode text with a calmer interface that stays focused on the essentials.</string>
-    <string name="action_about">About</string>
+    <string name="action_settings">Settings</string>
     <string name="action_clear_all">Clear All</string>
     <string name="action_close">Close</string>
     <string name="section_language">Language</string>
@@ -97,4 +97,28 @@
     <string name="settings_read_recovered">Settings reading has recovered. Your stored settings are available again.</string>
     <string name="settings_write_failed">Settings could not be saved. Previous settings remain in effect. Try again.</string>
     <string name="settings_acknowledge">Got it</string>
+    <string name="update_title">App updates</string>
+    <string name="update_current">Installed: %1$s (code %2$d)</string>
+    <string name="update_privacy">Checks GitHub only when requested. Your text and passwords are never sent. Updates require your confirmation in Android.</string>
+    <string name="update_check">Check for updates</string>
+    <string name="update_checking">Checking the latest stable GitHub release…</string>
+    <string name="update_latest">You have the latest stable version (%1$s).</string>
+    <string name="update_ahead">This build is newer than the latest public release (%1$s).</string>
+    <string name="update_available">Version %1$s (code %2$d), %3$d MiB</string>
+    <string name="update_download">Download and verify APK</string>
+    <string name="update_download_progress">Downloading: %1$d%%</string>
+    <string name="update_verified">APK checksum, package, version and signing certificate verified.</string>
+    <string name="update_install">Open Android installer</string>
+    <string name="update_install_started">Android handles installation. If cancelled, you can open the installer again.</string>
+    <string name="update_allow_install">Allow this app to install updates in Android Settings, return here, then tap the installer button again.</string>
+    <string name="update_cancel">Cancel</string>
+    <string name="update_release_page">View GitHub release notes</string>
+    <string name="update_network">Could not reach GitHub or download the update. Check your connection and retry.</string>
+    <string name="update_rate_limit">GitHub is limiting requests. Try again later.</string>
+    <string name="update_invalid">Release information is incomplete or uses an unsupported update contract. View the official release page or retry later.</string>
+    <string name="update_incompatible">This update does not support your Android version.</string>
+    <string name="update_integrity">Update verification failed. This APK cannot be installed through the app.</string>
+    <string name="update_storage">Not enough writable app storage for the update. Free space and retry.</string>
+    <string name="update_no_installer">Android installation settings or a package installer is unavailable.</string>
+    <string name="update_no_browser">No app is available to open the release page.</string>
 </resources>

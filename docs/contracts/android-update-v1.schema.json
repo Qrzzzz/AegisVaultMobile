@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AegisVault Android update manifest v1",
+  "type": "object",
+  "required": ["schemaVersion", "applicationId", "versionName", "versionCode", "minSdk", "releaseTag", "apk"],
+  "properties": {
+    "schemaVersion": {"type": "integer", "const": 1},
+    "applicationId": {"type": "string", "const": "com.aegisvault.mobile"},
+    "versionName": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "versionCode": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+    "minSdk": {"type": "integer", "minimum": 26, "maximum": 2147483647},
+    "releaseTag": {"type": "string", "pattern": "^v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "apk": {
+      "type": "object",
+      "required": ["name", "size", "sha256", "signingCertificateSha256"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^AegisVaultMobile-v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)-debug\\.apk$"},
+        "size": {"type": "integer", "minimum": 1, "maximum": 134217728},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "signingCertificateSha256": {"type": "string", "const": "b2b0f013dcfa428bb6f4c3563faa204c7890f72abd6062d1cbbb155222d493c9"}
+      }
+    }
+  }
+}

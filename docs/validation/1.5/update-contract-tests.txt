@@ -1,0 +1,7 @@
+.......
+Verified exact release 1: artificial
+----------------------------------------------------------------------
+Ran 7 tests in 0.027s
+
+OK
+Verified exact release 1: artificial
