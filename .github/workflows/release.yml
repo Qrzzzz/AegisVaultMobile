@@ -46,6 +46,9 @@ jobs:
           python -m pip install --quiet cryptography==50.0.2
           python scripts/test-migration.py 2>&1 | tee migration-tests.txt
       - uses: gradle/actions/setup-gradle@v4
+      - name: Validate update release contract
+        if: ${{ hashFiles('scripts/test-update-contract.py') != '' }}
+        run: python scripts/test-update-contract.py 2>&1 | tee update-contract-tests.txt
       - name: Validate product version and tag
         run: python3 scripts/prepare-release.py --check-only --tag "$RELEASE_TAG"
       - name: Restore existing test signing identity
@@ -74,6 +77,7 @@ jobs:
           path: |
             dist/AegisVaultMobile-*.apk
             dist/SHA256SUMS.txt
+            dist/update-manifest.json
           if-no-files-found: error
       - name: Upload validation reports
         if: always()
@@ -85,6 +89,7 @@ jobs:
             app/build/test-results/testDebugUnitTest/
             app/build/reports/lint-results-debug.*
             migration-tests.txt
+            update-contract-tests.txt
           if-no-files-found: warn
 
   publish:
@@ -101,7 +106,9 @@ jobs:
         with:
           ref: ${{ github.sha }}
           path: .release-automation
-          sparse-checkout: scripts/verify-release.py
+          sparse-checkout: |
+            scripts/verify-release.py
+            scripts/update-contract.py
           sparse-checkout-cone-mode: false
       - uses: actions/download-artifact@v4
         with:
@@ -114,7 +121,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$RELEASE_TAG" dist/*.apk dist/SHA256SUMS.txt \
+          ASSETS=(dist/*.apk dist/SHA256SUMS.txt)
+          if [ -f dist/update-manifest.json ]; then ASSETS+=(dist/update-manifest.json); fi
+          gh release create "$RELEASE_TAG" "${ASSETS[@]}" \
             --verify-tag --draft --title "AegisVault Mobile $RELEASE_TAG" \
             --notes-file "docs/releases/$RELEASE_TAG.md"
           RELEASE_ID=$(gh api "repos/$GITHUB_REPOSITORY/releases" --jq ".[] | select(.tag_name == \"$RELEASE_TAG\") | .id")

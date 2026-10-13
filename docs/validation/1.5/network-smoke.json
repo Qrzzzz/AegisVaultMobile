@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "endpoint": "https://api.github.com/repos/Qrzzzz/AegisVaultMobile/releases/latest",
+  "ahead": true,
+  "transport": "actual unauthenticated production HTTPS; no APK downloaded",
+  "latest": "1.4"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.update.UpdateTaskTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-13T12:21:19" hostname="QRZZZZ" time="0.017">
+  <properties/>
+  <testcase name="noStartupNetworkAndRapidChecksReserveOneRequest" classname="com.aegisvault.mobile.update.UpdateTaskTest" time="0.006"/>
+  <testcase name="downloadCancellationIgnoresLateProgressAndCompletion" classname="com.aegisvault.mobile.update.UpdateTaskTest" time="0.005"/>
+  <testcase name="cancelledOrDestroyedLateCheckCannotRestoreState" classname="com.aegisvault.mobile.update.UpdateTaskTest" time="0.001"/>
+  <testcase name="downloadFailurePreservesOfferForRetryThenReady" classname="com.aegisvault.mobile.update.UpdateTaskTest" time="0.003"/>
+  <testcase name="expectedFailureDoesNotBlockLaterManualCheck" classname="com.aegisvault.mobile.update.UpdateTaskTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

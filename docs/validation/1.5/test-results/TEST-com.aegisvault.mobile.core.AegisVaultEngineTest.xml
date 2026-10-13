@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.core.AegisVaultEngineTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-13T12:21:11" hostname="QRZZZZ" time="0.717">
+  <properties/>
+  <testcase name="unsupportedVersionFails" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.009"/>
+  <testcase name="invalidUtf8Base64" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.001"/>
+  <testcase name="sameInputDifferentCiphertext" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.178"/>
+  <testcase name="encryptDecryptRoundTrip" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.128"/>
+  <testcase name="invalidBase64SyntaxFails" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.0"/>
+  <testcase name="emptyTextIsValidButEmptyPasswordFailsExplicitly" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.135"/>
+  <testcase name="tamperedTokenFails" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.126"/>
+  <testcase name="wrongPasswordAuth" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.132"/>
+  <testcase name="legacyAkRequiresMigration" classname="com.aegisvault.mobile.core.AegisVaultEngineTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

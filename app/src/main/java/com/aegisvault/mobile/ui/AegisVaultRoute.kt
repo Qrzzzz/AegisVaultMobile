@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +44,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aegisvault.mobile.R
 import com.aegisvault.mobile.data.LanguageOption
 import com.aegisvault.mobile.data.SettingsNotice
+import com.aegisvault.mobile.update.UpdateViewModel
+import com.aegisvault.mobile.ui.components.UpdateSection
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -53,6 +56,7 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     val state by vm.uiState.collectAsStateWithLifecycle()
     val snackbar = remember { SnackbarHostState() }
     val context = LocalContext.current
+    val updateVm: UpdateViewModel = viewModel(factory = UpdateViewModel.Factory(context.applicationContext))
     val clipboard = remember(context) { context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
@@ -82,7 +86,7 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.screen_title)) }, actions = {
             IconButton(onClick = { showSettings = true }) {
-                Icon(Icons.Rounded.Info, contentDescription = stringResource(R.string.action_about))
+                Icon(Icons.Rounded.Settings, contentDescription = stringResource(R.string.action_settings))
             }
         })
     }, snackbarHost = { SnackbarHost(snackbar) }) { p ->
@@ -137,7 +141,7 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
 
     if (showSettings) {
         ModalBottomSheet(onDismissRequest = { showSettings = false }) {
-            SettingsSheet(state.settings, onUpdate = vm::updateSettings)
+            SettingsSheet(state.settings, onUpdate = vm::updateSettings, updateContent = { UpdateSection(updateVm) })
         }
     }
 }

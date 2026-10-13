@@ -1,0 +1,14 @@
+{
+  "apk": {
+    "name": "AegisVaultMobile-v1.5-debug.apk",
+    "sha256": "bc218d1225a5a17be971984f9e3247c9e657961bd7ae60716c4137ca0dc2c4a2",
+    "signingCertificateSha256": "b2b0f013dcfa428bb6f4c3563faa204c7890f72abd6062d1cbbb155222d493c9",
+    "size": 37
+  },
+  "applicationId": "com.aegisvault.mobile",
+  "minSdk": 26,
+  "releaseTag": "v1.5",
+  "schemaVersion": 1,
+  "versionCode": 7,
+  "versionName": "1.5"
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.update.UpdateNetworkSmokeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-13T12:21:17" hostname="QRZZZZ" time="2.665">
+  <properties/>
+  <testcase name="actualUnauthenticatedProductionHttpsChecksLatestPublicRelease" classname="com.aegisvault.mobile.update.UpdateNetworkSmokeTest" time="2.665"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

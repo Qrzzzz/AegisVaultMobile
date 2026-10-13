@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5 - 2026-10-13
+
+- Manual GitHub stable-release check, verified in-app APK download and explicit Android installer entry in Settings.
+- Versioned update manifest and JSON Schema; numeric product/versionCode ordering, bounded HTTPS, exact artifact hashes and actual package/certificate verification.
+- Scoped private update cache/FileProvider, download progress/cancel, localized expected failures and explicit per-app install permission. No sensitive text is sent or persisted.
+- Release packaging/verifier/CI use three standard assets from 1.5; legacy two-asset verification remains supported.
+- versionName 1.5 / versionCode 7, debug-signed test release. Earlier backend/settings safety is retained. Device install/permission/upgrade acceptance requires a real device.
+
 ## 1.4 - 2026-10-13
 
 - Shared safe settings decoding for reads/edits; preserve valid settings and recover unknown enum/type values with explicit defaults.
