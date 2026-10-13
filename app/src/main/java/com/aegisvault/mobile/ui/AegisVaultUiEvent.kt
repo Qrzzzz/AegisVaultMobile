@@ -16,4 +16,5 @@ sealed interface AegisVaultUiEvent {
     data object ClearResult : AegisVaultUiEvent
     data object OnLeaveApp : AegisVaultUiEvent
     data object ClearMessage : AegisVaultUiEvent
+    data object AcknowledgeSettingsNotice : AegisVaultUiEvent
 }

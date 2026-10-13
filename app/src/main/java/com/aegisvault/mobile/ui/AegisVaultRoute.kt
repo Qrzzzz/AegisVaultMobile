@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -42,6 +43,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aegisvault.mobile.R
 import com.aegisvault.mobile.data.LanguageOption
+import com.aegisvault.mobile.data.SettingsNotice
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -85,6 +87,18 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
         })
     }, snackbarHost = { SnackbarHost(snackbar) }) { p ->
         Column(Modifier.fillMaxSize().padding(p).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            state.settingsNotice?.let { notice ->
+                Text(stringResource(when (notice) {
+                    SettingsNotice.VALUES_RECOVERED -> R.string.settings_values_recovered
+                    SettingsNotice.STORE_RESET -> R.string.settings_store_reset
+                    SettingsNotice.READ_RETRYING -> R.string.settings_read_retrying
+                    SettingsNotice.READ_RECOVERED -> R.string.settings_read_recovered
+                    SettingsNotice.WRITE_FAILED -> R.string.settings_write_failed
+                }))
+                TextButton(onClick = { vm.onEvent(AegisVaultUiEvent.AcknowledgeSettingsNotice) }) {
+                    Text(stringResource(R.string.settings_acknowledge))
+                }
+            }
             ModeSelector(state.mode) { vm.onEvent(AegisVaultUiEvent.ChangeMode(it)) }
             SecureTextInputCard(state.inputText, { vm.onEvent(AegisVaultUiEvent.UpdateInput(it)) }, onPaste = {
                 val txt = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()

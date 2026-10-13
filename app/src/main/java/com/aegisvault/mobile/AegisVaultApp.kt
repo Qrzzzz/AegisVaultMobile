@@ -17,8 +17,8 @@ fun AegisVaultApp(activity: Activity) {
     val context = LocalContext.current
     val vm: AegisVaultViewModel = viewModel(factory = AegisVaultViewModel.Factory(AppPreferencesRepository(context)))
     val state = vm.uiState.collectAsStateWithLifecycle().value
-    DisposableEffect(state.settings.protectScreen) {
-        if (state.settings.protectScreen) activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    DisposableEffect(state.settings.protectScreen, state.settingsLoaded) {
+        if (!state.settingsLoaded || state.settings.protectScreen) activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         else activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
         onDispose { }
     }

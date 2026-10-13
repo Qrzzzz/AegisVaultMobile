@@ -3,6 +3,7 @@ package com.aegisvault.mobile.ui
 import com.aegisvault.mobile.core.Base64DecodeOptions
 import androidx.annotation.StringRes
 import com.aegisvault.mobile.data.AppSettings
+import com.aegisvault.mobile.data.SettingsNotice
 
 enum class ToolMode { AES, BASE64 }
 enum class MessageTone { SUCCESS, WARNING, ERROR }
@@ -18,4 +19,6 @@ data class AegisVaultUiState(
     val isBusy: Boolean = false,
     val message: UiMessage? = null,
     val settings: AppSettings = AppSettings(),
+    val settingsLoaded: Boolean = false,
+    val settingsNotice: SettingsNotice? = null,
 )

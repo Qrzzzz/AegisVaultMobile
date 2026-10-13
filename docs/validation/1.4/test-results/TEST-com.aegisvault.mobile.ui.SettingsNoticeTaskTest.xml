@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.ui.SettingsNoticeTaskTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-13T03:41:00" hostname="QRZZZZ" time="0.119">
+  <properties/>
+  <testcase name="leavingBeforeFirstSettingsLoadClearsButLoadedFalseChoiceIsHonored" classname="com.aegisvault.mobile.ui.SettingsNoticeTaskTest" time="0.105"/>
+  <testcase name="writeIoIsVisibleAndLaterSettingsEditStillWorks" classname="com.aegisvault.mobile.ui.SettingsNoticeTaskTest" time="0.007"/>
+  <testcase name="recoveryNoticeSurvivesActionsAndSensitiveClearUntilAcknowledged" classname="com.aegisvault.mobile.ui.SettingsNoticeTaskTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
