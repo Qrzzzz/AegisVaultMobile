@@ -37,6 +37,13 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - name: Install declared SDK
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate offline migration tool
+        run: |
+          python -m pip install --quiet cryptography==50.0.2
+          python scripts/test-migration.py 2>&1 | tee migration-tests.txt
       - uses: gradle/actions/setup-gradle@v4
       - name: Validate product version and tag
         run: python3 scripts/prepare-release.py --check-only --tag "$RELEASE_TAG"
@@ -76,6 +83,7 @@ jobs:
             app/build/reports/tests/testDebugUnitTest/
             app/build/test-results/testDebugUnitTest/
             app/build/reports/lint-results-debug.*
+            migration-tests.txt
           if-no-files-found: warn
 
   publish:

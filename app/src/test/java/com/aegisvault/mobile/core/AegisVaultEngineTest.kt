@@ -20,15 +20,11 @@ class AegisVaultEngineTest {
 
     @Test fun invalidBase64SyntaxFails() { try { AegisVaultEngine.decodeText("%%%") } catch (e:AegisVaultException){ assertEquals(ErrorCode.BASE64_INVALID, e.code); return }; throw AssertionError() }
     @Test fun unsupportedVersionFails() { try { AegisVaultEngine.decryptText("AGV9.invalid", "pass12345") } catch (e:AegisVaultException){ assertEquals(ErrorCode.PROTOCOL, e.code); return }; throw AssertionError() }
-    @Test fun legacyAkMode() {
-        val nonce = ByteArray(12) { 1 }
-        val key = java.security.MessageDigest.getInstance("SHA-256").digest("legacy-pass".toByteArray())
-        val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
-        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, javax.crypto.spec.SecretKeySpec(key, "AES"), javax.crypto.spec.GCMParameterSpec(128, nonce))
-        val ct = cipher.doFinal("legacy".toByteArray())
-        val token = java.util.Base64.getEncoder().encodeToString(nonce + ct)
-        val out = AegisVaultEngine.decryptText("AK#legacy-pass#$token", "")
-        assertTrue(out.usedLegacyAk)
-        assertEquals("legacy", out.plaintext)
+    @Test fun legacyAkRequiresMigration() {
+        val sample = org.json.JSONObject(javaClass.getResource("/android-historical.json")!!.readText()).getJSONObject("ak")
+        val e = org.junit.Assert.assertThrows(AegisVaultException::class.java) {
+            AegisVaultEngine.decryptText(sample.getString("token"), "")
+        }
+        assertEquals(ErrorCode.MIGRATION, e.code)
     }
 }

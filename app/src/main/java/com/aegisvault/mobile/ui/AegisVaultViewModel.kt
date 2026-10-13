@@ -111,7 +111,7 @@ class AegisVaultViewModel(
                 AegisVaultUiEvent.Encrypt -> ActionResult(AegisVaultEngine.encryptText(input, password), UiMessage(R.string.status_text_encrypt_success, MessageTone.SUCCESS))
                 AegisVaultUiEvent.Decrypt -> {
                     val r = AegisVaultEngine.decryptText(input, password)
-                    ActionResult(r.plaintext, UiMessage(if (r.usedLegacyAk) R.string.status_text_decrypt_legacy_ak else R.string.status_text_decrypt_success, if (r.usedLegacyAk) MessageTone.WARNING else MessageTone.SUCCESS))
+                    ActionResult(r.plaintext, UiMessage(R.string.status_text_decrypt_success, MessageTone.SUCCESS))
                 }
                 AegisVaultUiEvent.Encode -> ActionResult(AegisVaultEngine.encodeText(input), UiMessage(R.string.status_base64_encode_success, MessageTone.SUCCESS))
                 AegisVaultUiEvent.Decode -> ActionResult(AegisVaultEngine.decodeText(input), UiMessage(R.string.status_base64_decode_success, MessageTone.SUCCESS))
@@ -126,6 +126,7 @@ class AegisVaultViewModel(
         ErrorCode.BASE64_INVALID -> R.string.error_base64
         ErrorCode.UTF8_INVALID -> R.string.error_utf8
         ErrorCode.PROTOCOL -> R.string.error_protocol
+        ErrorCode.MIGRATION -> R.string.error_migration
         ErrorCode.RESOURCE -> R.string.error_resource
         ErrorCode.INTERNAL -> R.string.error_internal
     }

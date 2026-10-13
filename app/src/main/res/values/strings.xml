@@ -29,12 +29,11 @@
     <string name="result_placeholder">Results will appear here after you run an action.</string>
     <string name="action_copy_result">Copy Result</string>
     <string name="about_title">About AegisVault Mobile</string>
-    <string name="about_body">A focused mobile utility for text AES encryption, decryption, Base64 encoding, Base64 decoding, and legacy text compatibility.</string>
+    <string name="about_body">Offline AGV1 text encryption and decryption with authenticated headers, plus text Base64 tools.</string>
     <string name="status_ready">Ready</string>
     <string name="status_processing">Processing...</string>
     <string name="status_text_encrypt_success">Text encrypted successfully. Output uses AGV1 format.</string>
     <string name="status_text_decrypt_success">Text decrypted successfully.</string>
-    <string name="status_text_decrypt_legacy_ak">Decrypted with high-risk AK compatibility mode. Handle the plaintext carefully.</string>
     <string name="status_base64_encode_success">Base64 encoded successfully.</string>
     <string name="status_base64_decode_success">Base64 decoded successfully.</string>
     <string name="status_copied">Result copied to clipboard.</string>
@@ -87,4 +86,5 @@
 
     <string name="error_resource">Input or cryptographic parameters exceed the Mobile safety limit.</string>
     <string name="error_internal">Cryptographic operation unavailable. Please retry.</string>
+    <string name="error_migration">Only formal AGV1 text is supported. Old Android JSON, AES and AK data need the offline migration tool; see migration instructions.</string>
 </resources>

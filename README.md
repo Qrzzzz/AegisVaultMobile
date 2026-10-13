@@ -17,7 +17,7 @@
 
 ---
 
-当前版本为 **1.1**（versionCode 3）。本次修复任务生命周期与资源预算，仍保留 Android JSON 型 AGV1/旧 AES/AK#，目前无法与桌面版互解。 [安全合约、预算和 1.2–1.4 迁移计划](./docs/backend-1.1.md)
+当前版本为 **1.2**（versionCode 4），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.2 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [验证记录](./docs/validation-1.2.md)
 
 ## ✨ 简介
 
@@ -50,9 +50,9 @@
 - 使用 **AES-256-GCM** 进行文本加密与认证
 - 使用 **scrypt** 从用户口令派生密钥
 - 每次加密生成随机 salt 与随机 nonce
-- 输出 Android JSON 型 `AGV1.` 格式密文（1.1 尚未与桌面协议对齐）
-- 支持解密旧版文本格式
-- 支持旧版高风险 `AK#` 兼容模式提示
+- 输出正式桌面 `AGV1.` 二进制文本封装，并认证原始 JSON 头部
+- 生产 App 只解密正式 AGV1，旧 Android JSON/AES/AK# 使用独立迁移工具
+- 格式互通受 Android 1 MiB 明文和 64 MiB KDF 设备预算限制
 
 ### 🔤 Base64 文本工具
 
@@ -89,7 +89,7 @@
 当前版本：
 
 ```text
-AegisVault Mobile v1.1
+AegisVault Mobile v1.2
 ```
 
 > 当前 APK 为 debug 签名版本，主要用于测试和演示。正式分发前建议使用私有签名密钥构建 release APK 或 AAB。
@@ -125,7 +125,7 @@ AegisVault Mobile v1.1
 
 ## 🔐 安全模型
 
-AegisVault Mobile 的现代文本加密格式以 `AGV1.` 开头。其基本流程是：
+1.2 的正式 AGV1 是 `AGV1.` + URL-safe Base64(AGVTEXT\x01 + BE32 头长 + 原始 UTF-8 JSON 头 + 密文/tag)。原始头字节作为 GCM AAD。生产解密只接受这一格式；同样以 AGV1 开头的旧 Android JSON token 仍需迁移。其基本流程是：
 
 ```text
 用户口令
@@ -253,7 +253,7 @@ Windows PowerShell：
 输出位置：
 
 ```text
-dist/AegisVaultMobile-v1.1-debug.apk
+dist/AegisVaultMobile-v1.2-debug.apk
 ```
 
 ---

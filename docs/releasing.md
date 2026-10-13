@@ -13,3 +13,5 @@ Draft and public verification use the exact numeric Release ID because the by-ta
 For an authorized release: update app version/code, CHANGELOG and `docs/releases/vX.Y.md`; obtain green PR CI, merge, create an annotated `vX.Y` tag on the merged commit and push it. Confirm the release workflow success, public tag/commit, asset digests and latest-release state. Device acceptance and protocol compatibility must be reported separately; workflow success does not prove them.
 
 The release job explicitly signs the built APK with the restored test key, then checks the public certificate and final APK signer. The manual workflow_dispatch tag input rebuilds the existing immutable tag with current automation on main; this supports repairing automation without moving a release tag. It uses the tag source and notes, not the main application tree.
+
+Starting with 1.2, CI and release validation also run the bounded offline migration corpus under Python 3.12 / cryptography50.0.2 and retain the migration test report. The production App still has no legacy fallback.
