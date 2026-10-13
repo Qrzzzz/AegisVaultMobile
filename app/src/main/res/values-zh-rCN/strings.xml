@@ -91,4 +91,10 @@
     <string name="base64_ignore_whitespace">忽略 ASCII 空白</string>
     <string name="base64_modes_support">严格模式始终拒绝空白，即使已开启忽略。关闭严格并开启忽略后，仅接受 TAB、LF、CR、FF、VT 和普通空格；其他字符和 padding 仍会校验。</string>
     <string name="error_input_unicode">输入包含无效 Unicode（未配对的 surrogate）。</string>
+    <string name="settings_values_recovered">部分设置值未知或类型异常。合法设置已保留，异常安全选项已采用保护默认值，请检查设置。</string>
+    <string name="settings_store_reset">设置存储损坏，已重置并启用屏幕保护、离开时清空和 30 秒剪贴板清空，请检查设置。</string>
+    <string name="settings_read_retrying">暂时无法读取设置。保留最后有效设置；尚未加载时采用保护默认值，正在自动重试。</string>
+    <string name="settings_read_recovered">设置读取已恢复，已重新加载存储中的设置。</string>
+    <string name="settings_write_failed">设置未能保存，原有设置继续生效，请重试。</string>
+    <string name="settings_acknowledge">知道了</string>
 </resources>

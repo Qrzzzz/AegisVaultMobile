@@ -59,6 +59,7 @@ class AegisVaultViewModelTest {
     @Test fun onLeaveAppClearsOnlyWhenEnabled() = runTest {
         val repo = FakeRepo(AppSettings(autoClearOnLeave = false))
         val vm = AegisVaultViewModel(repo, StandardTestDispatcher(testScheduler))
+        advanceUntilIdle()
         vm.onEvent(AegisVaultUiEvent.UpdateInput("abc"))
         vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
         assertEquals("abc", vm.uiState.value.inputText)

@@ -34,7 +34,8 @@ class AegisVaultViewModel(
     private var destroyed = false
 
     init {
-        viewModelScope.launch { repo.settings.collect { _uiState.update { s -> s.copy(settings = it) } } }
+        viewModelScope.launch { repo.settings.collect { _uiState.update { s -> s.copy(settings = it, settingsLoaded = true) } } }
+        viewModelScope.launch { repo.notices.collect { _uiState.update { s -> s.copy(settingsNotice = it) } } }
     }
 
     fun onEvent(event: AegisVaultUiEvent) {
@@ -50,8 +51,12 @@ class AegisVaultViewModel(
             AegisVaultUiEvent.ClearSensitiveData -> clearSensitive()
             AegisVaultUiEvent.UseResultAsInput -> _uiState.update { it.copy(inputText = it.resultText, resultText = "", message = null) }
             AegisVaultUiEvent.ClearResult -> _uiState.update { it.copy(resultText = "", message = null) }
-            AegisVaultUiEvent.OnLeaveApp -> if (_uiState.value.settings.autoClearOnLeave) clearSensitive()
+            AegisVaultUiEvent.OnLeaveApp -> if (!_uiState.value.settingsLoaded || _uiState.value.settings.autoClearOnLeave) clearSensitive()
             AegisVaultUiEvent.ClearMessage -> _uiState.update { it.copy(message = null) }
+            AegisVaultUiEvent.AcknowledgeSettingsNotice -> {
+                repo.acknowledgeNotice()
+                _uiState.update { it.copy(settingsNotice = null) }
+            }
             else -> runAction(event)
         }
     }
@@ -134,7 +139,12 @@ class AegisVaultViewModel(
         ErrorCode.INTERNAL -> R.string.error_internal
     }
 
-    fun updateSettings(transform: (AppSettings) -> AppSettings) = viewModelScope.launch { repo.update(transform) }
+    fun updateSettings(transform: (AppSettings) -> AppSettings) = viewModelScope.launch {
+        try { repo.update(transform) }
+        catch (_: java.io.IOException) {
+            _uiState.update { it.copy(settingsNotice = com.aegisvault.mobile.data.SettingsNotice.WRITE_FAILED) }
+        }
+    }
 
     class Factory(private val repo: AppSettingsRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T = AegisVaultViewModel(repo) as T

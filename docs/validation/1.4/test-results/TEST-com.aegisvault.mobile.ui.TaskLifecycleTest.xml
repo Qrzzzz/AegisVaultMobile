@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.ui.TaskLifecycleTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-13T03:41:05" hostname="QRZZZZ" time="0.011">
+  <properties/>
+  <testcase name="repeatedTapReservesOneTaskBeforeDispatch" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.003"/>
+  <testcase name="editingPasswordOrModeDiscardsOldCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="reverseCompletionAndStaleFailureCannotChangeNewResultOrBusy" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.002"/>
+  <testcase name="leaveWithAutoClearDisabledKeepsCurrentTask" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="staleFinallyCannotResetNewBusyState" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="currentFailureAndCancellationReleaseBusy" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="completionPatchesResultWithoutRestoringSettings" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="clearLeaveAndDestroyPermanentlyInvalidateWorkers" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

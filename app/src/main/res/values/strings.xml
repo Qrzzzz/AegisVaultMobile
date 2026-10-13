@@ -91,4 +91,10 @@
     <string name="base64_ignore_whitespace">Ignore ASCII whitespace</string>
     <string name="base64_modes_support">Strict mode rejects all whitespace, even if Ignore is on. Turn Strict off and Ignore on to accept TAB, LF, CR, FF, VT and SPACE. Other characters and padding remain validated.</string>
     <string name="error_input_unicode">Input contains invalid Unicode (an unpaired surrogate).</string>
+    <string name="settings_values_recovered">Some settings were unknown or had the wrong type. Valid settings were preserved; invalid safety options use protective defaults. Review Settings.</string>
+    <string name="settings_store_reset">Settings storage was damaged and reset. Screen protection, auto-clear on leave and 30-second clipboard clearing are enabled. Review Settings.</string>
+    <string name="settings_read_retrying">Settings could not be read. Retaining the last valid settings, or protective defaults until loading succeeds. Retrying automatically.</string>
+    <string name="settings_read_recovered">Settings reading has recovered. Your stored settings are available again.</string>
+    <string name="settings_write_failed">Settings could not be saved. Previous settings remain in effect. Try again.</string>
+    <string name="settings_acknowledge">Got it</string>
 </resources>

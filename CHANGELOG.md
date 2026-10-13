@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4 - 2026-10-13
+
+- Shared safe settings decoding for reads/edits; preserve valid settings and recover unknown enum/type values with explicit defaults.
+- Actual DataStore corruption recovery, last-known settings during read I/O, bounded retry backoff, visible write failure and later successful edits.
+- Independent bilingual recovery notice and screen protection during initial settings loading; only existing non-sensitive preferences are persisted.
+- Full non-file backend regression and actual desktop exchange acceptance; existing 1.1-1.3 safety changes, dependencies and signing retained.
+- versionName 1.4 / versionCode 6. Debug-signed test release; physical-device acceptance NOT RUN without a connected device.
+
 ## 1.3 - 2026-10-13
 
 - Desktop-aligned four-mode Base64 decoding with explicit bilingual controls and standard alphabet/padding validation.
