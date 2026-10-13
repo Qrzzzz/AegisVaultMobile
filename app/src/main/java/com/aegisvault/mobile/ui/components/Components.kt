@@ -37,11 +37,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.aegisvault.mobile.R
+import com.aegisvault.mobile.core.Base64DecodeOptions
 import com.aegisvault.mobile.data.AppSettings
 import com.aegisvault.mobile.data.ClipboardAutoClear
 import com.aegisvault.mobile.data.LanguageOption
@@ -116,12 +119,31 @@ fun ActionButtons(mode: ToolMode, onEncrypt: () -> Unit, onDecrypt: () -> Unit, 
 }
 
 @Composable
+fun Base64OptionsControls(options: Base64DecodeOptions, onChange: (Base64DecodeOptions) -> Unit) {
+    val strictLabel = stringResource(R.string.base64_strict)
+    val ignoreLabel = stringResource(R.string.base64_ignore_whitespace)
+    Column {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Text(strictLabel, Modifier.weight(1f))
+            Switch(options.strict, { onChange(options.copy(strict = it)) },
+                modifier = Modifier.semantics { contentDescription = strictLabel })
+        }
+        Row(Modifier.fillMaxWidth(), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Text(ignoreLabel, Modifier.weight(1f))
+            Switch(options.ignoreAsciiWhitespace, { onChange(options.copy(ignoreAsciiWhitespace = it)) },
+                modifier = Modifier.semantics { contentDescription = ignoreLabel })
+        }
+        Text(stringResource(R.string.base64_modes_support), style = MaterialTheme.typography.bodySmall)
+    }
+}
+
+@Composable
 fun ResultCard(value: String, onCopy: suspend () -> Unit, onUseAsInput: () -> Unit, onClearResult: () -> Unit) {
     val scope = rememberCoroutineScope()
     Card {
         Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(stringResource(R.string.label_result), style = MaterialTheme.typography.titleMedium)
-            if (value.isBlank()) {
+            if (value.isEmpty()) {
                 Text(stringResource(R.string.result_placeholder), color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
                 Text(

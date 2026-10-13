@@ -1,0 +1,11 @@
+{
+  "desktop_sha": "c6664e2b7e6a11b7dfb55f0881136131e1d2bc74",
+  "git_blob_sha256": {
+    "src/aegisvault/core/base64_tools.py": "02de7cb2d73635f4099ebe921c4b0418e870687f414eaa89b9c4f6c7bbf7386c",
+    "src/aegisvault/resource_limits.py": "f098e9e405bdd1afdbdb7d0beeaad47cbd279ba7c0bccb57398ba6e7e4b043fc",
+    "tests/test_base64_modes.py": "9ae9b3abfa8f826546e2756c56bd193b70d2e853a96116ebfb9bd68251f29ab1",
+    "tests/test_base64_input_consistency.py": "d76dfbb81b68202f61dabfd883f815c09f6940cb9f0bbe5108663112f3d7c446",
+    "tests/test_text_crypto.py": "e048014210d0cc9ba4353aadc0e1bafb3ac7027318341c2ce8d2dcf671712cb6",
+    "tests/test_text_resource_limits.py": "ba0939409c7a36096008948f89547ed87bbdce6d6c3c0acfee0a1e76f09df8e0"
+  }
+}

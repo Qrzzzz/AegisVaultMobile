@@ -19,7 +19,7 @@
     <string name="action_paste">Paste</string>
     <string name="label_password">AES Key</string>
     <string name="hint_password">Enter a password or passphrase</string>
-    <string name="password_hint_aes">Use a memorable passphrase and keep it on a single line.</string>
+    <string name="password_hint_aes">Use a passphrase. Spaces are part of the password; only an empty password is rejected.</string>
     <string name="password_hint_base64">Base64 is encoding only. It does not provide secrecy and does not require a password.</string>
     <string name="action_encrypt">Encrypt</string>
     <string name="action_decrypt">Decrypt</string>
@@ -74,7 +74,7 @@
     <string name="settings_auto_clear_leave_support">Clears input, password, and result when app fully leaves foreground; unsaved text may be lost.</string>
 
 
-    <string name="input_supporting">Long text is supported. You can paste content directly in the field.</string>
+    <string name="input_supporting">Text is preserved exactly, including empty text and whitespace. Long text is supported.</string>
     <string name="action_clear_result">Clear result</string>
     <string name="settings_group_appearance">Appearance</string>
     <string name="settings_group_security">Security</string>
@@ -87,4 +87,8 @@
     <string name="error_resource">Input or cryptographic parameters exceed the Mobile safety limit.</string>
     <string name="error_internal">Cryptographic operation unavailable. Please retry.</string>
     <string name="error_migration">Only formal AGV1 text is supported. Old Android JSON, AES and AK data need the offline migration tool; see migration instructions.</string>
+    <string name="base64_strict">Strict Base64 validation</string>
+    <string name="base64_ignore_whitespace">Ignore ASCII whitespace</string>
+    <string name="base64_modes_support">Strict mode rejects all whitespace, even if Ignore is on. Turn Strict off and Ignore on to accept TAB, LF, CR, FF, VT and SPACE. Other characters and padding remain validated.</string>
+    <string name="error_input_unicode">Input contains invalid Unicode (an unpaired surrogate).</string>
 </resources>

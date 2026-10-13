@@ -22,7 +22,7 @@ internal object ResourceLimits {
     }
 
     /** Count before allocating UTF-8; reject unpaired surrogates instead of replacement. */
-    fun utf8Size(text: String, limit: Int = PLAINTEXT): Int {
+    fun utf8Size(text: String, limit: Int = PLAINTEXT, invalidCode: ErrorCode = ErrorCode.INPUT_INVALID): Int {
         size(text.length.toLong(), limit)
         var bytes = 0L
         var i = 0
@@ -33,11 +33,11 @@ internal object ResourceLimits {
                 c < '\u0800' -> 2
                 c.isHighSurrogate() -> {
                     if (i == text.length || !text[i].isLowSurrogate())
-                        throw AegisVaultException(ErrorCode.UTF8_INVALID)
+                        throw AegisVaultException(invalidCode)
                     i++
                     4
                 }
-                c.isLowSurrogate() -> throw AegisVaultException(ErrorCode.UTF8_INVALID)
+                c.isLowSurrogate() -> throw AegisVaultException(invalidCode)
                 else -> 3
             }
             size(bytes, limit)

@@ -16,6 +16,11 @@ SAMPLES = json.loads((ROOT / "app/src/test/resources/android-historical.json").r
 
 
 class MigrationTests(unittest.TestCase):
+    def test_whitespace_new_password_is_valid_empty_is_not(self):
+        sample = SAMPLES["modern"]
+        self.assertTrue(m.migrate(sample["token"], sample["password"], " \t ", "android-json").startswith("AGV1."))
+        with self.assertRaisesRegex(m.MigrationError, "PASSWORD"):
+            m.migrate(sample["token"], sample["password"], "", "android-json")
     def test_unicode_embedded_ak_password_is_recovered_without_logging(self):
         password, plaintext = "公开测试密钥-é", "公开 Unicode 迁移样本 🔐"
         nonce = bytes(range(12))

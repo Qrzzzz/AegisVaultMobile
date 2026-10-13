@@ -1,0 +1,73 @@
+{
+  "version": "1.3",
+  "versionCode": 5,
+  "tests": {
+    "tests": 47,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Error": 0,
+    "Warning": 40
+  },
+  "device": "NOT RUN: adb devices has no connected device",
+  "apk": {
+    "name": "AegisVaultMobile-v1.3-debug.apk",
+    "size": 21036219,
+    "sha256": "9c2c512c11307e11b1cb21e8020dcebbde4df2fa709fd355f88615643ce32765"
+  },
+  "signer_sha256": "b2b0f013dcfa428bb6f4c3563faa204c7890f72abd6062d1cbbb155222d493c9",
+  "runtime": {
+    "gradle": "8.7",
+    "java": "Android Studio JBR 21.0.10",
+    "sdk": "34",
+    "build_tools": "34.0.0",
+    "note": "ASCII source copy with temporary repository mirrors; declared versions unchanged"
+  },
+  "source_sha256": {
+    "app/src/main/AndroidManifest.xml": "2849402edd189532a232a1c5693f1a51558e82089d14ff78ace53129c0e561c5",
+    "app/src/test/resources/android-historical.json": "bf2f8a0ae27b7ade8be0f2079163072de9d5532d267d33ff6df56a37c7681882",
+    "app/src/test/resources/desktop-agv1.json": "89aed487a49877f072c94289187afd1030e976797554b1d22b1a03e9aee9fa66",
+    "app/src/test/resources/interop-1.2.json": "e2bd21556caca046d411a529e6d93c692f1ca394e6c2c535fb9ea3bee8971238",
+    "app/src/test/resources/text-semantics-1.3.json": "dcf26cbe01df7ddb3d98c833c9336d0ab9924b57ff84ee1558abb32ddf5b40a4",
+    "app/src/test/java/com/aegisvault/mobile/core/AegisVaultEngineTest.kt": "24be7ee751b23e5d4cfdb4437c45eb607d6e9e17c8af7811115132cb77000f62",
+    "app/src/test/java/com/aegisvault/mobile/core/ResourceSafetyTest.kt": "d6d58a26f89429f20c2f10b2a533d903da888b79564062a3e8e2d8abe8d515b7",
+    "app/src/test/java/com/aegisvault/mobile/core/TextProtocolTest.kt": "24f19d8108da8ee92402cf6d3d8867f46081592d2b140ade0777807cd804952b",
+    "app/src/test/java/com/aegisvault/mobile/core/TextSemanticsTest.kt": "aeb6e22ed3a5d3380995acaeafd69f5f2f72c4fe8742bee681367e611a54d43d",
+    "app/src/test/java/com/aegisvault/mobile/ui/AegisVaultViewModelTest.kt": "6c83a3eda5bd85ed48dd595d424f9cd960791236bd279e704db020c1197d3222",
+    "app/src/test/java/com/aegisvault/mobile/ui/Base64OptionsTaskTest.kt": "9c4f174d307f8ea9ca812724fb25d135fbf0df5263fe50303cccee792686c6cd",
+    "app/src/test/java/com/aegisvault/mobile/ui/ClipboardLogicTest.kt": "1b1fa4013af853bca067180574eefe0cfa2f15c237aae34237ee0cbca40c2f01",
+    "app/src/test/java/com/aegisvault/mobile/ui/MainDispatcherRule.kt": "d6db88da9fdad2c3654a8dcf7189eea068c62549bd6586fb5f5ea39fd107823d",
+    "app/src/test/java/com/aegisvault/mobile/ui/TaskLifecycleTest.kt": "482a56684d4b032c191cbdff4ad95ca117b070abe6713b85e7580287a6e04fc5",
+    "app/src/main/res/drawable/ic_launcher_background.xml": "980cb37a15cc699f7f70def7a7d58fa5015713490f689deaa911a2e44c3b43df",
+    "app/src/main/res/drawable-nodpi/ic_launcher_foreground.png": "a89807e2988a74fc2cb5651d15c1aab8dae89ffbac5c08c8f4ac258deeb5ef44",
+    "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml": "1c832bf194d8eecd439a92bcced0df144c9f566b934b3d7865e983d8ee8dbdeb",
+    "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml": "1c832bf194d8eecd439a92bcced0df144c9f566b934b3d7865e983d8ee8dbdeb",
+    "app/src/main/res/values/strings.xml": "112cb57674b244b0d90f7a7356c00ea83f2df042fe4bdf285c7eaf894cb28c1a",
+    "app/src/main/res/values-zh-rCN/strings.xml": "26baf51d28e8a1c11467a0415d43f6ce215cca1a4b36f56987481c4b1aeb0892",
+    "app/src/main/res/xml/locales_config.xml": "8936b7f9048be7656565b6b0023e2456d94dc424e134b918825db2a73edc5164",
+    "app/src/main/java/com/aegisvault/mobile/AegisVaultApp.kt": "07c0f306bee788aed4516de1adffe1d5a0dda3656afbd2aee03b6fbe0efad743",
+    "app/src/main/java/com/aegisvault/mobile/MainActivity.kt": "f18b4cf1ddf12a736060a6d7dae47a90ba6c68e2334ee240179198157bbe7f74",
+    "app/src/main/java/com/aegisvault/mobile/core/AegisVaultEngine.kt": "a787cad11a860f30a22626e580ec2afe874203c50ae202fe96a359f83cb3433b",
+    "app/src/main/java/com/aegisvault/mobile/core/ProtocolJson.kt": "adcc27877c1551b9f10ba3afdbb5f9b693e4806624d17eeba0c62029682a0f98",
+    "app/src/main/java/com/aegisvault/mobile/core/ResourceLimits.kt": "ad3a0d37571e866df719bf786550c9fafdcb4492c7d798e5ff3b605bf9619c75",
+    "app/src/main/java/com/aegisvault/mobile/core/TextBase64.kt": "e97bfe0969d0192911ccc3649702a93ecf89607eaaef43db5c1a6aabac974361",
+    "app/src/main/java/com/aegisvault/mobile/data/AppPreferences.kt": "59903d096f027f6f23c7173b636fd41c6bbc2f5e7923e89229516adc54831ed7",
+    "app/src/main/java/com/aegisvault/mobile/data/AppPreferencesRepository.kt": "e0c7b5d61dcb1da09c6870600639809dd06e48d0bb87e570eb9ba059a4e5bbd3",
+    "app/src/main/java/com/aegisvault/mobile/data/AppSettings.kt": "766c15318d11bbe54d1177e347a3372b9d7ba3e5889dd7eb44b483f1df864a7e",
+    "app/src/main/java/com/aegisvault/mobile/data/AppSettingsRepository.kt": "f04bf033790a03760d82f8ead3cafb32d8b88cf139ca5f0070d3609bd9a5276a",
+    "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultRoute.kt": "c308c54918ea277552f18e954e461792295d18a9048a169e78ab95c52da7fc32",
+    "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultUiEvent.kt": "80ce2a4c56a442e1b5b7fdef169f6e0dfb8a6cd92880c0e437a356b561ec1d70",
+    "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultUiState.kt": "99ff75d9240d0ca6c8c67a46c2583e1b1674f1138134899851e85e0a83b2ebeb",
+    "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultViewModel.kt": "5006138d38ee2b89ded74d1004f9311c77a9a009b5674283e9fee480949ffa0c",
+    "app/src/main/java/com/aegisvault/mobile/ui/components/Components.kt": "cedeb0df6d17190275657da7b396917effd2deb97f9443fcd0defa3f04f002d8",
+    "app/src/main/java/com/aegisvault/mobile/ui/theme/AegisVaultDesign.kt": "fa6076d228eccfa0da4b051bac8b4608d7727fa45252d3cb40f29648e1978433",
+    "app/src/main/java/com/aegisvault/mobile/ui/theme/AnimatedAuroraBackground.kt": "fedacd0b5b197a8eb7fcd7f4d2448ece5804f9b0d6f62acc680d229bbd674f10",
+    "app/src/main/java/com/aegisvault/mobile/ui/theme/AppTheme.kt": "0706b428024abccea9cb9ae0f8c33f06c7bf341c84ba9f3f09beaf0bbfbe0d5f",
+    "app/build.gradle.kts": "f8731c60c90a543165aed54e9b0ce68544df374909bc264d9db272bb8abc6c7f",
+    "build.gradle.kts": "48f7c9d13c50fa379dce0a2b7c028bcffe60d428eada35b12cfb8af28b31c962",
+    "settings.gradle.kts": "c03e51d3d80da55561ae1b679b20b793a17fc257165d9b55073afa50ab0a6e1c",
+    "gradle/wrapper/gradle-wrapper.properties": "dd7a1ea9958ebb69a3b4b91854fbdb5ed746996a26ae32c5b1a051f7ce4b8613"
+  }
+}

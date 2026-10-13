@@ -19,7 +19,7 @@
     <string name="action_paste">粘贴</string>
     <string name="label_password">AES 密钥</string>
     <string name="hint_password">输入密码或口令短语</string>
-    <string name="password_hint_aes">建议使用容易记住的口令短语，并保持单行输入。</string>
+    <string name="password_hint_aes">使用口令短语。空格是口令的一部分，仅拒绝空口令。</string>
     <string name="password_hint_base64">Base64 只是编码，不提供保密性，也不需要密码。</string>
     <string name="action_encrypt">加密</string>
     <string name="action_decrypt">解密</string>
@@ -74,7 +74,7 @@
     <string name="settings_auto_clear_leave_support">应用进入后台后清空输入、口令和结果，未保存文本可能丢失。</string>
 
 
-    <string name="input_supporting">支持较长文本，可在输入框内直接粘贴。</string>
+    <string name="input_supporting">保留文本原样，包括空文本和空白。支持长文本。</string>
     <string name="action_clear_result">清空结果</string>
     <string name="settings_group_appearance">外观</string>
     <string name="settings_group_security">安全</string>
@@ -87,4 +87,8 @@
     <string name="error_resource">输入或加密参数超出安卓版安全限制。</string>
     <string name="error_internal">加密操作暂不可用，请重试。</string>
     <string name="error_migration">仅支持正式 AGV1 文本。旧 Android JSON、AES 和 AK 数据需使用独立离线迁移工具，请参阅迁移说明。</string>
+    <string name="base64_strict">严格校验 Base64</string>
+    <string name="base64_ignore_whitespace">忽略 ASCII 空白</string>
+    <string name="base64_modes_support">严格模式始终拒绝空白，即使已开启忽略。关闭严格并开启忽略后，仅接受 TAB、LF、CR、FF、VT 和普通空格；其他字符和 padding 仍会校验。</string>
+    <string name="error_input_unicode">输入包含无效 Unicode（未配对的 surrogate）。</string>
 </resources>
