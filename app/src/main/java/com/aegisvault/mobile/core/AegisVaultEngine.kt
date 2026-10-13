@@ -1,11 +1,8 @@
 package com.aegisvault.mobile.core
 
 import org.bouncycastle.crypto.generators.SCrypt
-import org.json.JSONException
-import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.nio.charset.CodingErrorAction
-import java.security.MessageDigest
 import java.security.SecureRandom
 import java.util.Base64
 import javax.crypto.AEADBadTagException
@@ -20,6 +17,7 @@ enum class ErrorCode {
     BASE64_INVALID,
     UTF8_INVALID,
     PROTOCOL,
+    MIGRATION,
     RESOURCE,
     INTERNAL,
 }
@@ -31,7 +29,6 @@ class AegisVaultException(
 
 data class TextDecryptResult(
     val plaintext: String,
-    val usedLegacyAk: Boolean,
 )
 
 object AegisVaultEngine {
@@ -49,53 +46,92 @@ object AegisVaultEngine {
         val saltLength: Int = 16,
     )
 
-    fun encryptText(plaintext: String, password: String): String {
-        if (plaintext.isBlank()) {
-            throw AegisVaultException(ErrorCode.EMPTY_TEXT)
-        }
+    internal val textMagic = byteArrayOf(65, 71, 86, 84, 69, 88, 84, 1)
+
+    fun encryptText(plaintext: String, password: String): String = encryptEnvelope(
+        plaintext, password, randomBytes(16), randomBytes(nonceSize),
+        java.time.Instant.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS).toString(), ScryptParams(),
+    )
+
+    // Deterministic inputs are internal to tests; the production entry always uses SecureRandom.
+    internal fun encryptEnvelope(plaintext: String, password: String, salt: ByteArray, nonce: ByteArray,
+        createdAt: String, params: ScryptParams): String {
+        if (plaintext.isBlank()) throw AegisVaultException(ErrorCode.EMPTY_TEXT)
         requirePassword(password)
         ResourceLimits.encryptedOutputSize(ResourceLimits.utf8Size(plaintext))
-        val params = ScryptParams()
-        val salt = randomBytes(params.saltLength)
-        val nonce = randomBytes(nonceSize)
-        val key = deriveScryptKey(password, salt, params)
-        val ciphertext = aesGcmEncrypt(key, nonce, plaintext.toByteArray(StandardCharsets.UTF_8), null)
-        val payload = JSONObject()
-            .put("v", 1)
-            .put("kind", "text")
-            .put("alg", "AES-256-GCM")
-            .put(
-                "kdf",
-                JSONObject()
-                    .put("name", "scrypt")
-                    .put("n", params.n)
-                    .put("r", params.r)
-                    .put("p", params.p)
-                    .put("length", params.length)
-                    .put("salt_len", params.saltLength),
-            )
-            .put("salt", encodeUrlBase64(salt))
-            .put("nonce", encodeUrlBase64(nonce))
-            .put("ciphertext", encodeUrlBase64(ciphertext))
-
-        val raw = payload.toString().toByteArray(StandardCharsets.UTF_8)
-        ResourceLimits.size(raw.size.toLong(), ResourceLimits.JSON_PAYLOAD)
-        val token = textPrefix + encodeUrlBase64(raw)
-        ResourceLimits.size(token.length.toLong(), ResourceLimits.ENCODED)
-        return token
+        validateScryptParams(params, salt.size)
+        if (nonce.size != nonceSize || createdAt.isEmpty() || createdAt.codePointCount(0, createdAt.length) > 128 || '\u0000' in createdAt)
+            throw AegisVaultException(ErrorCode.PROTOCOL)
+        val header = ProtocolJson.canonical(mapOf(
+            "algorithm" to "AES-256-GCM", "created_at" to createdAt, "format" to "aegisvault.text",
+            "version" to 1, "nonce" to Base64.getEncoder().encodeToString(nonce),
+            "kdf" to mapOf("type" to "scrypt", "salt" to Base64.getEncoder().encodeToString(salt),
+                "n" to params.n, "r" to params.r, "p" to params.p, "length" to params.length),
+        )).toByteArray(StandardCharsets.UTF_8)
+        ResourceLimits.size(header.size.toLong(), ResourceLimits.METADATA)
+        val ciphertext = aesGcmEncrypt(deriveScryptKey(password, salt, params), nonce,
+            plaintext.toByteArray(StandardCharsets.UTF_8), header)
+        val raw = java.nio.ByteBuffer.allocate(12 + header.size + ciphertext.size)
+            .put(textMagic).putInt(header.size).put(header).put(ciphertext).array()
+        return textPrefix + encodeUrlBase64(raw)
     }
 
     fun decryptText(token: String, password: String): TextDecryptResult {
         ResourceLimits.size(token.length.toLong(), ResourceLimits.ENCODED)
         val trimmed = token.trim()
-        if (trimmed.isBlank()) {
-            throw AegisVaultException(ErrorCode.EMPTY_TEXT)
-        }
-        return if (trimmed.startsWith(textPrefix)) {
-            TextDecryptResult(plaintext = decryptModernText(trimmed, password), usedLegacyAk = false)
-        } else {
-            decryptLegacyText(trimmed, password)
-        }
+        if (trimmed.isBlank()) throw AegisVaultException(ErrorCode.EMPTY_TEXT)
+        if (!trimmed.startsWith(textPrefix)) throw AegisVaultException(
+            if (trimmed.startsWith("AGV")) ErrorCode.PROTOCOL else ErrorCode.MIGRATION)
+        val raw = decodeUrlBase64(trimmed.removePrefix(textPrefix), ResourceLimits.PACKAGE)
+        if (raw.size >= 8 && raw.copyOfRange(0, 7).contentEquals(textMagic.copyOfRange(0, 7)) && raw[7] != 1.toByte())
+            throw AegisVaultException(ErrorCode.PROTOCOL)
+        if (raw.size < textMagic.size || !raw.copyOfRange(0, textMagic.size).contentEquals(textMagic))
+            throw AegisVaultException(ErrorCode.MIGRATION)
+        if (raw.size < 12) throw AegisVaultException(ErrorCode.PROTOCOL)
+        val headerLength = java.nio.ByteBuffer.wrap(raw, 8, 4).int.toLong() and 0xffffffffL
+        if (headerLength == 0L) throw AegisVaultException(ErrorCode.PROTOCOL)
+        ResourceLimits.size(headerLength, ResourceLimits.METADATA)
+        if (12L + headerLength + 16 > raw.size) throw AegisVaultException(ErrorCode.PROTOCOL)
+        val end = 12 + headerLength.toInt()
+        ResourceLimits.size((raw.size - end).toLong(), ResourceLimits.CIPHERTEXT)
+        val headerBytes = raw.copyOfRange(12, end)
+        val header = ProtocolJson.parse(headerBytes)
+        if (string(header, "format") != "aegisvault.text" || integer(header, "version") != 1 ||
+            string(header, "algorithm") != "AES-256-GCM") throw AegisVaultException(ErrorCode.PROTOCOL)
+        val createdAt = string(header, "created_at")
+        if (createdAt.isEmpty() || createdAt.codePointCount(0, createdAt.length) > 128 || '\u0000' in createdAt)
+            throw AegisVaultException(ErrorCode.PROTOCOL)
+        @Suppress("UNCHECKED_CAST")
+        val kdf = header["kdf"] as? Map<String, Any?> ?: throw AegisVaultException(ErrorCode.PROTOCOL)
+        if (string(kdf, "type") != "scrypt") throw AegisVaultException(ErrorCode.PROTOCOL)
+        val salt = decodeStandardBase64(string(kdf, "salt"), 64)
+        val params = ScryptParams(integer(kdf, "n"), integer(kdf, "r"), integer(kdf, "p"),
+            integer(kdf, "length"), salt.size)
+        validateScryptParams(params, salt.size)
+        val nonce = decodeStandardBase64(string(header, "nonce"), nonceSize)
+        if (nonce.size != nonceSize) throw AegisVaultException(ErrorCode.PROTOCOL)
+        requirePassword(password)
+        val plaintext = aesGcmDecrypt(deriveScryptKey(password, salt, params), nonce,
+            raw.copyOfRange(end, raw.size), headerBytes)
+        val text = ProtocolJson.utf8(plaintext)
+        ResourceLimits.utf8Size(text)
+        return TextDecryptResult(text)
+    }
+
+    private fun string(map: Map<String, Any?>, field: String): String =
+        map[field] as? String ?: throw AegisVaultException(ErrorCode.PROTOCOL)
+
+    private fun integer(map: Map<String, Any?>, field: String): Int {
+        val value = map[field] as? Long ?: throw AegisVaultException(ErrorCode.PROTOCOL)
+        if (value !in Int.MIN_VALUE.toLong()..Int.MAX_VALUE.toLong()) throw AegisVaultException(ErrorCode.PROTOCOL)
+        return value.toInt()
+    }
+
+    private fun decodeStandardBase64(input: String, limit: Int): ByteArray {
+        ResourceLimits.decodedSize(input, limit)
+        if (input.length % 4 != 0) throw AegisVaultException(ErrorCode.PROTOCOL)
+        return try { Base64.getDecoder().decode(input) }
+        catch (_: IllegalArgumentException) { throw AegisVaultException(ErrorCode.PROTOCOL) }
     }
 
     fun encodeText(text: String): String {
@@ -129,89 +165,6 @@ object AegisVaultEngine {
         }
     }
 
-    private fun decryptModernText(token: String, password: String): String {
-        requirePassword(password)
-        val payloadRaw = decodeUrlBase64(token.removePrefix(textPrefix), ResourceLimits.JSON_PAYLOAD)
-        ResourceLimits.jsonPreflight(payloadRaw)
-        try {
-            val payloadText = try {
-                StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
-                    .decode(java.nio.ByteBuffer.wrap(payloadRaw)).toString()
-            } catch (_: java.nio.charset.CharacterCodingException) {
-                throw AegisVaultException(ErrorCode.PROTOCOL)
-            }
-            val payload = JSONObject(payloadText)
-            if (strictInt(payload, "v") != 1 || strictString(payload, "kind") != "text" ||
-                strictString(payload, "alg") != "AES-256-GCM") {
-                throw AegisVaultException(ErrorCode.PROTOCOL)
-            }
-            val kdf = payload.getJSONObject("kdf")
-            if (strictString(kdf, "name") != "scrypt") {
-                throw AegisVaultException(ErrorCode.PROTOCOL)
-            }
-            val params = ScryptParams(
-                n = strictInt(kdf, "n"),
-                r = strictInt(kdf, "r"),
-                p = strictInt(kdf, "p"),
-                length = strictInt(kdf, "length"),
-                saltLength = strictInt(kdf, "salt_len"),
-            )
-            validateScryptParams(params)
-            val ciphertextToken = strictString(payload, "ciphertext")
-            ResourceLimits.size(payloadRaw.size.toLong() - ciphertextToken.length, ResourceLimits.METADATA)
-            val salt = decodeUrlBase64(strictString(payload, "salt"), 64)
-            validateScryptParams(params, salt.size)
-            val nonce = decodeUrlBase64(strictString(payload, "nonce"), nonceSize)
-            val ciphertext = decodeUrlBase64(ciphertextToken, ResourceLimits.CIPHERTEXT)
-            if (nonce.size != nonceSize || ciphertext.size < 16) {
-                throw AegisVaultException(ErrorCode.PROTOCOL)
-            }
-            val key = deriveScryptKey(password, salt, params)
-            val plaintext = aesGcmDecrypt(key, nonce, ciphertext, null)
-            ResourceLimits.size(plaintext.size.toLong(), ResourceLimits.PLAINTEXT)
-            return plaintext.toString(StandardCharsets.UTF_8)
-        } catch (_: JSONException) {
-            throw AegisVaultException(ErrorCode.PROTOCOL)
-        }
-    }
-
-    private fun decryptLegacyText(token: String, password: String): TextDecryptResult {
-        var rawToken = token
-        var passwordToUse = password
-        var usedLegacyAk = false
-
-        if (rawToken.startsWith("AK#")) {
-            val parts = rawToken.split("#", limit = 3)
-            if (parts.size != 3 || parts[1].isBlank() || parts[2].isBlank()) {
-                throw AegisVaultException(ErrorCode.PROTOCOL)
-            }
-            passwordToUse = parts[1]
-            rawToken = parts[2]
-            usedLegacyAk = true
-        } else {
-            requirePassword(passwordToUse)
-        }
-
-        ResourceLimits.utf8Size(passwordToUse)
-        ResourceLimits.decodedSize(rawToken, ResourceLimits.CIPHERTEXT + nonceSize)
-        val raw = try {
-            Base64.getDecoder().decode(rawToken)
-        } catch (_: IllegalArgumentException) {
-            throw AegisVaultException(ErrorCode.PROTOCOL)
-        }
-        if (raw.size < nonceSize + 16) {
-            throw AegisVaultException(ErrorCode.PROTOCOL)
-        }
-        val nonce = raw.copyOfRange(0, nonceSize)
-        val ciphertext = raw.copyOfRange(nonceSize, raw.size)
-        val key = sha256(passwordToUse.toByteArray(StandardCharsets.UTF_8))
-        val plaintext = aesGcmDecrypt(key, nonce, ciphertext, null)
-        return TextDecryptResult(
-            plaintext = plaintext.toString(StandardCharsets.UTF_8),
-            usedLegacyAk = usedLegacyAk,
-        )
-    }
-
     private fun requirePassword(password: String) {
         if (password.isBlank()) {
             throw AegisVaultException(ErrorCode.EMPTY_PASSWORD)
@@ -243,18 +196,6 @@ object AegisVaultEngine {
             throw AegisVaultException(ErrorCode.RESOURCE)
     }
 
-    private fun strictInt(json: JSONObject, name: String): Int {
-        val value = json.get(name)
-        if (value !is Int) throw AegisVaultException(ErrorCode.PROTOCOL)
-        return value
-    }
-
-    private fun strictString(json: JSONObject, name: String): String {
-        val value = json.get(name)
-        if (value !is String) throw AegisVaultException(ErrorCode.PROTOCOL)
-        return value
-    }
-
     private fun aesGcmEncrypt(key: ByteArray, nonce: ByteArray, plaintext: ByteArray, aad: ByteArray?): ByteArray = cryptoOperation {
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(key, "AES"), GCMParameterSpec(tagSizeBits, nonce))
@@ -283,8 +224,6 @@ object AegisVaultEngine {
         }
 
     private fun randomBytes(size: Int): ByteArray = ByteArray(size).also(secureRandom::nextBytes)
-
-    private fun sha256(input: ByteArray): ByteArray = MessageDigest.getInstance("SHA-256").digest(input)
 
     private fun encodeUrlBase64(input: ByteArray): String =
         Base64.getUrlEncoder().withoutPadding().encodeToString(input)

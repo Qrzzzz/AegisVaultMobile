@@ -1,0 +1,36 @@
+{
+  "notice": "Artificial public data only",
+  "desktop_sha": "c6664e2b7e6a11b7dfb55f0881136131e1d2bc74",
+  "cases": [
+    {
+      "origin": "desktop",
+      "plaintext": "Real desktop → Android 中文 🔐",
+      "password": "public-interop-password",
+      "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTEzVDAwOjQ3OjQ5WiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjozMjc2OCwicCI6MSwiciI6OCwic2FsdCI6Ikc5MG9vZHZYTS9rQWlCUFR6S2NGNVE9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiJiMUdsV2g3ZkRFVkFiSGlwIiwidmVyc2lvbiI6MX1rUG4SpFwP1hpqKwNs-BQXib1cZdNvOaaXtntYuZAyN4f2qnclPO8umvLK2dyRFkKQl-h7"
+    },
+    {
+      "origin": "desktop",
+      "plaintext": "line one\nline two é😀",
+      "password": "public-interop-password",
+      "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTEzVDAwOjQ3OjQ5WiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjozMjc2OCwicCI6MSwiciI6OCwic2FsdCI6IjYwZ2J5K2JEbGJiUjBKSVdYZ0JreFE9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiJlWWRMS2FpcGZTNDNnQ0wzIiwidmVyc2lvbiI6MX2vw_14_odz7-YhkYv-H_OfO_dWd31X0zlKPIWKowQWdjWEmrTQWgsU"
+    },
+    {
+      "origin": "migration-modern",
+      "plaintext": "cross-platform 中文 🔐",
+      "password": "public-new-password",
+      "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTEzVDAwOjQ3OjQ5WiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjozMjc2OCwicCI6MSwiciI6OCwic2FsdCI6ImxsY3hOdTNNdTBnRUNtdHJtc2s3ZVE9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiI5Zjg4SXpQQjRUYVNjVEtDIiwidmVyc2lvbiI6MX04P1smr_a2Robwjuw-g3Jx5e45s7Pq6K7NtJbEsmRaaI1VyTZV2wUcqSk"
+    },
+    {
+      "origin": "migration-legacy",
+      "plaintext": "legacy",
+      "password": "public-new-password",
+      "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTEzVDAwOjQ3OjQ5WiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjozMjc2OCwicCI6MSwiciI6OCwic2FsdCI6ImZNR0xYQjRNOUczNmJCMDFaNzlvZlE9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiJ1ckpvTG1LTzlLY1VqZnFiIiwidmVyc2lvbiI6MX39ht6JBpPGpJyy8JynJuEHVBGTJEeS"
+    },
+    {
+      "origin": "migration-ak",
+      "plaintext": "legacy",
+      "password": "public-new-password",
+      "token": "AGV1.QUdWVEVYVAEAAADdeyJhbGdvcml0aG0iOiJBRVMtMjU2LUdDTSIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTEzVDAwOjQ3OjUwWiIsImZvcm1hdCI6ImFlZ2lzdmF1bHQudGV4dCIsImtkZiI6eyJsZW5ndGgiOjMyLCJuIjozMjc2OCwicCI6MSwiciI6OCwic2FsdCI6ImNRYkhrWUNaSHgrT1c3VnU2QWhLOXc9PSIsInR5cGUiOiJzY3J5cHQifSwibm9uY2UiOiJFQTNLL1ZPaWJCcWswUGZQIiwidmVyc2lvbiI6MX0ugxHEVQpdhOjTcxLoix7dzW6Zh3Z_"
+    }
+  ]
+}

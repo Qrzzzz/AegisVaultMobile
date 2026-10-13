@@ -1,0 +1,16 @@
+{
+  "gradle_zip": "C:\\Users\\qrzzz\\.gradle\\wrapper\\dists\\gradle-8.7-bin\\bhs2wmbdwecv87pi65oeuq5iu\\gradle-8.7-bin.zip",
+  "gradle_sha256": "544c35d6bd849ae8a5ed0bcea39ba677dc40f49df7d1835561582da2009b961d",
+  "java_home": "D:/Programme Files/Android Studio/jbr",
+  "sdk": "C:/Users/qrzzz/AppData/Local/Android/Sdk",
+  "sdk_source_properties": "Pkg.Desc=Android SDK Platform 14\nPkg.UserSrc=false\nPlatform.Version=14\nPlatform.CodeName=\nPkg.Revision=3\nAndroidVersion.ApiLevel=34\nAndroidVersion.ExtensionLevel=7\nAndroidVersion.IsBaseSdk=true\nLayoutlib.Api=15\nLayoutlib.Revision=1\nPlatform.MinToolsRev=22\n",
+  "application_plugins": {
+    "AGP": "8.5.2",
+    "Kotlin": "1.9.24"
+  },
+  "scripts_sha256": {
+    "migrate-legacy.py": "319497606c47e4e589c97f195c168d075b873390c021b628db149d80782a9a10",
+    "test-migration.py": "3bd033f7b0863ab19d607fdda97c5b664a4a632ea82bade2ec6931380ec70928",
+    "interop-1.2.py": "1978ea11f88247e4b18836a7944a4bdccb36968868397d5bf4388647e3035d5c"
+  }
+}

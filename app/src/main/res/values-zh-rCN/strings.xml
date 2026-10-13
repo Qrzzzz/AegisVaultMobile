@@ -29,12 +29,11 @@
     <string name="result_placeholder">执行操作后，结果会显示在这里。</string>
     <string name="action_copy_result">复制结果</string>
     <string name="about_title">关于 AegisVault Mobile</string>
-    <string name="about_body">一个更聚焦的移动端文本工具，提供 AES 加密解密、Base64 编码解码，以及旧版文本兼容能力。</string>
+    <string name="about_body">离线 AGV1 文本加密解密，认证原始头部，并提供文本 Base64 工具。</string>
     <string name="status_ready">就绪</string>
     <string name="status_processing">处理中...</string>
     <string name="status_text_encrypt_success">文本加密成功，输出为 AGV1 新格式。</string>
     <string name="status_text_decrypt_success">文本解密成功。</string>
-    <string name="status_text_decrypt_legacy_ak">已用高风险 AK 兼容模式解密，请谨慎处理明文。</string>
     <string name="status_base64_encode_success">Base64 编码成功。</string>
     <string name="status_base64_decode_success">Base64 解码成功。</string>
     <string name="status_copied">结果已复制到剪贴板。</string>
@@ -87,4 +86,5 @@
 
     <string name="error_resource">输入或加密参数超出安卓版安全限制。</string>
     <string name="error_internal">加密操作暂不可用，请重试。</string>
+    <string name="error_migration">仅支持正式 AGV1 文本。旧 Android JSON、AES 和 AK 数据需使用独立离线迁移工具，请参阅迁移说明。</string>
 </resources>

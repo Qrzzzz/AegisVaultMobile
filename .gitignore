@@ -26,5 +26,8 @@ Thumbs.db
 *.swp
 *.swo
 
+# Offline Python migration / validation tools
+__pycache__/
+
 # Logs
 *.log

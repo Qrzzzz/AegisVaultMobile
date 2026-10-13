@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2 - 2026-10-13
+
+- Formal desktop AGV1 binary text envelope, canonical UTF-8 writer, exact raw-header AAD and strict independent JSON/UTF-8 reader.
+- Explicit bounded offline Android JSON/AES/AK migration; production legacy fallback, SHA256 key derivation and AK branches removed.
+- Separate 64 KiB header / 1 MiB plaintext budgets and single-layer token capacity; Android 64 MiB KDF policy retained.
+- Frozen fixed-vector equality, actual desktop CryptoService bidirectional exchange and historical migration corpus validation.
+- versionName 1.2 / versionCode 4; existing signing and workflow contracts preserved. Debug-signed test release; physical-device acceptance remains NOT RUN.
+
 ## 1.1 - 2026-10-12
 
 - Reserve one effective task synchronously; cancel and discard obsolete results on clear, edit, mode change, auto-clear leave and destruction. Completion patches only current result/message/busy.

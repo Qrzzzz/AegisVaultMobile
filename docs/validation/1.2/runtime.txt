@@ -1,0 +1,14 @@
+
+------------------------------------------------------------
+Gradle 8.7
+------------------------------------------------------------
+
+Build time:   2024-03-22 15:52:46 UTC
+Revision:     650af14d7653aa949fce5e886e685efc9cf97c10
+
+Kotlin:       1.9.22
+Groovy:       3.0.17
+Ant:          Apache Ant(TM) version 1.10.13 compiled on January 4 2023
+JVM:          21.0.10 (JetBrains s.r.o. 21.0.10+-14961533-b1163.108)
+OS:           Windows 11 10.0 amd64
+

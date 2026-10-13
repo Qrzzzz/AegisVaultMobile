@@ -17,7 +17,7 @@
 
 ---
 
-Current version is **1.1** (versionCode 3). This update fixes task lifecycle and resource budgets. Android JSON AGV1/legacy AES/AK# remain; desktop tokens are still incompatible. [Security contract, limits and 1.2–1.4 migration plan](./docs/backend-1.1.md)
+Current version is **1.2** (versionCode 4), using formal desktop AGV1 text and authenticated headers. Historical Android JSON/AES/AK# need explicit offline migration. [1.2 contract and limits](./docs/backend-1.2.md) · [Migration](./docs/migration-1.2.en.md) · [Validation record](./docs/validation-1.2.md)
 
 ## ✨ Overview
 
@@ -51,10 +51,9 @@ This project was developed, organized, documented, and release-optimized with as
 - **AES-256-GCM** text encryption and authentication
 - Password-based key derivation with **scrypt**
 - Random salt and random nonce for every encryption
-- Android JSON `AGV1.` encrypted text format (desktop protocol alignment is pending)
-- Modern token decryption
-- Legacy text compatibility
-- Warning for high-risk legacy `AK#` compatibility mode
+- Formal desktop `AGV1.` binary text envelope with exact raw-header authentication
+- Production App decrypts formal AGV1 only; historical Android JSON/AES/AK# use a separate migration tool
+- Format interoperability remains subject to Android 1 MiB plaintext and 64 MiB KDF budgets
 
 ### 🔤 Base64 Text Utility
 
@@ -92,7 +91,7 @@ Download the APK from GitHub Releases:
 Current version:
 
 ```text
-AegisVault Mobile v1.1
+AegisVault Mobile v1.2
 ```
 
 > The current APK is debug-signed and intended for testing and demonstration. For production distribution, build a release APK or AAB with a private signing key.
@@ -128,7 +127,7 @@ AegisVault Mobile v1.1
 
 ## 🔐 Security Model
 
-Modern AegisVault text tokens start with `AGV1.`. The basic process is:
+Version 1.2 uses `AGV1.` + URL-safe Base64(AGVTEXT\x01 + BE32 header length + raw UTF-8 JSON header + ciphertext/tag). Exact raw header bytes are GCM AAD. Production decryption accepts only this envelope; historical Android JSON tokens with the same prefix require migration. The basic process is:
 
 ```text
 User passphrase
@@ -239,7 +238,7 @@ Windows PowerShell:
 Output:
 
 ```text
-dist/AegisVaultMobile-v1.1-debug.apk
+dist/AegisVaultMobile-v1.2-debug.apk
 ```
 
 ---

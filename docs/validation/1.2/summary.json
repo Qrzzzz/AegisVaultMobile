@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "tests": 42,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Error": 0,
+    "Warning": 40
+  },
+  "source_files_matched": 45,
+  "apk_size": 20975261,
+  "apk_sha256": "c11e6784a73b25b37960f80999acaaee5efece88ea4392ab88656c7bd370a4dc",
+  "device": "NOT RUN: adb devices has no connected device",
+  "product": {
+    "versionName": "1.2",
+    "versionCode": 4
+  },
+  "published": false,
+  "migration_tests": {
+    "tests": 5,
+    "failures": 0
+  },
+  "interop": {
+    "desktop_to_android": 2,
+    "migrations_to_android_and_desktop": 3,
+    "android_to_desktop": 5,
+    "desktop_sha": "c6664e2b7e6a11b7dfb55f0881136131e1d2bc74"
+  }
+}

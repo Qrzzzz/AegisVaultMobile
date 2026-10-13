@@ -1,13 +1,12 @@
 package com.aegisvault.mobile.core
 
-/** Provisional Mobile 1.1 limits; the JSON writer has TWO Base64 layers. */
+/** Mobile device policy; formal AGV1 uses one Base64 layer and a separate binary header. */
 internal object ResourceLimits {
     const val PLAINTEXT = 1_048_576
     const val ENCODED = 2_097_152
-    const val METADATA = 16_384
+    const val METADATA = 65_536
     const val CIPHERTEXT = PLAINTEXT + 16
-    const val CIPHERTEXT_ENCODED = (CIPHERTEXT * 4 + 2) / 3
-    const val JSON_PAYLOAD = CIPHERTEXT_ENCODED + METADATA
+    const val PACKAGE = 12 + METADATA + CIPHERTEXT
 
     fun size(actual: Long, limit: Int) {
         if (actual > limit) throw AegisVaultException(ErrorCode.RESOURCE)
@@ -15,10 +14,9 @@ internal object ResourceLimits {
 
     fun encryptedOutputSize(plaintextBytes: Int): Int {
         size(plaintextBytes.toLong(), PLAINTEXT)
-        val inner = ((plaintextBytes.toLong() + 16) * 4 + 2) / 3
-        val json = inner + METADATA
-        val token = 5 + (json * 4 + 2) / 3
-        size(json, JSON_PAYLOAD)
+        val binary = 12L + METADATA + plaintextBytes + 16
+        val token = 5 + (binary * 4 + 2) / 3
+        size(binary, PACKAGE)
         size(token, ENCODED)
         return token.toInt()
     }
@@ -58,39 +56,4 @@ internal object ResourceLimits {
         size(input.length.toLong() * 3 / 4 - padding, limit)
     }
 
-    /** Bound metadata and parser nesting before JSONObject allocates its object graph. */
-    fun jsonPreflight(raw: ByteArray) {
-        var i = 0
-        var depth = 0
-        var metadata = 0L
-        var ciphertextValue = false
-        val key = "\"ciphertext\"".toByteArray(Charsets.US_ASCII)
-        while (i < raw.size) {
-            when (raw[i].toInt().toChar()) {
-                '{', '[' -> { depth++; if (depth > 32) throw AegisVaultException(ErrorCode.RESOURCE) }
-                '}', ']' -> depth--
-                '"' -> {
-                    val start = i++
-                    while (i < raw.size && raw[i].toInt() != 34) {
-                        if (raw[i].toInt() == 92) i++
-                        i++
-                    }
-                    if (i >= raw.size) throw AegisVaultException(ErrorCode.PROTOCOL)
-                    val length = i - start + 1
-                    metadata += if (ciphertextValue && depth == 1) 2 else length.toLong()
-                    var next = i + 1
-                    while (next < raw.size && raw[next].toInt().toChar() in " \t\r\n") next++
-                    ciphertextValue = depth == 1 && length == key.size &&
-                        key.indices.all { raw[start + it] == key[it] } &&
-                        next < raw.size && raw[next].toInt() == 58
-                    size(metadata, METADATA)
-                    i++
-                    continue
-                }
-            }
-            metadata++
-            size(metadata, METADATA)
-            i++
-        }
-    }
 }

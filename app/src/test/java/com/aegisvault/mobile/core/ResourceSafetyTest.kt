@@ -22,39 +22,17 @@ class ResourceSafetyTest {
         for (n in listOf(0, -1, Int.MAX_VALUE, 16385)) fails(ErrorCode.PROTOCOL) { AegisVaultEngine.validateScryptParams(base.copy(n = n)) }
     }
 
-    private fun wrap(payload: JSONObject) = "AGV1." + Base64.getUrlEncoder().withoutPadding().encodeToString(payload.toString().toByteArray())
-    private fun fixture(): JSONObject = JSONObject(javaClass.getResource("/android-historical.json")!!.readText()).getJSONObject("modern")
-    private fun payload(): JSONObject = JSONObject(String(Base64.getUrlDecoder().decode(fixture().getString("token").removePrefix("AGV1."))))
-
-    @Test fun rejectsCoercedFieldsBeforeKdf() {
-        for (name in listOf("n", "r", "p", "length", "salt_len")) {
-            val valid = payload().getJSONObject("kdf").getInt(name)
-            for (value in listOf<Any>(valid.toString(), valid + 0.5, true, JSONObject.NULL, valid.toLong() + 4294967296L)) {
-                val p = payload(); p.getJSONObject("kdf").put(name, value)
-                fails(ErrorCode.PROTOCOL) { AegisVaultEngine.decryptText(wrap(p), "audit-password") }
-            }
-        }
-        val p = payload().put("salt", Base64.getUrlEncoder().encodeToString(ByteArray(15)))
-        fails(ErrorCode.PROTOCOL) { AegisVaultEngine.decryptText(wrap(p), "audit-password") }
-        fails(ErrorCode.PROTOCOL) { AegisVaultEngine.decryptText(wrap(payload().put("v", "1")), "audit-password") }
-        val fractionalJson = payload().toString().replace("\"r\":8", "\"r\":8.0")
-        val fractionalToken = "AGV1." + Base64.getUrlEncoder().withoutPadding().encodeToString(fractionalJson.toByteArray())
-        fails(ErrorCode.PROTOCOL) { AegisVaultEngine.decryptText(fractionalToken, "audit-password") }
-    }
-
-    @Test fun historicalAndroidSamplesRemainReadable() {
+    @Test fun historicalAndroidSamplesRequireExplicitMigration() {
         val samples = JSONObject(javaClass.getResource("/android-historical.json")!!.readText())
         for (name in listOf("modern", "legacy", "ak")) {
             val sample = samples.getJSONObject(name)
-            val result = AegisVaultEngine.decryptText(sample.getString("token"), sample.getString("password"))
-            assertEquals(sample.getString("plaintext"), result.plaintext)
-            assertEquals(name == "ak", result.usedLegacyAk)
+            fails(ErrorCode.MIGRATION) { AegisVaultEngine.decryptText(sample.getString("token"), sample.getString("password")) }
         }
     }
 
-    @Test fun desktopFormatStillExplicitlyIncompatible() {
+    @Test fun desktopFixtureNowReadable() {
         val sample = JSONObject(javaClass.getResource("/desktop-agv1.json")!!.readText())
-        fails(ErrorCode.PROTOCOL) { AegisVaultEngine.decryptText(sample.getString("token"), sample.getString("password")) }
+        assertEquals(sample.getString("plaintext"), AegisVaultEngine.decryptText(sample.getString("token"), sample.getString("password")).plaintext)
     }
 
     @Test fun thirtyKiBAndUnicodeRoundTrip() {
@@ -68,7 +46,7 @@ class ResourceSafetyTest {
 
     @Test fun exactSafePlaintextBoundaryAndOutputBudget() {
         val text = "x".repeat(ResourceLimits.PLAINTEXT)
-        assertEquals(1_886_015, ResourceLimits.encryptedOutputSize(ResourceLimits.PLAINTEXT))
+        assertEquals(1_485_525, ResourceLimits.encryptedOutputSize(ResourceLimits.PLAINTEXT))
         val token = AegisVaultEngine.encryptText(text, "safe-test")
         assertTrue(token.length <= ResourceLimits.encryptedOutputSize(ResourceLimits.PLAINTEXT))
         assertEquals(text, AegisVaultEngine.decryptText(token, "safe-test").plaintext)
@@ -84,8 +62,8 @@ class ResourceSafetyTest {
         fails(ErrorCode.RESOURCE) { AegisVaultEngine.decodeText("A".repeat(ResourceLimits.ENCODED + 1)) }
         fails(ErrorCode.RESOURCE) { AegisVaultEngine.decodeText("A".repeat(1398104)) }
         fails(ErrorCode.RESOURCE) { AegisVaultEngine.decryptText("AGV1." + "A".repeat(ResourceLimits.ENCODED), "p") }
-        fails(ErrorCode.RESOURCE) { AegisVaultEngine.decryptText(wrap(payload().put("extra", "a".repeat(ResourceLimits.METADATA))), "p") }
-        fails(ErrorCode.RESOURCE) { ResourceLimits.jsonPreflight(("[".repeat(33) + "]".repeat(33)).toByteArray()) }
+        fails(ErrorCode.RESOURCE) { ProtocolJson.parse(ByteArray(ResourceLimits.METADATA + 1)) }
+        fails(ErrorCode.RESOURCE) { ProtocolJson.parse(("[".repeat(33) + "]".repeat(33)).toByteArray()) }
         fails(ErrorCode.UTF8_INVALID) { AegisVaultEngine.encodeText("\uD800") }
         fails(ErrorCode.UTF8_INVALID) { AegisVaultEngine.encryptText("a", "\uDC00") }
     }
