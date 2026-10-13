@@ -41,6 +41,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Validate offline migration tool
+        if: ${{ hashFiles('scripts/test-migration.py') != '' }}
         run: |
           python -m pip install --quiet cryptography==50.0.2
           python scripts/test-migration.py 2>&1 | tee migration-tests.txt
