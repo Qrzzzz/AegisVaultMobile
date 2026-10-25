@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.ui.TaskLifecycleTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:35:39" hostname="QRZZZZ" time="0.028">
+  <properties/>
+  <testcase name="repeatedTapReservesOneTaskBeforeDispatch" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.003"/>
+  <testcase name="editingPasswordOrModeDiscardsOldCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.002"/>
+  <testcase name="obsoleteFailureExitsBeforeNewWorkerStartsAndCannotChangeItsBusy" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.004"/>
+  <testcase name="leaveWithAutoClearDisabledKeepsCurrentTask" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="staleFinallyCannotResetNewBusyState" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="currentFailureAndCancellationReleaseBusy" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="rapidEditsRetainOnlyOneExecutingWorkerAndTheLatestWaitingRequest" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.01"/>
+  <testcase name="clearingAWaitingRequestPreventsItFromEverEnteringTheWorker" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.002"/>
+  <testcase name="completionPatchesResultWithoutRestoringSettings" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="processGateSurvivesViewModelDestructionAndIsSharedWithANewOwner" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.001"/>
+  <testcase name="clearLeaveAndDestroyPermanentlyInvalidateWorkers" classname="com.aegisvault.mobile.ui.TaskLifecycleTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

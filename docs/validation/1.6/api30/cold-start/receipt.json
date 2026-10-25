@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "serial": "emulator-5580",
+  "kind": "actual emulator UI + force-stop/cold-start",
+  "selectedLanguage": "zh-CN",
+  "verifiedResource": "输入内容",
+  "physicalPhone": false
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.update.UpdateTransportTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:35:39" hostname="QRZZZZ" time="0.061">
+  <properties/>
+  <testcase name="actualTransportSetsStandardHeadersLimitsAndClosesConnections" classname="com.aegisvault.mobile.update.UpdateTransportTest" time="0.04"/>
+  <testcase name="oversizedMetadataAndInfiniteRedirectsAreBounded" classname="com.aegisvault.mobile.update.UpdateTransportTest" time="0.003"/>
+  <testcase name="redirectIsValidatedBeforeOpeningAndFailuresAreClassified" classname="com.aegisvault.mobile.update.UpdateTransportTest" time="0.003"/>
+  <testcase name="storageFailureAndCancellationAreNotReportedAsSuccessfulDownload" classname="com.aegisvault.mobile.update.UpdateTransportTest" time="0.008"/>
+  <testcase name="realStreamingDownloadChecksLengthDigestAndWritesExactBytes" classname="com.aegisvault.mobile.update.UpdateTransportTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,3 @@
+app\src\main\java\com\aegisvault\mobile\ui\AegisVaultViewModel.kt:150:98: warning: unchecked cast: AegisVaultViewModel to T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = AegisVaultViewModel(repo) as T
+                                                                                                 ^

@@ -1,0 +1,13 @@
+{
+  "kind": "Android Emulator (not a physical handset)",
+  "serial": "emulator-5580",
+  "avd": "lcg_113_api30_probe",
+  "readOnly": true,
+  "snapshot": "disabled",
+  "verifiedAt": "2026-10-15T09:13:57.7109234+08:00",
+  "ro.build.version.release": "11",
+  "ro.build.version.sdk": "30",
+  "ro.product.cpu.abi": "x86_64",
+  "ro.build.fingerprint": "google/sdk_gphone_x86_64/generic_x86_64_arm64:11/RSR1.201211.001/7027799:user/release-keys",
+  "ro.kernel.qemu": "1"
+}

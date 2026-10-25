@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.core.TextSemanticsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:35:36" hostname="QRZZZZ" time="2.43">
+  <properties/>
+  <testcase name="whitespaceAndUnicodePasswordsAreExactAndTokenEdgesFollowDesktop" classname="com.aegisvault.mobile.core.TextSemanticsTest" time="1.347"/>
+  <testcase name="invalidInputAndInvalidDecodedUtf8StayDistinct" classname="com.aegisvault.mobile.core.TextSemanticsTest" time="0.077"/>
+  <testcase name="modeBudgetOrderAndAndroidPolicyRemainBounded" classname="com.aegisvault.mobile.core.TextSemanticsTest" time="0.055"/>
+  <testcase name="actualDesktopCorpusMatchesAllFourModesAndFullInputChain" classname="com.aegisvault.mobile.core.TextSemanticsTest" time="0.949"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

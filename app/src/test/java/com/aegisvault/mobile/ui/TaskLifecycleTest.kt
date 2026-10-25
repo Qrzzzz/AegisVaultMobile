@@ -70,14 +70,15 @@ class TaskLifecycleTest {
         }
     }
 
-    @Test fun reverseCompletionAndStaleFailureCannotChangeNewResultOrBusy() = runTest {
+    @Test fun obsoleteFailureExitsBeforeNewWorkerStartsAndCannotChangeItsBusy() = runTest {
         val worker = PausedWorker(); val vm = vm(this, worker)
         vm.onEvent(AegisVaultUiEvent.Encode); runCurrent()
         vm.onEvent(AegisVaultUiEvent.UpdateInput("new")); vm.onEvent(AegisVaultUiEvent.Encode); runCurrent()
-        assertEquals(2, worker.gates.size)
-        worker.gates[1].complete(Unit); runCurrent()
-        assertEquals("result:new", vm.uiState.value.resultText)
-        worker.failure = true; worker.gates[0].complete(Unit); advanceUntilIdle()
+        assertEquals(1, worker.gates.size); assertTrue(vm.uiState.value.isBusy)
+        worker.failure = true; worker.gates[0].complete(Unit); runCurrent()
+        assertEquals(2, worker.gates.size); assertTrue(vm.uiState.value.isBusy)
+        assertNull(vm.uiState.value.message)
+        worker.failure = false; worker.gates[1].complete(Unit); advanceUntilIdle()
         assertEquals("result:new", vm.uiState.value.resultText); assertFalse(vm.uiState.value.isBusy)
         assertEquals(MessageTone.SUCCESS, vm.uiState.value.message!!.tone)
     }
@@ -116,5 +117,45 @@ class TaskLifecycleTest {
         vm.onEvent(AegisVaultUiEvent.Encode); runCurrent(); vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
         worker.gates.single().complete(Unit); advanceUntilIdle()
         assertEquals("old", vm.uiState.value.inputText); assertEquals("result:old", vm.uiState.value.resultText)
+    }
+
+    @Test fun rapidEditsRetainOnlyOneExecutingWorkerAndTheLatestWaitingRequest() = runTest {
+        val worker = PausedWorker(); val vm = vm(this, worker)
+        vm.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        repeat(100) {
+            vm.onEvent(AegisVaultUiEvent.UpdateInput("input-$it"))
+            vm.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        }
+        assertEquals(1, worker.gates.size)
+        worker.gates[0].complete(Unit); runCurrent()
+        assertEquals(2, worker.gates.size)
+        worker.gates[1].complete(Unit); advanceUntilIdle()
+        assertEquals("result:input-99", vm.uiState.value.resultText)
+        assertFalse(vm.uiState.value.isBusy)
+    }
+
+    @Test fun processGateSurvivesViewModelDestructionAndIsSharedWithANewOwner() = runTest {
+        val worker = PausedWorker(); val old = vm(this, worker)
+        old.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        ViewModelStore().apply { put("old", old); clear() }
+        val newer = vm(this, worker)
+        newer.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        assertEquals(1, worker.gates.size)
+        worker.gates[0].complete(Unit); runCurrent()
+        assertEquals(2, worker.gates.size)
+        worker.gates[1].complete(Unit); advanceUntilIdle()
+        assertEquals("", old.uiState.value.resultText)
+        assertEquals("result:old", newer.uiState.value.resultText)
+    }
+
+    @Test fun clearingAWaitingRequestPreventsItFromEverEnteringTheWorker() = runTest {
+        val worker = PausedWorker(); val vm = vm(this, worker)
+        vm.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        vm.onEvent(AegisVaultUiEvent.UpdateInput("queued"))
+        vm.onEvent(AegisVaultUiEvent.Encrypt); runCurrent()
+        vm.onEvent(AegisVaultUiEvent.ClearSensitiveData)
+        worker.gates.single().complete(Unit); advanceUntilIdle()
+        assertEquals(1, worker.gates.size); assertFalse(vm.uiState.value.isBusy)
+        assertEquals("", vm.uiState.value.resultText)
     }
 }

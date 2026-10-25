@@ -1,0 +1,10 @@
+VIEWMODEL_OVERLAP active=8 peak=8 latestBusy=true
+AFTER_CLEAR active=8 uiBusy=false inputEmpty=true
+STALE_WRITEBACK_GUARD retained=true allWorkersReleased=true
+COMPOSITION_RECREATED atMs=31000 copiedValueStillPresent=true
+REPEATED_SAME_COPY elapsedSinceSecondMs=10001 clipboardEmpty=true
+JUnit version 4.13.2
+.......................................
+Time: 4.677
+
+OK (39 tests)

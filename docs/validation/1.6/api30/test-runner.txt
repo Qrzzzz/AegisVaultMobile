@@ -1,0 +1,31 @@
+--------- beginning of kernel
+--------- beginning of main
+--------- beginning of system
+10-25 05:55:53.043  2328  2348 I TestRunner: run started: 13 tests
+10-25 05:55:53.043  2328  2348 I TestRunner: started: languagePickerChangesRealResourcesAndSurvivesRecreation(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:55:55.766  2328  2348 I TestRunner: finished: languagePickerChangesRealResourcesAndSurvivesRecreation(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:55:55.768  2328  2348 I TestRunner: started: clipboardDeadlineSurvivesActualActivityRecreation(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:26.324  2328  2348 I TestRunner: finished: clipboardDeadlineSurvivesActualActivityRecreation(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:26.327  2328  2348 I TestRunner: started: realCopiedClipIsSensitiveAndAnExternalSameTextReplacementIsPreserved(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:26.601  2328  2348 I TestRunner: finished: realCopiedClipIsSensitiveAndAnExternalSameTextReplacementIsPreserved(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:26.603  2328  2348 I TestRunner: started: configurationRecreationKeepsSessionWithAutoClearEnabled(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:27.057  2328  2348 I TestRunner: finished: configurationRecreationKeepsSessionWithAutoClearEnabled(com.aegisvault.mobile.ui.AppSafetyDeviceTest)
+10-25 05:56:27.058  2328  2348 I TestRunner: started: currentFailureReleasesBusyAndDisabledAutoClearKeepsTaskAcrossStop(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:27.714  2328  2348 I TestRunner: finished: currentFailureReleasesBusyAndDisabledAutoClearKeepsTaskAcrossStop(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:27.717  2328  2348 I TestRunner: started: actualConfigurationRecreationPreservesAnActiveTaskWithAutoClearEnabled(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.123  2328  2348 I TestRunner: finished: actualConfigurationRecreationPreservesAnActiveTaskWithAutoClearEnabled(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.125  2328  2348 I TestRunner: started: editsDuringNonCooperativeWorkOnlyQueueTheLatestRequest(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.460  2328  2348 I TestRunner: finished: editsDuringNonCooperativeWorkOnlyQueueTheLatestRequest(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.461  2328  2348 I TestRunner: started: activeCompletionPreservesNewSettingsAndRapidTapsStartOneTask(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.789  2328  2348 I TestRunner: finished: activeCompletionPreservesNewSettingsAndRapidTapsStartOneTask(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:28.791  2328  2348 I TestRunner: started: editsModeOptionsAndSettingsSurviveLateCompletion(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.133  2328  2348 I TestRunner: finished: editsModeOptionsAndSettingsSurviveLateCompletion(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.133  2328  2348 I TestRunner: started: realActivityDestroyClearsEvenWhenAutoClearOnLeaveIsDisabled(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.471  2328  2348 I TestRunner: finished: realActivityDestroyClearsEvenWhenAutoClearOnLeaveIsDisabled(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.472  2328  2348 I TestRunner: started: actualActivityStopClearsAndDiscardsLateCompletion(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.839  2328  2348 I TestRunner: finished: actualActivityStopClearsAndDiscardsLateCompletion(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:29.841  2328  2348 I TestRunner: started: clearButtonCannotBeUndoneByNonCooperativeWorker(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:30.264  2328  2348 I TestRunner: finished: clearButtonCannotBeUndoneByNonCooperativeWorker(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:30.264  2328  2348 I TestRunner: started: staleFinallyCannotResetNewBusyAndReverseFailureCannotOverwriteSuccess(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:30.604  2328  2348 I TestRunner: finished: staleFinallyCannotResetNewBusyAndReverseFailureCannotOverwriteSuccess(com.aegisvault.mobile.ui.TaskLifecycleDeviceTest)
+10-25 05:56:30.606  2328  2348 I TestRunner: run finished: 13 tests, 0 failed, 0 ignored

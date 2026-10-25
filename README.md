@@ -17,7 +17,9 @@
 
 ---
 
-当前版本为 **1.5**（versionCode 7），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.3 文本语义](./docs/backend-1.3.md) · [AGV1 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [1.4 验证记录](./docs/validation-1.4.md) · [设置恢复](./docs/settings-1.4.md)
+当前版本为 **1.6**（versionCode 8），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.3 文本语义](./docs/backend-1.3.md) · [AGV1 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [1.4 验证记录](./docs/validation-1.4.md) · [设置恢复](./docs/settings-1.4.md)
+
+**1.6** 修复 KDF 计算叠加、语言切换、剪贴板敏感标记、旋转误清空与剪贴板清理计时问题。[修复说明](./docs/fixes-1.6.md) · [验证记录](./docs/validation-1.6.md)。发布 APK 沿用原有签名，支持通过标准更新流程下载校验。
 
 ## ✨ 简介
 
@@ -97,7 +99,7 @@
 当前版本：
 
 ```text
-AegisVault Mobile v1.5
+AegisVault Mobile v1.6
 ```
 
 > 当前 APK 为 debug 签名版本，主要用于测试和演示。正式分发前建议使用私有签名密钥构建 release APK 或 AAB。
@@ -261,7 +263,7 @@ Windows PowerShell：
 输出位置：
 
 ```text
-dist/AegisVaultMobile-v1.5-debug.apk
+dist/AegisVaultMobile-v1.6-debug.apk
 ```
 
 ---

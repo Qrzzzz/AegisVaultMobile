@@ -1,0 +1,8 @@
+{
+  "baseline": "ae4d6e41498c214e2bcea5940850d7b1ce3f33e3",
+  "testSource": "app\\src\\androidTest\\java\\com\\aegisvault\\mobile\\ui\\TaskLifecycleDeviceTest.kt",
+  "testSourceSha256": "56a6793f8d36ca0bff9ac23afc6e06bc5d193c3f51a767a57162488a2501a062",
+  "buildCopyMatches": true,
+  "versionName": "1.5",
+  "versionCode": 7
+}

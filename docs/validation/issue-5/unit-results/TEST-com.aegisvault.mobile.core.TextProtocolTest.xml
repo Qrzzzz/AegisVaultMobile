@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.core.TextProtocolTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-15T01:13:53" hostname="QRZZZZ" time="0.986">
+  <properties/>
+  <testcase name="requiredFieldsRejectNullBooleanContainersMissingAndBadBase64" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.034"/>
+  <testcase name="fieldsHaveRealTypesAndSafeParameters" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.023"/>
+  <testcase name="originalNoncanonicalHeaderIsAadAndCannotBeReserialized" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.092"/>
+  <testcase name="truncationHeaderLengthAndPayloadBudgets" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.01"/>
+  <testcase name="tamperingAuthenticatedHeaderAndCiphertext" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.062"/>
+  <testcase name="realDesktopAndHistoricalMigrationExchange" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.608"/>
+  <testcase name="malformedGrammarAndDuplicateKeysNeverReachKdf" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.006"/>
+  <testcase name="exactDesktopWriterBytesAndUnicodeDecrypt" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.072"/>
+  <testcase name="authenticatedInvalidPlaintextUtf8IsRejected" classname="com.aegisvault.mobile.core.TextProtocolTest" time="0.078"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" tests="7" failures="0" errors="0" skipped="0" time="9.587" timestamp="2026-10-15T01:13:12" hostname="localhost">
+  <properties>
+    <property name="device" value="lcg_113_api30_probe(AVD) - 11" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="currentFailureReleasesBusyAndDisabledAutoClearKeepsTaskAcrossStop" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="3.736" />
+  <testcase name="activeCompletionPreservesNewSettingsAndRapidTapsStartOneTask" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.881" />
+  <testcase name="editsModeOptionsAndSettingsSurviveLateCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.697" />
+  <testcase name="realActivityDestroyClearsEvenWhenAutoClearOnLeaveIsDisabled" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.665" />
+  <testcase name="actualActivityStopClearsAndDiscardsLateCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="1.009" />
+  <testcase name="clearButtonCannotBeUndoneByNonCooperativeWorker" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.79" />
+  <testcase name="staleFinallyCannotResetNewBusyAndReverseFailureCannotOverwriteSuccess" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.571" />
+</testsuite>

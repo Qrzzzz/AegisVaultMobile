@@ -1,0 +1,15 @@
+app\src\main\java\com\aegisvault\mobile\update\GitHubUpdateRepository.kt:20:61: warning: 'constructor URL(String!)' is deprecated. Deprecated in Java
+    private val connect: (String) -> HttpsURLConnection = { URL(it).openConnection() as HttpsURLConnection }) : UpdateTransport {
+                                                            ^
+app\src\main\java\com\aegisvault\mobile\update\GitHubUpdateRepository.kt:32:61: warning: 'constructor URL(String!)' is deprecated. Deprecated in Java
+                connection.setRequestProperty("Accept", if (URL(next).host == "api.github.com") "application/vnd.github+json" else "application/octet-stream")
+                                                            ^
+app\src\main\java\com\aegisvault\mobile\update\GitHubUpdateRepository.kt:36:55: warning: 'constructor URL(URL!, String!)' is deprecated. Deprecated in Java
+                    301, 302, 303, 307, 308 -> next = URL(URL(next), connection.getHeaderField("Location")
+                                                      ^
+app\src\main\java\com\aegisvault\mobile\update\GitHubUpdateRepository.kt:36:59: warning: 'constructor URL(String!)' is deprecated. Deprecated in Java
+                    301, 302, 303, 307, 308 -> next = URL(URL(next), connection.getHeaderField("Location")
+                                                          ^
+app\src\test\java\com\aegisvault\mobile\update\UpdateTransportTest.kt:20:139: warning: 'constructor URL(String!)' is deprecated. Deprecated in Java
+        private val headers: Map<String, String> = emptyMap(), private val declaredLength: Long = raw.size.toLong()) : HttpsURLConnection(URL(url)) {
+                                                                                                                                          ^
