@@ -1,0 +1,37 @@
+{
+  "versionName": "1.6",
+  "versionCode": 8,
+  "unit": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 90,
+    "skipped": 1,
+    "tests": 91
+  },
+  "api30": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 14,
+    "skipped": 0,
+    "tests": 14
+  },
+  "api34": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 15,
+    "skipped": 0,
+    "tests": 15
+  },
+  "coldStartApi30": "PASS (actual UI, force-stop, relaunch)",
+  "migration": 6,
+  "updateContract": 7,
+  "lint": {
+    "errors": 0,
+    "warnings": 38
+  },
+  "workflow": "actionlint PASS",
+  "physicalPhone": "NOT RUN",
+  "publication": "NOT PUBLISHED",
+  "issues": "16-20 remain OPEN; changes are local",
+  "actualKdfPressure": "PASS on API30/API34; peakActiveWorkers=1; 100 edit requests; sampled memory receipts recorded"
+}

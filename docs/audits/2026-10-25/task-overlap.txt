@@ -1,0 +1,3 @@
+VIEWMODEL_OVERLAP active=8 peak=8 latestBusy=true
+AFTER_CLEAR active=8 uiBusy=false inputEmpty=true
+STALE_WRITEBACK_GUARD retained=true allWorkersReleased=true

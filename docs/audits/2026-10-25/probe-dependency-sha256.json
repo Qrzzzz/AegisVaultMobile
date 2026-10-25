@@ -1,0 +1,34 @@
+[
+  {
+    "file": "annotation.jar",
+    "sha256": "9aab326d9492800991854360ac248f493ce7f7c3183519309b78ace9e240f6f6"
+  },
+  {
+    "file": "bcprov.jar",
+    "sha256": "add5915e6acfc6ab5836e1fd8a5e21c6488536a8c1f21f386eeb3bf280b702d7"
+  },
+  {
+    "file": "coroutines-test.jar",
+    "sha256": "c4ef1deb31be3f81ed82ecf237220cc95886868a7ec527a418599dfff159dedb"
+  },
+  {
+    "file": "coroutines.jar",
+    "sha256": "f3d4f5de1c391bbcc20f3b3435ccbac013521e76b6902d7d59635ec15c1f797e"
+  },
+  {
+    "file": "hamcrest.jar",
+    "sha256": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+  },
+  {
+    "file": "json.jar",
+    "sha256": "3cf6cd6892e32e2b4c1c39e0f52f5248a2f5b37646fdfbb79a66b46b618414ed"
+  },
+  {
+    "file": "junit.jar",
+    "sha256": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3"
+  },
+  {
+    "file": "viewmodel/classes.jar",
+    "sha256": "e6c9ea6ae4aead8427be447acb368b5442b47d085cb681603774167a1a564ffd"
+  }
+]

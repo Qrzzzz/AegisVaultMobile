@@ -1,9 +1,9 @@
 package com.aegisvault.mobile.ui
 
-import android.content.ClipData
+import android.app.Activity
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
+import android.content.ContextWrapper
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,24 +30,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aegisvault.mobile.R
-import com.aegisvault.mobile.data.LanguageOption
 import com.aegisvault.mobile.data.SettingsNotice
 import com.aegisvault.mobile.update.UpdateViewModel
 import com.aegisvault.mobile.ui.components.UpdateSection
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,23 +56,33 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
     val context = LocalContext.current
     val updateVm: UpdateViewModel = viewModel(factory = UpdateViewModel.Factory(context.applicationContext))
     val clipboard = remember(context) { context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    val clipboardCleanup = remember(context) { AppClipboard.get(context) }
+    val locales = remember(context) { AppLocaleBridge(context) }
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var passwordVisible by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    val languageReady by rememberUpdatedState(state.settingsLoaded && state.settingsNotice != SettingsNotice.READ_RETRYING)
+    val currentLanguage by rememberUpdatedState(state.settings.language)
 
-    DisposableEffect(lifecycleOwner, state.settings.autoClearOnLeave) {
+    DisposableEffect(lifecycleOwner, vm, context, locales) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP) vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
+            if (event == Lifecycle.Event.ON_STOP && context.activity()?.isChangingConfigurations != true)
+                vm.onEvent(AegisVaultUiEvent.OnLeaveApp)
+            if (event == Lifecycle.Event.ON_RESUME && languageReady)
+                locales.synchronize(currentLanguage) { language -> vm.updateSettings { it.copy(language = language) } }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
-    LaunchedEffect(state.settings.language) {
-        val tag = when (state.settings.language) { LanguageOption.SYSTEM -> ""; LanguageOption.ENGLISH -> "en"; LanguageOption.ZH_CN -> "zh-CN" }
-        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
+    LaunchedEffect(languageReady, state.settings.language) {
+        if (languageReady) locales.synchronize(state.settings.language) { language -> vm.updateSettings { it.copy(language = language) } }
+    }
+
+    LaunchedEffect(state.settingsLoaded, state.settings.clipboardAutoClear) {
+        if (state.settingsLoaded) clipboardCleanup.setTimeout(state.settings.clipboardAutoClear.seconds)
     }
 
     LaunchedEffect(state.message) {
@@ -119,20 +127,12 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
             ActionButtons(state.mode, onEncrypt = { vm.onEvent(AegisVaultUiEvent.Encrypt) }, onDecrypt = { vm.onEvent(AegisVaultUiEvent.Decrypt) }, onEncode = { vm.onEvent(AegisVaultUiEvent.Encode) }, onDecode = { vm.onEvent(AegisVaultUiEvent.Decode) })
             ResultCard(state.resultText, onCopy = {
                 if (state.resultText.isEmpty()) { scope.launch { snackbar.showSnackbar(context.getString(R.string.error_copy_empty)) }; return@ResultCard }
-                val copied = state.resultText
-                clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault Result", copied))
+                val copied = clipboardCleanup.copy(state.resultText)
                 scope.launch {
                     val res = snackbar.showSnackbar(context.getString(R.string.status_copied_security), actionLabel = context.getString(R.string.action_clear_clipboard))
                     if (res.name.contains("Action")) {
-                        val current = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
-                        if (shouldClearClipboard(current, copied)) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
+                        clipboardCleanup.clear(copied)
                     }
-                }
-                val secs = state.settings.clipboardAutoClear.seconds
-                if (secs != null) scope.launch {
-                    delay(secs * 1000)
-                    val current = clipboard.primaryClip?.getItemAt(0)?.coerceToText(context)?.toString()
-                    if (shouldClearClipboard(current, copied)) clipboard.setPrimaryClip(ClipData.newPlainText("AegisVault", ""))
                 }
             }, onUseAsInput = { vm.onEvent(AegisVaultUiEvent.UseResultAsInput) }, onClearResult = { vm.onEvent(AegisVaultUiEvent.ClearResult) })
             OutlinedButton(onClick = { vm.onEvent(AegisVaultUiEvent.ClearSensitiveData); focusManager.clearFocus() }) { Text(stringResource(R.string.action_clear_sensitive_data)) }
@@ -141,9 +141,17 @@ fun AegisVaultRoute(vm: AegisVaultViewModel) {
 
     if (showSettings) {
         ModalBottomSheet(onDismissRequest = { showSettings = false }) {
-            SettingsSheet(state.settings, onUpdate = vm::updateSettings, updateContent = { UpdateSection(updateVm) })
+            SettingsSheet(state.settings, onUpdate = { transform ->
+                val updated = transform(state.settings)
+                if (updated.language != state.settings.language) locales.select(updated.language)
+                vm.updateSettings(transform)
+            }, updateContent = { UpdateSection(updateVm) })
         }
     }
 }
 
-internal fun shouldClearClipboard(current: String?, copied: String): Boolean = current == copied && copied.isNotEmpty()
+private tailrec fun Context.activity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.activity()
+    else -> null
+}

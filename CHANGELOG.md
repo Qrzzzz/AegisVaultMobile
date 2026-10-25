@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.6 - 2026-10-25
+
+- Bound actual text/KDF execution to one worker per process; cancelled calculations keep their slot until they exit, and obsolete waiting requests never execute (#16).
+- Use an AppCompat Activity for language switching; apply stored languages after settings load and hand off legacy preferences to Android 13+ per-app locales once (#17).
+- Mark copied results as sensitive; match a unique clip owner, content digest and timestamp before clearing (#18).
+- Preserve the current session and active task during Activity configuration recreation while retaining true-background clearing (#19).
+- Keep one clipboard deadline outside the Composition; replace it on each copy, recompute on timeout changes, and retry an overdue denied clear when the window regains focus (#20).
+- versionName 1.6 / versionCode 8. AGV1, KDF parameters, update contract and signing identity are unchanged.
+
 ## 1.5 - 2026-10-13
 
 - Manual GitHub stable-release check, verified in-app APK download and explicit Android installer entry in Settings.

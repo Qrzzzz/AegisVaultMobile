@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.data.SettingsRecoveryTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-25T05:35:39" hostname="QRZZZZ" time="0.75">
+  <properties/>
+  <testcase name="actualFileReadIoRetriesAndSubscriptionReceivesLaterEdit" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.229"/>
+  <testcase name="unknownAndOldEnumsPreserveLegalSecurityThenEditSucceeds" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.04"/>
+  <testcase name="actualFileWriteIoLeavesOldValuesAndNextEditSucceeds" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.036"/>
+  <testcase name="missingValuesAreNormalInstallationDefaults" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.017"/>
+  <testcase name="cancellationAndProgrammingErrorsAreNotRecovered" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.011"/>
+  <testcase name="lostRecordAfterLoadKeepsKnownSafetyAndCanBeRepairedByEdit" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.036"/>
+  <testcase name="corruptProtobufUsesActualHandlerAndNextEditSucceeds" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.028"/>
+  <testcase name="readCancellationAndProgrammingErrorsPropagateWithoutDefaultEmission" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.006"/>
+  <testcase name="freshDataStoreReadsUnknownEnumsAndWrongTypesFromActualProtobufFile" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.023"/>
+  <testcase name="everyLegalEnumAndFalseSafetyChoiceSurvivesRealPersistence" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.289"/>
+  <testcase name="retryAfterKnownSettingsKeepsProtectionRatherThanEmittingEmptyDefaults" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.017"/>
+  <testcase name="wrongTypesRecoverWithoutClassCastAndUseProtectiveSafetyDefaults" classname="com.aegisvault.mobile.data.SettingsRecoveryTest" time="0.017"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

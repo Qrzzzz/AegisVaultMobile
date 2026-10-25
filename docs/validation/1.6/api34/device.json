@@ -1,0 +1,13 @@
+{
+  "type": "Android Emulator (AOSP, not a physical phone)",
+  "serial": "emulator-5582",
+  "avd": "aegis16_api34",
+  "readOnly": true,
+  "noSnapshot": true,
+  "verifiedAt": "2026-10-25T13:49:48.2047283+08:00",
+  "ro.build.version.release": "14",
+  "ro.build.version.sdk": "34",
+  "ro.product.cpu.abi": "x86_64",
+  "ro.build.fingerprint": "Android/sdk_phone64_x86_64/emu64x:14/UE1A.230829.036.A1/11228894:userdebug/test-keys",
+  "ro.kernel.qemu": "1"
+}

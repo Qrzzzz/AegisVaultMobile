@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.aegisvault.mobile.ui.AppSafetyDeviceTest" tests="15" failures="0" errors="0" skipped="0" time="48.237" timestamp="2026-10-25T06:21:00" hostname="localhost">
+  <properties>
+    <property name="device" value="aegis16_api34(AVD) - 14" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="frameworkFollowSystemResetIsAdoptedInsteadOfRestoringTheOldPreference" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="2.487" />
+  <testcase name="languagePickerChangesRealResourcesAndSurvivesRecreation" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="2.709" />
+  <testcase name="clipboardDeadlineSurvivesActualActivityRecreation" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="30.747" />
+  <testcase name="actualKdfPressureUsesOneWorkerAndRecordsSampledMemory" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="3.088" />
+  <testcase name="realCopiedClipIsSensitiveAndAnExternalSameTextReplacementIsPreserved" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="0.667" />
+  <testcase name="configurationRecreationKeepsSessionWithAutoClearEnabled" classname="com.aegisvault.mobile.ui.AppSafetyDeviceTest" time="0.979" />
+  <testcase name="currentFailureReleasesBusyAndDisabledAutoClearKeepsTaskAcrossStop" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="1.1" />
+  <testcase name="actualConfigurationRecreationPreservesAnActiveTaskWithAutoClearEnabled" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.822" />
+  <testcase name="editsDuringNonCooperativeWorkOnlyQueueTheLatestRequest" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.698" />
+  <testcase name="activeCompletionPreservesNewSettingsAndRapidTapsStartOneTask" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.604" />
+  <testcase name="editsModeOptionsAndSettingsSurviveLateCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.686" />
+  <testcase name="realActivityDestroyClearsEvenWhenAutoClearOnLeaveIsDisabled" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.634" />
+  <testcase name="actualActivityStopClearsAndDiscardsLateCompletion" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.884" />
+  <testcase name="clearButtonCannotBeUndoneByNonCooperativeWorker" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.886" />
+  <testcase name="staleFinallyCannotResetNewBusyAndReverseFailureCannotOverwriteSuccess" classname="com.aegisvault.mobile.ui.TaskLifecycleDeviceTest" time="0.636" />
+</testsuite>

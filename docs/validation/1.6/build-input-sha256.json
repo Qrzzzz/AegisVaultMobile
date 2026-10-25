@@ -1,0 +1,262 @@
+[
+  {
+    "path": "app/src/test/resources/update-manifest-v1.json",
+    "sha256": "8530c9c95671394b716cf3aa125dbae8f5d97f3e2a3b864a656a668742b87a39"
+  },
+  {
+    "path": "app/src/test/resources/text-semantics-1.3.json",
+    "sha256": "1d4fed1775f659053cdb95cff731f67b4036628643d54e68adb14d0be165bb4b"
+  },
+  {
+    "path": "app/src/test/resources/interop-1.2.json",
+    "sha256": "e2bd21556caca046d411a529e6d93c692f1ca394e6c2c535fb9ea3bee8971238"
+  },
+  {
+    "path": "app/src/test/resources/desktop-agv1.json",
+    "sha256": "89aed487a49877f072c94289187afd1030e976797554b1d22b1a03e9aee9fa66"
+  },
+  {
+    "path": "app/src/test/resources/android-historical.json",
+    "sha256": "bf2f8a0ae27b7ade8be0f2079163072de9d5532d267d33ff6df56a37c7681882"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/update/UpdateTransportTest.kt",
+    "sha256": "c41e69a2ff2e71c89ea0a1d5c26644638942c465c045a19419be38ea30b4fea4"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/update/UpdateTaskTest.kt",
+    "sha256": "59afe44cffcf439a770dbf4021c6a2ac6023289d984073589f7ca4927c5d0ca2"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/update/UpdateNetworkSmokeTest.kt",
+    "sha256": "88cc52e91bf85fcc1fc7f7a07655d663f6c108baf38ffe1ce4d071176d7e21c5"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/update/UpdateContractTest.kt",
+    "sha256": "e52e76d1f65c9eb6b8b898af207c9264c61c1ee3a9df4154c65489413021c044"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/TaskLifecycleTest.kt",
+    "sha256": "4211d00da50d529ec7005a3caa7866c535cd8bf01400b1610737d101d72b8d8f"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/SettingsNoticeTaskTest.kt",
+    "sha256": "4d26b31d57fe5e1a8dedba00377551ba312859acd35a3a8b9cde6fa3f966f897"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/MainDispatcherRule.kt",
+    "sha256": "d6db88da9fdad2c3654a8dcf7189eea068c62549bd6586fb5f5ea39fd107823d"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/ClipboardLogicTest.kt",
+    "sha256": "3724f6f656c88ae5e87e4ae751d9b977dc2ba07321d4d373af7d60f3068e09bd"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/Base64OptionsTaskTest.kt",
+    "sha256": "9c4f174d307f8ea9ca812724fb25d135fbf0df5263fe50303cccee792686c6cd"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/ui/AegisVaultViewModelTest.kt",
+    "sha256": "28e38e6cacd422da00ab3d2d003de1708529ff0159042468621ebf462d330050"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/data/SettingsRecoveryTest.kt",
+    "sha256": "8ef4775f7edd22e6315389fc1557fe633bb29a8b829c16d9f3fcc48e108f7c97"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/data/AppLocalePolicyTest.kt",
+    "sha256": "1d8a85d700a5a1d4724bb40b0f1a1d01552d59c4fd30524cae91900519ee7c32"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/core/TextSemanticsTest.kt",
+    "sha256": "4a648bd1f579e9f91d6eb2fa27059fb015e6fb75b9d63ad381a98616aaa7e72f"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/core/TextProtocolTest.kt",
+    "sha256": "24f19d8108da8ee92402cf6d3d8867f46081592d2b140ade0777807cd804952b"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/core/ResourceSafetyTest.kt",
+    "sha256": "cef317bf4fc222229f2906522961453d602ac26ac975ed9dc374744e94458fb7"
+  },
+  {
+    "path": "app/src/test/java/com/aegisvault/mobile/core/AegisVaultEngineTest.kt",
+    "sha256": "e923c3ea2aeaa13171528f05a188e5eb938618535373a84954b89651776a49a4"
+  },
+  {
+    "path": "app/src/main/res/xml/update_file_paths.xml",
+    "sha256": "3acf4103cd548e2847915b7e37e8a1bea874bb7411a46f051ef019bbf6aca7b6"
+  },
+  {
+    "path": "app/src/main/res/xml/locales_config.xml",
+    "sha256": "8936b7f9048be7656565b6b0023e2456d94dc424e134b918825db2a73edc5164"
+  },
+  {
+    "path": "app/src/main/res/values-zh-rCN/strings.xml",
+    "sha256": "50aa7ab2f2a5bb585b21a34f4262707ad2e5c8f04d94b51a76e983f6f0e48b91"
+  },
+  {
+    "path": "app/src/main/res/values/strings.xml",
+    "sha256": "cc92266b402af9f332e5b060c53c197b6d82e8bbc3b6ae57ad71dcfb740a55b7"
+  },
+  {
+    "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+    "sha256": "1c832bf194d8eecd439a92bcced0df144c9f566b934b3d7865e983d8ee8dbdeb"
+  },
+  {
+    "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+    "sha256": "1c832bf194d8eecd439a92bcced0df144c9f566b934b3d7865e983d8ee8dbdeb"
+  },
+  {
+    "path": "app/src/main/res/drawable/ic_launcher_background.xml",
+    "sha256": "980cb37a15cc699f7f70def7a7d58fa5015713490f689deaa911a2e44c3b43df"
+  },
+  {
+    "path": "app/src/main/AndroidManifest.xml",
+    "sha256": "9dffa900e6f10b76d0ae2310be941684d8ff98b0109691a9b70bafd1d2e1819b"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/update/UpdateViewModel.kt",
+    "sha256": "f2ebe75a4926993df5ff9c325395803a767744f15a4d2ca9fc6a0b7181a9c57f"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/update/UpdateContract.kt",
+    "sha256": "1cda74dbfba4d3a1be2c7b8b9095a7175c5bdb9ffb152c0fee0beaf7280a964f"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/update/GitHubUpdateRepository.kt",
+    "sha256": "5857157e96b168fd4343acc8f7467265559c4ece52e09cc8c4328604f25dd30e"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/update/AndroidUpdateFiles.kt",
+    "sha256": "39d91ae896787e21f05fc5b49125ef30c0cb4c9dd4b216c4fd34b4fd31f27b3e"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/theme/AppTheme.kt",
+    "sha256": "0706b428024abccea9cb9ae0f8c33f06c7bf341c84ba9f3f09beaf0bbfbe0d5f"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/theme/AnimatedAuroraBackground.kt",
+    "sha256": "fedacd0b5b197a8eb7fcd7f4d2448ece5804f9b0d6f62acc680d229bbd674f10"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/theme/AegisVaultDesign.kt",
+    "sha256": "fa6076d228eccfa0da4b051bac8b4608d7727fa45252d3cb40f29648e1978433"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/TextOperationGate.kt",
+    "sha256": "f6551added43646910303ff230f797a03a5fcb9ffd6517a8af6383c74edcb5e5"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/components/UpdateSection.kt",
+    "sha256": "8d81d89eb114b16362b9767066c7f388edbfd9caa70b5a1d5198458e6bee5dc4"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/components/Components.kt",
+    "sha256": "e3e24a6268228ac762ba3547686528f12f66b83195b56e35ee166b2f7e147dfb"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/ClipboardCleanup.kt",
+    "sha256": "7902374cceaf6557e857955086d667fd816e9fcadd31761dcea2b9c323d695f2"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AppLocaleBridge.kt",
+    "sha256": "d1677139f978e8956cc02860002f8684d0f8bdb65153facbdc6276e12d2f439a"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AndroidSensitiveClipboard.kt",
+    "sha256": "9bc7d02d9b8f1a288ae2048c8fddae447aba58db26ecd900483106565ea55dd7"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultViewModel.kt",
+    "sha256": "b922b597c24d29ef2c5ad80a0a40ed6eaae7292c19788686f7cfa945ddf31e35"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultUiState.kt",
+    "sha256": "103b8142d67ad3cc8f7174adafa88a9792e609436cf2112cee34088043c543ec"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultUiEvent.kt",
+    "sha256": "3478d9fd1a7096a90a4b1d168f39c2e2a11d04f5556f8c7554c3d9dc2d102b76"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/ui/AegisVaultRoute.kt",
+    "sha256": "fd87726e99eb278c80766e546e2e8bfae642613c0eb5868f6f20d7fd3ee92ec3"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/MainActivity.kt",
+    "sha256": "fa1155385b95510670e86cea5d03fa51c733c74c7c3bc00fa9b6db36e1168940"
+  },
+  {
+    "path": "app/src/androidTest/java/com/aegisvault/mobile/ui/TaskLifecycleDeviceTest.kt",
+    "sha256": "1f3217ff46a3b5e62fe538b89be0fd98886107c1d01ceacf999fc89f9f973048"
+  },
+  {
+    "path": "app/src/androidTest/java/com/aegisvault/mobile/ui/AppSafetyDeviceTest.kt",
+    "sha256": "81469b9454b17d6646a81e66855445a590c9ecbdb9b6a9d5c7b9e525652a0108"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/AegisVaultApp.kt",
+    "sha256": "bf06cf33ae5533ee66736efa533b19edfed77a1a2020c472586f37e4cc0a6de3"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/SettingsCodec.kt",
+    "sha256": "796095e98ba91a1bebd341c8d9a1be3ced940882764a2054734e4354188a04c0"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/AppSettingsRepository.kt",
+    "sha256": "55d5acf9f7975100e5a441e1c96141825da35d2a123f2c1109f1523a4b14cc3b"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/AppSettings.kt",
+    "sha256": "766c15318d11bbe54d1177e347a3372b9d7ba3e5889dd7eb44b483f1df864a7e"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/AppPreferencesRepository.kt",
+    "sha256": "f5abaf92a3d2c32f00e184ab1a4184005b89e8b19c75ec61f4cd62fed7b8f5b5"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/AppPreferences.kt",
+    "sha256": "59903d096f027f6f23c7173b636fd41c6bbc2f5e7923e89229516adc54831ed7"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/data/AppLocalePolicy.kt",
+    "sha256": "2738f442489b758a4092e5a5b690ebd03890f3b6faf95cd08c7a85d69dc4d77c"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/core/TextBase64.kt",
+    "sha256": "e97bfe0969d0192911ccc3649702a93ecf89607eaaef43db5c1a6aabac974361"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/core/ResourceLimits.kt",
+    "sha256": "afe42f4f5c4a8d0de8999db96fb37cc18b7ae0993a10ad62787e3af012f674ca"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/core/ProtocolJson.kt",
+    "sha256": "b234931b40dc9c3d007832a424875c9a1444b3e5bba206431fb4b06f1c8416c2"
+  },
+  {
+    "path": "app/src/main/java/com/aegisvault/mobile/core/AegisVaultEngine.kt",
+    "sha256": "0def28d849d0789eda363e68a9bb60ccc481e0b4777393a36076f2c9426de7b2"
+  },
+  {
+    "path": "app/build.gradle.kts",
+    "sha256": "c4092d8fbdb806197980aa789d99b6d7b106cf2f0c385c0c79b4ac7d27478677"
+  },
+  {
+    "path": "build.gradle.kts",
+    "sha256": "48f7c9d13c50fa379dce0a2b7c028bcffe60d428eada35b12cfb8af28b31c962"
+  },
+  {
+    "path": "settings.gradle.kts",
+    "sha256": "c03e51d3d80da55561ae1b679b20b793a17fc257165d9b55073afa50ab0a6e1c"
+  },
+  {
+    "path": "gradle.properties",
+    "sha256": "5ff4359bb22b9436ec644207f9240f4e47b9a733fe03ba402c77944a05283574"
+  },
+  {
+    "path": "gradle/wrapper/gradle-wrapper.properties",
+    "sha256": "dd7a1ea9958ebb69a3b4b91854fbdb5ed746996a26ae32c5b1a051f7ce4b8613"
+  }
+]

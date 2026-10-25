@@ -1,0 +1,42 @@
+[
+  {
+    "number": 16,
+    "title": "[P1] 编辑后重试可叠加不可取消的 KDF 任务，缺少应用级并发预算",
+    "state": "OPEN",
+    "url": "https://github.com/Qrzzzz/AegisVaultMobile/issues/16",
+    "bodyMatches": true,
+    "verifiedAt": "2026-10-25T13:15:48.1295371+08:00"
+  },
+  {
+    "number": 17,
+    "title": "[P2] 语言切换宿主未接入 AppCompat，Android 8–12L 无法正确应用语言",
+    "state": "OPEN",
+    "url": "https://github.com/Qrzzzz/AegisVaultMobile/issues/17",
+    "bodyMatches": true,
+    "verifiedAt": "2026-10-25T13:15:48.6176418+08:00"
+  },
+  {
+    "number": 18,
+    "title": "[P2] 复制解密结果未设置敏感标记，Android 13+ 剪贴板预览可能暴露明文",
+    "state": "OPEN",
+    "url": "https://github.com/Qrzzzz/AegisVaultMobile/issues/18",
+    "bodyMatches": true,
+    "verifiedAt": "2026-10-25T13:15:49.4871577+08:00"
+  },
+  {
+    "number": 19,
+    "title": "[P2] 配置重建的 ON_STOP 被当作离开应用，误清空当前输入与结果",
+    "state": "OPEN",
+    "url": "https://github.com/Qrzzzz/AegisVaultMobile/issues/19",
+    "bodyMatches": true,
+    "verifiedAt": "2026-10-25T13:15:50.2024203+08:00"
+  },
+  {
+    "number": 20,
+    "title": "[P2] 剪贴板清理计时随 Composition 丢失，旧计时可提前清空新复制",
+    "state": "OPEN",
+    "url": "https://github.com/Qrzzzz/AegisVaultMobile/issues/20",
+    "bodyMatches": true,
+    "verifiedAt": "2026-10-25T13:15:50.9019496+08:00"
+  }
+]

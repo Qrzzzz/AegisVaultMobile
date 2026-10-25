@@ -1,0 +1,19 @@
+{
+  "baseline": "ae4d6e41498c214e2bcea5940850d7b1ce3f33e3",
+  "versionName": "1.6",
+  "versionCode": 8,
+  "apk": "dist\\qa\\AegisVaultMobile-v1.6-local-debug.apk",
+  "size": 21049072,
+  "sha256": "6c9305dccb391de0a11f554899f1e2d1a6901cc6b5f406147376b97a592dde44",
+  "signer": "efeffa848cf56b90dc2e3c3ce7e2bf9fa0e1564364ed5c9240be2db16ebefeaf",
+  "expectedPublishedSigner": "b2b0f013dcfa428bb6f4c3563faa204c7890f72abd6062d1cbbb155222d493c9",
+  "publishedSignerMatches": false,
+  "purpose": "Local QA only; cannot replace a published same-package installation",
+  "productionManifestGenerated": false,
+  "buildCopyMatches": true,
+  "gradle": "8.7",
+  "kotlin": "1.9.24",
+  "jbr": "21.0.10",
+  "compileSdk": 34,
+  "buildTools": "34.0.0"
+}

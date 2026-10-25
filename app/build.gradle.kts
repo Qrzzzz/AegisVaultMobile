@@ -11,8 +11,8 @@ android {
         applicationId = "com.aegisvault.mobile"
         minSdk = 26
         targetSdk = 34
-        versionCode = 7
-        versionName = "1.5"
+        versionCode = 8
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

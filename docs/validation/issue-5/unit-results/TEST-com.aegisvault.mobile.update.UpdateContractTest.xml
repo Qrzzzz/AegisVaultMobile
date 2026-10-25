@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aegisvault.mobile.update.UpdateContractTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-15T01:13:57" hostname="QRZZZZ" time="0.041">
+  <properties/>
+  <testcase name="repositoryRequestsOnlyMetadataAndSkipsManifestForHistoricalOrCurrentRelease" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.009"/>
+  <testcase name="draftsPrereleasesDuplicateAssetsAndForeignUrlsAreRejected" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.011"/>
+  <testcase name="metadataBytesAndApkDigestMustAgreeWithBothSources" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.004"/>
+  <testcase name="actualArchivePolicyRejectsWrongPackageVersionMinSdkOrCertificate" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.002"/>
+  <testcase name="strictJsonRealIntegersBoundsAndContractVersionAreRequired" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.013"/>
+  <testcase name="sharedPublisherManifestIsAcceptedAndVersionComparisonIsNumeric" classname="com.aegisvault.mobile.update.UpdateContractTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

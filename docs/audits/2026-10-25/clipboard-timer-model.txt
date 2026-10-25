@@ -1,0 +1,2 @@
+COMPOSITION_RECREATED atMs=31000 copiedValueStillPresent=true
+REPEATED_SAME_COPY elapsedSinceSecondMs=10001 clipboardEmpty=true

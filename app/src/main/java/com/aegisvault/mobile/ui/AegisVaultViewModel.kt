@@ -87,7 +87,9 @@ class AegisVaultViewModel(
         _uiState.update { it.copy(isBusy = true, message = null) }
         activeJob = viewModelScope.launch {
             try {
-                val result = withContext(workerDispatcher) { operation(event, snapshot.inputText, snapshot.password, snapshot.base64Options) }
+                val result = withContext(workerDispatcher) {
+                    TextOperationGate.run { operation(event, snapshot.inputText, snapshot.password, snapshot.base64Options) }
+                }
                 if (id == generation && !destroyed) _uiState.update {
                     it.copy(resultText = result.text, message = result.message)
                 }

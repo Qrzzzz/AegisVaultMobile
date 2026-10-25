@@ -1,0 +1,15 @@
+{
+  "baseline": "ae4d6e41498c214e2bcea5940850d7b1ce3f33e3",
+  "release": "v1.5",
+  "auditedAt": "2026-10-25T13:10:07.2824203+08:00",
+  "jvm": "Android Studio JBR 21.0.10",
+  "kotlinCompiler": "Gradle-bundled 1.9.22 (standalone probe, not Android compiler task)",
+  "lifecycle": "2.8.2",
+  "coroutines": "1.8.1",
+  "bcprov": "1.78.1",
+  "annotation": "1.8.0",
+  "androidBuild": "NOT RUN",
+  "androidDevice": "NOT RUN",
+  "sdkObservation": "Previous SDK directory and adb unavailable; no SDK reinstallation or device setup performed",
+  "sourceChanges": "Audit evidence only; pre-existing issue5 changes preserved"
+}

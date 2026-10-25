@@ -1,0 +1,12 @@
+{
+  "peakActiveWorkers": 1,
+  "actualKdfExecutions": 2,
+  "editRequests": 100,
+  "baselineJavaBytes": 14695152,
+  "sampledPeakJavaBytes": 60090264,
+  "sampledPeakPssKiB": 226570,
+  "heapLimitBytes": 201326592,
+  "samplingDelayMs": 10,
+  "samples": 149,
+  "roundTrip": "PASS"
+}

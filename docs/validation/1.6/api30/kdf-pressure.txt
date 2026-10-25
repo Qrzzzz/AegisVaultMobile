@@ -1,0 +1,4 @@
+--------- beginning of kernel
+--------- beginning of main
+--------- beginning of system
+10-25 06:19:18.974  2338  2358 I KdfPressure: {"peakActiveWorkers":1,"actualKdfExecutions":2,"editRequests":100,"baselineJavaBytes":23110944,"sampledPeakJavaBytes":65262688,"sampledPeakPssKiB":238996,"heapLimitBytes":201326592,"samplingDelayMs":10,"samples":68,"roundTrip":"PASS"}
