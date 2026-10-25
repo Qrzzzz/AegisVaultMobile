@@ -193,7 +193,7 @@
   },
   {
     "path": "app/src/androidTest/java/com/aegisvault/mobile/ui/AppSafetyDeviceTest.kt",
-    "sha256": "a1ddf7866e5b27d0adfab04c07f6142d61fc079dd72341d2fd7214eb13083a3b"
+    "sha256": "81469b9454b17d6646a81e66855445a590c9ecbdb9b6a9d5c7b9e525652a0108"
   },
   {
     "path": "app/src/main/java/com/aegisvault/mobile/AegisVaultApp.kt",

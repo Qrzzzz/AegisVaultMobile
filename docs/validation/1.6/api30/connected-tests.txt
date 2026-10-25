@@ -80,10 +80,11 @@ Warning: SDK processing. This version only understands SDK XML versions up to 3 
 > Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
 
 > Task :app:connectedDebugAndroidTest
-Starting 13 tests on aegis16_api30(AVD) - 11
+Starting 14 tests on aegis16_api30(AVD) - 11
 
-aegis16_api30(AVD) - 11 Tests 1/13 completed. (0 skipped) (0 failed)
-Finished 13 tests on aegis16_api30(AVD) - 11
+aegis16_api30(AVD) - 11 Tests 1/14 completed. (0 skipped) (0 failed)
+aegis16_api30(AVD) - 11 Tests 8/14 completed. (0 skipped) (0 failed)
+Finished 14 tests on aegis16_api30(AVD) - 11
 
-BUILD SUCCESSFUL in 53s
+BUILD SUCCESSFUL in 1m 6s
 69 actionable tasks: 2 executed, 67 up-to-date

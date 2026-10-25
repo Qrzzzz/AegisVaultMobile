@@ -7,17 +7,19 @@
 | Check | Actual result |
 | --- | --- |
 | Declared Gradle JVM suite | **91 methods: 90 passed, 1 skipped, 0 failures/errors**. The optional live GitHub smoke stays skipped. |
-| Android API 34 / AOSP x86_64 | **14 instrumentation tests passed, 0 skipped, 0 failures/errors**. |
-| Android API 30 / AOSP x86_64 | **13 instrumentation tests passed, 0 skipped, 0 failures/errors**. The API 33+ framework-locale test is excluded by SdkSuppress. |
+| Android API 34 / AOSP x86_64 | **15 instrumentation tests passed, 0 skipped, 0 failures/errors**. |
+| Android API 30 / AOSP x86_64 | **14 instrumentation tests passed, 0 skipped, 0 failures/errors**. The API 33+ framework-locale test is excluded by SdkSuppress. |
 | API 30 process cold start | **Passed**: real UI selected Chinese, force-stopped the app, relaunched and verified the Chinese input resource. |
 | Lint / debug app / test APK build | **Passed**, lint **0 errors / 38 warnings**. |
 | Python migration / update contract | **6 + 7 tests passed**. The verifier's artificial releases are test fixtures. |
 | Product version and notes | `prepare-release.py --check-only --tag v1.6` passed, versionCode 8. This mode does not verify APK signing. |
-| CI/release YAML | actionlint 1.7.12 passed. This local record predates the release PR and remote CI. |
+| CI/release YAML | actionlint 1.7.12 passed. Remote CI separately verifies the final release PR revision. |
 
 The JVM suite includes 100 edit/retry requests with one executing worker and only the latest waiting request, cross-ViewModel execution gating after destruction, cancellation before entry, stale error/finally protection, clipboard identity/deadline/timeout changes and foreground retry, and old/framework locale migration policy. Previous cryptographic/protocol, input semantics, DataStore recovery and update regressions remain in the full suite.
 
-The Android suite uses the real AppCompat MainActivity, production Route/ViewModel, Android Main/Default dispatchers, ActivityScenario recreation/stop/destruction and the actual system ClipboardManager. It verifies real Chinese/English resource switching, API 33+ framework reset to Follow system, session and active-task retention through configuration recreation, actual sensitive clip extras and same-text replacement preservation, and a real 30-second clipboard deadline surviving recreation. The non-cooperative task cases inject a deterministically gated worker; they do not measure concurrent real KDF memory or establish physical-phone OOM acceptance.
+The Android suite uses the real AppCompat MainActivity, production Route/ViewModel, Android Main/Default dispatchers, ActivityScenario recreation/stop/destruction and the actual system ClipboardManager. It verifies real Chinese/English resource switching, API 33+ framework reset to Follow system, session and active-task retention through configuration recreation, actual sensitive clip extras and same-text replacement preservation, and a real 30-second clipboard deadline surviving recreation. The deterministic non-cooperative cases use a gated worker. A separate pressure test executes the actual production scrypt/AES engine, sends 100 edits/retries, verifies the last AGV1 round trip and samples process memory.
+
+Real KDF pressure on both API levels observed **one maximum active worker** and **two actual encryptions** (the old request and the latest request). Sampled Java heap maxima were **65,262,688 bytes on API 30** and **60,090,264 bytes on API 34**, with a **201,326,592-byte heap limit**; sampled process PSS maxima were 238,996 / 226,570 KiB respectively. Sampling uses a 10 ms delay between measurements, not a guarantee of an exact instantaneous peak. These are emulator measurements, not physical-phone OOM acceptance. [API 30 receipt](validation/1.6/api30/kdf-pressure.json) · [API 34 receipt](validation/1.6/api34/kdf-pressure.json).
 
 Evidence: [JVM XML](validation/1.6/unit-results/), [build log](validation/1.6/build.txt), [lint XML](validation/1.6/lint-results-debug.xml), [API 34 native XML and runner/device logs](validation/1.6/api34/), [API 30 native XML and runner/device logs](validation/1.6/api30/), [actual cold-start receipt and UI hierarchies](validation/1.6/api30/cold-start/), [migration](validation/1.6/migration-tests.txt), [update contracts](validation/1.6/update-contract-tests.txt), [version check](validation/1.6/version-check.txt), [workflow check](validation/1.6/workflow-check.txt).
 
@@ -33,6 +35,6 @@ The actual local APK reports package `com.aegisvault.mobile`, versionName 1.6, v
 
 The local emulator instances are dedicated, headless, hardware-accelerated AVDs with read-only/no-snapshot startup. They contain synthetic test inputs. Their results are emulator evidence, not physical-phone confirmation. API 30 cold-start language persistence was additionally exercised through actual UI and force-stop/relaunch, using the [emulator-only probe](validation/1.6/cold-start-language-probe.py). Physical-device low-memory/OEM behavior, API 26 clipboard fallback, production-signed upgrade and installer flows are not established by these tests. The earlier user-reported #5 phone pass remains historical evidence for #5.
 
-This record was collected before commit, push, tag, GitHub Release and issue closure. Those later actions are evidenced separately by the release PR, Actions and published assets. Existing #5 acceptance/audit files were preserved; its instrumentation tests were extended for the bounded execution behavior and configuration recreation. Historical validation records remain unchanged.
+The initial record preceded the release PR; actual KDF pressure/memory measurements were added during pre-release validation. Publication and closure are evidenced separately by the release PR, Actions and published assets. Existing #5 acceptance/audit files were preserved; its instrumentation tests were extended for the bounded execution behavior and configuration recreation. Historical validation records remain unchanged.
 
 Reproduce on a selected QA emulator with `ANDROID_SERIAL` set explicitly: `gradlew --no-daemon testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest connectedDebugAndroidTest`. CI now uses API 30/34 matrix jobs. No install test should use the local QA APK to replace a public-signed installation.

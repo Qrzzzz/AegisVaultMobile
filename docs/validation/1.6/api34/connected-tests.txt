@@ -23,22 +23,17 @@ Warning: SDK processing. This version only understands SDK XML versions up to 3 
 > Task :app:compileDebugJavaWithJavac UP-TO-DATE
 > Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
 > Task :app:preDebugAndroidTestBuild SKIPPED
-> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
-> Task :app:generateDebugAndroidTestLintModel
-> Task :app:extractProguardFiles UP-TO-DATE
-> Task :app:generateDebugLintReportModel UP-TO-DATE
-> Task :app:preDebugUnitTestBuild UP-TO-DATE
-> Task :app:generateDebugUnitTestLintModel UP-TO-DATE
-> Task :app:lintAnalyzeDebug UP-TO-DATE
-> Task :app:lintAnalyzeDebugUnitTest UP-TO-DATE
 > Task :app:processDebugAndroidTestManifest UP-TO-DATE
 > Task :app:generateDebugAndroidTestBuildConfig UP-TO-DATE
 > Task :app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
 > Task :app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
 > Task :app:generateDebugAndroidTestResources UP-TO-DATE
 > Task :app:mergeDebugAndroidTestResources UP-TO-DATE
 > Task :app:processDebugAndroidTestResources UP-TO-DATE
+> Task :app:compileDebugAndroidTestKotlin UP-TO-DATE
 > Task :app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :app:compileDebugAndroidTestJavaWithJavac UP-TO-DATE
 > Task :app:mergeDebugShaders UP-TO-DATE
 > Task :app:compileDebugShaders NO-SOURCE
 > Task :app:generateDebugAssets UP-TO-DATE
@@ -68,38 +63,28 @@ Warning: SDK processing. This version only understands SDK XML versions up to 3 
 > Task :app:mergeDebugAndroidTestAssets UP-TO-DATE
 > Task :app:compressDebugAndroidTestAssets UP-TO-DATE
 > Task :app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
 > Task :app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
 > Task :app:mergeExtDexDebugAndroidTest UP-TO-DATE
 > Task :app:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeProjectDexDebugAndroidTest UP-TO-DATE
 > Task :app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
 > Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
 > Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
 > Task :app:validateSigningDebugAndroidTest UP-TO-DATE
 > Task :app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
-
-> Task :app:compileDebugAndroidTestKotlin
-w: file:///C:/Users/qrzzz/AppData/Local/Temp/aegis16-build/app/src/androidTest/java/com/aegisvault/mobile/ui/TaskLifecycleDeviceTest.kt:42:25 Parameter 'event' is never used
-w: file:///C:/Users/qrzzz/AppData/Local/Temp/aegis16-build/app/src/androidTest/java/com/aegisvault/mobile/ui/TaskLifecycleDeviceTest.kt:42:66 Parameter 'password' is never used
-w: file:///C:/Users/qrzzz/AppData/Local/Temp/aegis16-build/app/src/androidTest/java/com/aegisvault/mobile/ui/TaskLifecycleDeviceTest.kt:42:84 Parameter 'options' is never used
-
-> Task :app:lintAnalyzeDebugAndroidTest
-> Task :app:compileDebugAndroidTestJavaWithJavac UP-TO-DATE
-> Task :app:lintReportDebug UP-TO-DATE
-> Task :app:lintDebug
-> Task :app:dexBuilderDebugAndroidTest
-> Task :app:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
-> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
-> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
-> Task :app:mergeProjectDexDebugAndroidTest
-> Task :app:packageDebugAndroidTest
+> Task :app:packageDebugAndroidTest UP-TO-DATE
 > Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
 
 > Task :app:connectedDebugAndroidTest
-Starting 14 tests on aegis16_api34(AVD) - 14
+Starting 15 tests on aegis16_api34(AVD) - 14
 
-aegis16_api34(AVD) - 14 Tests 2/14 completed. (0 skipped) (0 failed)
-aegis16_api34(AVD) - 14 Tests 13/14 completed. (0 skipped) (0 failed)
-Finished 14 tests on aegis16_api34(AVD) - 14
+aegis16_api34(AVD) - 14 Tests 2/15 completed. (0 skipped) (0 failed)
+aegis16_api34(AVD) - 14 Tests 5/15 completed. (0 skipped) (0 failed)
+Finished 15 tests on aegis16_api34(AVD) - 14
 
-BUILD SUCCESSFUL in 1m 2s
-78 actionable tasks: 9 executed, 69 up-to-date
+BUILD SUCCESSFUL in 1m 6s
+69 actionable tasks: 2 executed, 67 up-to-date

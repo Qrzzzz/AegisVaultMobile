@@ -7,6 +7,8 @@ import android.content.Context
 import android.app.LocaleManager
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
+import com.aegisvault.mobile.core.AegisVaultEngine
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -23,6 +25,8 @@ import com.aegisvault.mobile.data.AppSettings
 import com.aegisvault.mobile.data.ClipboardAutoClear
 import com.aegisvault.mobile.data.LanguageOption
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
@@ -129,6 +133,63 @@ class AppSafetyDeviceTest {
         assertSame(cleanup, AppClipboard.get(compose.activity))
         compose.waitUntil(35000) {
             clipboard.primaryClip?.getItemAt(0)?.text?.toString().isNullOrEmpty()
+        }
+    }
+
+    @Test fun actualKdfPressureUsesOneWorkerAndRecordsSampledMemory() {
+        val active = java.util.concurrent.atomic.AtomicInteger()
+        val peakActive = java.util.concurrent.atomic.AtomicInteger()
+        val executions = java.util.concurrent.atomic.AtomicInteger()
+        val started = Channel<Unit>(Channel.UNLIMITED)
+        val runtime = Runtime.getRuntime()
+        fun heap() = (runtime.totalMemory() - runtime.freeMemory()).coerceAtLeast(0)
+        val baselineHeap = heap()
+        val peakHeap = java.util.concurrent.atomic.AtomicLong(baselineHeap)
+        val peakPss = java.util.concurrent.atomic.AtomicLong(android.os.Debug.getPss())
+        val samples = java.util.concurrent.atomic.AtomicInteger()
+        val sampling = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        val sampler = sampling.launch {
+            while (isActive) {
+                peakHeap.accumulateAndGet(heap(), ::maxOf)
+                peakPss.accumulateAndGet(android.os.Debug.getPss(), ::maxOf)
+                samples.incrementAndGet()
+                delay(10)
+            }
+        }
+        lateinit var stress: AegisVaultViewModel
+        main {
+            stress = AegisVaultViewModel(repo, Dispatchers.Default) { _, input, password, _ ->
+                peakActive.accumulateAndGet(active.incrementAndGet(), ::maxOf)
+                executions.incrementAndGet(); started.trySend(Unit)
+                try {
+                    AegisVaultViewModel.ActionResult(AegisVaultEngine.encryptText(input, password),
+                        UiMessage(R.string.status_text_encrypt_success, MessageTone.SUCCESS))
+                } finally { active.decrementAndGet() }
+            }
+            compose.activity.viewModelStore.put("actual-kdf-pressure", stress)
+            stress.onEvent(AegisVaultUiEvent.UpdatePassword("synthetic-pressure-password"))
+            stress.onEvent(AegisVaultUiEvent.UpdateInput("first"))
+            stress.onEvent(AegisVaultUiEvent.Encrypt)
+        }
+        try {
+            runBlocking { withTimeout(10000) { started.receive() } }
+            val text = "synthetic-".repeat(4096)
+            main {
+                repeat(100) { index ->
+                    stress.onEvent(AegisVaultUiEvent.UpdateInput("$index:$text"))
+                    stress.onEvent(AegisVaultUiEvent.Encrypt)
+                }
+            }
+            val result = runBlocking { withTimeout(30000) { stress.uiState.first {
+                !it.isBusy && it.inputText == "99:$text" && it.resultText.startsWith("AGV1.")
+            } } }
+            assertEquals(1, peakActive.get()); assertEquals(0, active.get())
+            assertEquals("99:$text", AegisVaultEngine.decryptText(result.resultText, "synthetic-pressure-password").plaintext)
+            peakHeap.accumulateAndGet(heap(), ::maxOf)
+            Log.i("KdfPressure", """{"peakActiveWorkers":${peakActive.get()},"actualKdfExecutions":${executions.get()},"editRequests":100,"baselineJavaBytes":$baselineHeap,"sampledPeakJavaBytes":${peakHeap.get()},"sampledPeakPssKiB":${peakPss.get()},"heapLimitBytes":${runtime.maxMemory()},"samplingDelayMs":10,"samples":${samples.get()},"roundTrip":"PASS"}""")
+        } finally {
+            sampling.cancel()
+            runBlocking { sampler.join() }
         }
     }
 }
