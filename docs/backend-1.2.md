@@ -34,4 +34,4 @@ Base64 工具及空白语义保留现状，仅正式协议接入处强制有效 
 
 工具：[migrate-legacy.py](../scripts/migrate-legacy.py)。使用 1.1 冻结人工样本 `app/src/test/resources/android-historical.json`，不替换原样本。历史 JSON 使用独立受控 reader，16 KiB metadata/32 nesting；旧 AES/AK 仅显式指定格式，SHA256 key 仅用于数据恢复。所有恢复都先认证并严格验证文本/资源，再输出新正式 token，工具自己回验 AES-GCM 后才创建输出。错误不产生成功输出，不覆盖原件，不记录 token/密码/明文。
 
-[中文迁移说明](migration-1.2.zh-CN.md) / [English migration instructions](migration-1.2.en.md)。实际桌面 CryptoService 双向交换、迁移和 Android 构建证据见 [validation-1.2.md](validation-1.2.md)。冻结向量与原始头 AAD 回归测试不能代替实体设备测试。
+[中文迁移说明](migration-1.2.zh-CN.md) / [English migration instructions](migration-1.2.en.md)。冻结向量与原始头 AAD 回归测试不能代替实体设备测试。

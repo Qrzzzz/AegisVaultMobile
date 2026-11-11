@@ -1,1 +1,0 @@
-Verified exact release 411531614: https://github.com/Qrzzzz/AegisVaultMobile/releases/tag/v1.4

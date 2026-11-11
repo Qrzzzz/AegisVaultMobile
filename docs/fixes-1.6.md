@@ -28,4 +28,4 @@ Process death, forced stop, lost permissions and OEM clipboard restrictions rema
 
 ## Validation and release
 
-See [actual validation results](validation-1.6.md). CI now runs the lifecycle/locale/clipboard instrumentation suite on API 30 and 34; adding the job is not evidence that remote CI ran. The update schema, dependency versions and expected published signer remain unchanged. A locally generated development signing key cannot replace the existing release identity; the release workflow remains responsible for restoring and verifying that identity before publication.
+CI now runs the lifecycle/locale/clipboard instrumentation suite on API 30 and 34; adding the job is not evidence that remote CI ran. The update schema, dependency versions and expected published signer remain unchanged. A locally generated development signing key cannot replace the existing release identity; the release workflow remains responsible for restoring and verifying that identity before publication.

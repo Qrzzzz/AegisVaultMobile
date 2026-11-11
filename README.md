@@ -17,9 +17,9 @@
 
 ---
 
-当前版本为 **1.6**（versionCode 8），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.3 文本语义](./docs/backend-1.3.md) · [AGV1 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [1.4 验证记录](./docs/validation-1.4.md) · [设置恢复](./docs/settings-1.4.md)
+当前版本为 **1.6**（versionCode 8），采用正式桌面 AGV1 文本协议与头部认证；旧 Android JSON/AES/AK# 需独立离线迁移。 [1.3 文本语义](./docs/backend-1.3.md) · [AGV1 合约与预算](./docs/backend-1.2.md) · [迁移说明](./docs/migration-1.2.zh-CN.md) · [设置恢复](./docs/settings-1.4.md)
 
-**1.6** 修复 KDF 计算叠加、语言切换、剪贴板敏感标记、旋转误清空与剪贴板清理计时问题。[修复说明](./docs/fixes-1.6.md) · [验证记录](./docs/validation-1.6.md)。发布 APK 沿用原有签名，支持通过标准更新流程下载校验。
+**1.6** 修复 KDF 计算叠加、语言切换、剪贴板敏感标记、旋转误清空与剪贴板清理计时问题。[修复说明](./docs/fixes-1.6.md)。发布 APK 沿用原有签名，支持通过标准更新流程下载校验。
 
 ## ✨ 简介
 
@@ -79,7 +79,7 @@
 - 设置中手动检查 GitHub 最新正式版，下载并校验 APK 后打开系统安装界面
 - 标准化更新清单、版本代码、大小、SHA-256、包名和签名一致性校验
 - 更新网络请求不包含文本、口令或结果；加密与 Base64 保持离线
-- [1.5 更新合约](./docs/update-1.5.md) · [验证记录](./docs/validation-1.5.md)
+- [1.5 更新合约](./docs/update-1.5.md)
 
 ### 📴 离线优先
 
